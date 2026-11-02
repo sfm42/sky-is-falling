@@ -1,230 +1,25 @@
 {
-  "updated": "2026-11-02T18:00:00+00:00",
-  "score": 57,
-  "level": "Stockpiling Beans",
-  "emoji": "🟠",
-  "forecast": "Heavy hysteria moving in. Canned goods advisory in effect until further notice.",
-  "method": "sample",
-  "sampleSize": 0,
-  "sources": {},
+  "updated": "2026-11-02T20:55:01+00:00",
+  "score": 2,
+  "level": "Mild Concern",
+  "emoji": "🟢",
+  "forecast": "Clear skies across the timeline. Light grumbling possible in the afternoon.",
+  "method": "word-list",
+  "sampleSize": 38,
+  "sources": {
+    "news": 38
+  },
   "bySource": {
-    "bluesky": 61,
-    "news": 34
+    "news": 1
   },
   "topWords": [
-    "it's over",
-    "collapse",
-    "we're cooked",
-    "wake up",
-    "crisis",
-    "breaking"
+    "crash",
+    "unprecedented"
   ],
   "history": [
     {
-      "t": "2026-10-23T18:00:00+00:00",
-      "score": 38,
-      "sample": true
-    },
-    {
-      "t": "2026-10-24T00:00:00+00:00",
-      "score": 38,
-      "sample": true
-    },
-    {
-      "t": "2026-10-24T06:00:00+00:00",
-      "score": 49,
-      "sample": true
-    },
-    {
-      "t": "2026-10-24T12:00:00+00:00",
-      "score": 44,
-      "sample": true
-    },
-    {
-      "t": "2026-10-24T18:00:00+00:00",
-      "score": 54,
-      "sample": true
-    },
-    {
-      "t": "2026-10-25T00:00:00+00:00",
-      "score": 55,
-      "sample": true
-    },
-    {
-      "t": "2026-10-25T06:00:00+00:00",
-      "score": 52,
-      "sample": true
-    },
-    {
-      "t": "2026-10-25T12:00:00+00:00",
-      "score": 61,
-      "sample": true
-    },
-    {
-      "t": "2026-10-25T18:00:00+00:00",
-      "score": 54,
-      "sample": true
-    },
-    {
-      "t": "2026-10-26T00:00:00+00:00",
-      "score": 61,
-      "sample": true
-    },
-    {
-      "t": "2026-10-26T06:00:00+00:00",
-      "score": 54,
-      "sample": true
-    },
-    {
-      "t": "2026-10-26T12:00:00+00:00",
-      "score": 53,
-      "sample": true
-    },
-    {
-      "t": "2026-10-26T18:00:00+00:00",
-      "score": 56,
-      "sample": true
-    },
-    {
-      "t": "2026-10-27T00:00:00+00:00",
-      "score": 60,
-      "sample": true
-    },
-    {
-      "t": "2026-10-27T06:00:00+00:00",
-      "score": 45,
-      "sample": true
-    },
-    {
-      "t": "2026-10-27T12:00:00+00:00",
-      "score": 43,
-      "sample": true
-    },
-    {
-      "t": "2026-10-27T18:00:00+00:00",
-      "score": 46,
-      "sample": true
-    },
-    {
-      "t": "2026-10-28T00:00:00+00:00",
-      "score": 48,
-      "sample": true
-    },
-    {
-      "t": "2026-10-28T06:00:00+00:00",
-      "score": 39,
-      "sample": true
-    },
-    {
-      "t": "2026-10-28T12:00:00+00:00",
-      "score": 34,
-      "sample": true
-    },
-    {
-      "t": "2026-10-28T18:00:00+00:00",
-      "score": 42,
-      "sample": true
-    },
-    {
-      "t": "2026-10-29T00:00:00+00:00",
-      "score": 27,
-      "sample": true
-    },
-    {
-      "t": "2026-10-29T06:00:00+00:00",
-      "score": 40,
-      "sample": true
-    },
-    {
-      "t": "2026-10-29T12:00:00+00:00",
-      "score": 32,
-      "sample": true
-    },
-    {
-      "t": "2026-10-29T18:00:00+00:00",
-      "score": 32,
-      "sample": true
-    },
-    {
-      "t": "2026-10-30T00:00:00+00:00",
-      "score": 34,
-      "sample": true
-    },
-    {
-      "t": "2026-10-30T06:00:00+00:00",
-      "score": 40,
-      "sample": true
-    },
-    {
-      "t": "2026-10-30T12:00:00+00:00",
-      "score": 52,
-      "sample": true
-    },
-    {
-      "t": "2026-10-30T18:00:00+00:00",
-      "score": 45,
-      "sample": true
-    },
-    {
-      "t": "2026-10-31T00:00:00+00:00",
-      "score": 55,
-      "sample": true
-    },
-    {
-      "t": "2026-10-31T06:00:00+00:00",
-      "score": 59,
-      "sample": true
-    },
-    {
-      "t": "2026-10-31T12:00:00+00:00",
-      "score": 57,
-      "sample": true
-    },
-    {
-      "t": "2026-10-31T18:00:00+00:00",
-      "score": 61,
-      "sample": true
-    },
-    {
-      "t": "2026-11-01T00:00:00+00:00",
-      "score": 55,
-      "sample": true
-    },
-    {
-      "t": "2026-11-01T06:00:00+00:00",
-      "score": 55,
-      "sample": true
-    },
-    {
-      "t": "2026-11-01T12:00:00+00:00",
-      "score": 57,
-      "sample": true
-    },
-    {
-      "t": "2026-11-01T18:00:00+00:00",
-      "score": 63,
-      "sample": true
-    },
-    {
-      "t": "2026-11-02T00:00:00+00:00",
-      "score": 56,
-      "sample": true
-    },
-    {
-      "t": "2026-11-02T06:00:00+00:00",
-      "score": 52,
-      "sample": true
-    },
-    {
-      "t": "2026-11-02T12:00:00+00:00",
-      "score": 53,
-      "sample": true
-    },
-    {
-      "t": "2026-11-02T18:00:00+00:00",
-      "score": 57,
-      "sample": true
+      "t": "2026-11-02T20:55:01+00:00",
+      "score": 2
     }
-  ],
-  "isSample": true
+  ]
 }
