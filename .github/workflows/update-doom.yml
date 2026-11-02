@@ -8,6 +8,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: doom-reading
+  cancel-in-progress: false
+
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -23,10 +27,16 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
         run: python scripts/update_doom.py
-      - name: Commit the new reading
+      - name: Save the new reading
         run: |
           git config user.name "doom-meter-bot"
           git config user.email "doom-meter-bot@users.noreply.github.com"
+          # Always save onto the latest main, even for re-runs of older commits
+          cp data/doom.json "$RUNNER_TEMP/doom.json"
+          git fetch origin main
+          git checkout -B main origin/main
+          cp "$RUNNER_TEMP/doom.json" data/doom.json
           git add data/doom.json
-          git diff --cached --quiet || git commit -m "Doom reading $(date -u +%Y-%m-%dT%H:%MZ)"
-          git push
+          git diff --cached --quiet && { echo "No change to save."; exit 0; }
+          git commit -m "Doom reading $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push origin main
