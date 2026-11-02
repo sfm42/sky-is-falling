@@ -26,7 +26,7 @@ import xml.etree.ElementTree as ET
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_PATH = os.path.join(ROOT, "data", "doom.json")
-HISTORY_LEN = 60          # readings kept for the trend line
+HISTORY_LEN = 168         # readings kept for the trend line (1 week hourly)
 PER_SOURCE = int(os.environ.get("DOOM_SAMPLE_SIZE", "50"))
 CLAUDE_MODEL = os.environ.get("DOOM_CLAUDE_MODEL", "claude-haiku-5-5")
 

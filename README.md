@@ -1,6 +1,6 @@
 # ☄️ The Sky Is Falling Index
 
-The internet's official-ish panic gauge. A few times a day a robot reads a sample of public posts and headlines with doom words in them, rates how dramatic each one sounds, and points the needle somewhere between 🟢 **Mild Concern** and ☄️ **Full Chicken Little**.
+The internet's official-ish panic gauge. Every hour a robot reads a sample of public posts and headlines with doom words in them, rates how dramatic each one sounds, and points the needle somewhere between 🟢 **Mild Concern** and ☄️ **Full Chicken Little**.
 
 It measures **tone, not topic**, and stores **only overall numbers**. No accounts are named, tracked or saved.
 
@@ -11,7 +11,7 @@ It measures **tone, not topic**, and stores **only overall numbers**. No account
 | `index.html` | The whole site: gauge, Doom Forecast, trend line, and the paste-a-post Doom-o-Meter |
 | `data/doom.json` | The latest reading (starts with sample data) |
 | `scripts/update_doom.py` | Fetches posts, scores them, writes `doom.json`. Standard library only, no installs |
-| `.github/workflows/update-doom.yml` | Runs the script every 6 hours and commits the new reading |
+| `.github/workflows/update-doom.yml` | Runs the script every hour and commits the new reading |
 
 ## Launch it (about 10 minutes)
 
@@ -24,7 +24,7 @@ It measures **tone, not topic**, and stores **only overall numbers**. No account
 |---|---|---|
 | `BSKY_HANDLE` + `BSKY_APP_PASSWORD` | Bluesky posts. Make an app password at bsky.app → Settings → Privacy and security → App passwords | Free |
 | `ANTHROPIC_API_KEY` | Claude scores the posts (much smarter than the word list) and writes the daily forecast | Pennies a day with Haiku |
-| `X_BEARER_TOKEN` | Adds X posts | ~$0.005 per post read. 50 posts × 4 runs/day ≈ $30/month |
+| `X_BEARER_TOKEN` | Adds X posts | ~$0.005 per post read. 50 posts × 24 runs/day ≈ $180/month (lower DOOM_SAMPLE_SIZE or the schedule to cut this) |
 
 News headlines (Google News RSS) need no key, so the meter works even with zero secrets.
 
@@ -32,7 +32,7 @@ News headlines (Google News RSS) need no key, so the meter works even with zero 
 
 ## Tuning
 
-- **How often:** edit the `cron` line in the workflow (`17 */6 * * *` = every 6 hours).
+- **How often:** edit the `cron` line in the workflow (`17 * * * *` = every hour at :17 past; `17 */2 * * *` = every 2 hours).
 - **Sample size per source:** set a `DOOM_SAMPLE_SIZE` env var in the workflow (default 50). This is the main X cost lever.
 - **Doom words:** edit `LEXICON` in `scripts/update_doom.py` **and** the matching list in `index.html` (the paste scorer runs in the browser).
 - **Level names / jokes:** `LEVELS`, `VERDICTS` and the ticker text are near the top of the script in `index.html`.
