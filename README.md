@@ -2,6 +2,8 @@
 
 The internet's official-ish panic gauge. Every hour a robot reads a sample of public posts and headlines with doom words in them, rates how dramatic each one sounds, and points the needle somewhere between 🟢 **Mild Concern** and ☄️ **Full Chicken Little**.
 
+A second gauge, **Robot Uprising Risk**, does the same for AI chatter, from 🤖 **Mild Robot Concern** to 💥 **Full Robot Uprising**.
+
 It measures **tone, not topic**, and stores **only overall numbers**. No accounts are named, tracked or saved.
 
 ## What's in here
@@ -34,7 +36,9 @@ News headlines (Google News RSS) need no key, so the meter works even with zero 
 
 - **How often:** edit the `cron` line in the workflow (`17 * * * *` = every hour at :17 past; `17 */2 * * *` = every 2 hours).
 - **Sample size per source:** set a `DOOM_SAMPLE_SIZE` env var in the workflow (default 50). This is the main X cost lever.
-- **Doom words:** edit `LEXICON` in `scripts/update_doom.py` **and** the matching list in `index.html` (the paste scorer runs in the browser).
+- **Doom words:** edit `LEXICON` (general) and `AI_LEXICON` (AI panic) in `scripts/update_doom.py` **and** the matching lists in `index.html` (the paste scorer runs in the browser).
+- **What gets searched:** `MAIN_TERMS` / `AI_TERMS` (Bluesky and X searches) and `MAIN_FEEDS` / `AI_FEEDS` (news RSS) at the top of the script.
+- **Red X in Actions?** The run fails on purpose when no source returned anything. Open the run's log to see which feeds failed.
 - **Level names / jokes:** `LEVELS`, `VERDICTS` and the ticker text are near the top of the script in `index.html`.
 
 ## Ground rules (keep it fun and keep it allowed)

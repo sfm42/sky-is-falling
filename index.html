@@ -46,7 +46,7 @@
     margin:0 0 14px; display:flex; align-items:center; gap:8px}
   .card h2::before{content:""; width:10px; height:10px; background:var(--hazard); display:inline-block}
   .gauge-wrap{position:relative; max-width:520px; margin:0 auto}
-  #needle{transform-origin:200px 200px; transition:transform 1.6s cubic-bezier(.3,1.6,.5,1)}
+  .needle{transform-origin:200px 200px; transition:transform 1.6s cubic-bezier(.3,1.6,.5,1)}
   .jitter{animation:jit .35s steps(2) infinite}
   @keyframes jit{50%{transform:translate(.6px,-.4px)}}
   @media (prefers-reduced-motion:reduce){.jitter{animation:none}}
@@ -97,6 +97,20 @@
   .legend b{display:block; font:800 15px "Archivo",sans-serif; text-transform:uppercase}
   .legend span{font:12px "JetBrains Mono",monospace; opacity:.9}
   .legend .on{outline:5px solid var(--ink); outline-offset:-9px}
+
+  .ai-card{margin-top:26px; background:var(--ink); color:var(--paper); box-shadow:7px 7px 0 var(--hazard)}
+  .ai-card h2{flex-wrap:wrap}
+  .ai-card h2 .tag{font-size:11px; letter-spacing:.12em; border:2px solid var(--paper); padding:2px 7px; margin-left:4px; color:var(--paper)}
+  .ai-grid{display:grid; grid-template-columns:1fr 1.15fr; gap:26px; align-items:center}
+  @media (max-width:820px){.ai-grid{grid-template-columns:1fr}}
+  .ai-card .score small,.ai-card .meta,.ai-card .forecast b{color:#b9ad97}
+  .ai-card .forecast{border-top-color:var(--paper); margin-top:0; border-top:0; padding-top:0}
+  .ai-card .chip{background:transparent; border-color:var(--paper); color:var(--paper)}
+  .ai-card .sub{font:700 12px "JetBrains Mono",monospace; letter-spacing:.16em; text-transform:uppercase; color:#b9ad97; margin:18px 0 8px}
+  .ai-card .score{font-size:68px}
+  .dual{display:grid; gap:14px}
+  .dual .lab{font:700 11px "JetBrains Mono",monospace; letter-spacing:.14em; text-transform:uppercase; color:var(--muted)}
+  .dual .rscore{font-size:44px}
   footer{margin-top:34px; font-size:14px; color:var(--muted); border-top:3px solid var(--ink); padding-top:16px;
     display:grid; grid-template-columns:2fr 1fr; gap:20px}
   @media (max-width:820px){footer{grid-template-columns:1fr}}
@@ -125,15 +139,7 @@
     <section class="card" aria-labelledby="g-h">
       <h2 id="g-h">Current Doom Reading</h2>
       <div class="gauge-wrap">
-        <svg viewBox="0 0 400 225" role="img" aria-label="Doom gauge" id="gauge">
-          <g id="bands"></g>
-          <g id="ticks"></g>
-          <g class="jitter"><g id="needle">
-            <polygon points="196,200 204,200 200,48" fill="#16130f"/>
-          </g></g>
-          <circle cx="200" cy="200" r="16" fill="#16130f"/>
-          <circle cx="200" cy="200" r="6" fill="#ec7a1c"/>
-        </svg>
+        <svg viewBox="0 0 400 225" role="img" aria-label="Doom gauge" id="gauge"></svg>
       </div>
       <div class="readout">
         <div class="score"><span id="score">--</span><small>/100</small></div>
@@ -165,6 +171,32 @@
     </div>
   </div>
 
+  <section class="card ai-card" aria-labelledby="ai-h">
+    <h2 id="ai-h">Robot Uprising Risk <span class="tag">AI panic sub-meter</span></h2>
+    <div class="ai-grid">
+      <div>
+        <div class="gauge-wrap" style="max-width:420px">
+          <svg viewBox="0 0 400 225" role="img" aria-label="AI panic gauge" id="aiGauge"></svg>
+        </div>
+        <div class="readout">
+          <div class="score"><span id="aiScore">--</span><small>/100</small></div>
+          <div class="level" id="aiLevel">Booting up…</div>
+        </div>
+      </div>
+      <div>
+        <div class="forecast">
+          <b>⚡ Robot Uprising Forecast</b>
+          <p id="aiForecast">Asking the robots nicely…</p>
+        </div>
+        <div class="sub">Trending AI panic words</div>
+        <div class="chips" id="aiWords"></div>
+        <div class="sub">AI panic over time</div>
+        <svg viewBox="0 0 360 110" id="aiTrend" preserveAspectRatio="none" role="img" aria-label="Recent AI panic readings" style="width:100%;height:auto;display:block"></svg>
+        <div class="meta"><span id="aiUpdated"></span><span id="aiMethod"></span></div>
+      </div>
+    </div>
+  </section>
+
   <section class="card scorer" aria-labelledby="p-h">
     <h2 id="p-h">The Doom-o-Meter: Test Any Post</h2>
     <div class="scorer-grid">
@@ -181,10 +213,11 @@
   </section>
 
   <div class="legend" id="legend"></div>
+  <div class="legend" id="aiLegend" style="margin-top:12px"></div>
 
   <footer>
     <div>
-      <strong>How it works.</strong> Every hour, a robot reads a sample of public posts and headlines that contain doom words, rates how dramatic each one sounds, and averages the loudest half. It measures <em>tone</em>, not topic: a calm report about something serious scores low. No accounts are named, tracked or stored, only the overall numbers.
+      <strong>How it works.</strong> Every hour, a robot reads a sample of public posts and headlines that contain doom words, rates how dramatic each one sounds, and averages the loudest half. A second robot does the same for AI chatter to set the Robot Uprising Risk. Both measure <em>tone</em>, not topic: a calm report about something serious scores low. No accounts are named, tracked or stored, only the overall numbers.
     </div>
     <div>
       <strong>Disclaimer.</strong> For entertainment only. Not a forecast of anything. If the needle is in the red, please drink some water and go outside.
@@ -194,19 +227,29 @@
 <div class="toast" id="toast"></div>
 
 <script id="fallback-data" type="application/json">
-{"updated":"2026-11-02T18:00:00+00:00","score":57,"level":"Stockpiling Beans","emoji":"🟠","forecast":"Heavy hysteria moving in. Canned goods advisory in effect until further notice.","method":"sample","bySource":{"bluesky":61,"news":34},"topWords":["it's over","collapse","we're cooked","wake up","crisis","breaking"],"history":[],"isSample":true}
+{"updated": "2026-11-02T18:00:00+00:00", "score": 57, "level": "Stockpiling Beans", "emoji": "🟠", "forecast": "Heavy hysteria moving in. Canned goods advisory in effect until further notice.", "method": "sample", "sampleSize": 0, "sources": {}, "bySource": {"bluesky": 61, "news": 34}, "topWords": ["it's over", "collapse", "we're cooked", "wake up", "crisis", "breaking"], "isSample": true, "ai": {"updated": "2026-11-02T18:00:00+00:00", "score": 46, "level": "Saying Please to the Chatbot", "emoji": "🙏", "forecast": "Widespread politeness toward software. Experts advise saying thank you, just in case.", "method": "sample", "sampleSize": 0, "sources": {}, "bySource": {"bluesky": 52, "news": 29}, "topWords": ["agi", "p(doom)", "coming for your job", "ai slop", "sentient", "deepfake"], "history": []}, "history": []}
 </script>
 <script>
 const LEVELS = [
-  {min:0,  name:"Mild Concern",        emoji:"🟢", color:"var(--l0)", hex:"#5e9e6b", blurb:"0–19 · normal vibes"},
-  {min:20, name:"Clutching Pearls",    emoji:"🟡", color:"var(--l1)", hex:"#e2b829", blurb:"20–39 · light gasping"},
-  {min:40, name:"Stockpiling Beans",   emoji:"🟠", color:"var(--l2)", hex:"#ec7a1c", blurb:"40–59 · pantry check"},
-  {min:60, name:"Building a Bunker",   emoji:"🔴", color:"var(--l3)", hex:"#d6402a", blurb:"60–79 · concrete ordered"},
-  {min:80, name:"Full Chicken Little", emoji:"☄️", color:"var(--l4)", hex:"#7a1f5c", blurb:"80–100 · acorn impact"},
+  {min:0,  name:"Mild Concern",        emoji:"🟢", hex:"#5e9e6b", blurb:"0–19 · normal vibes"},
+  {min:20, name:"Clutching Pearls",    emoji:"🟡", hex:"#e2b829", blurb:"20–39 · light gasping"},
+  {min:40, name:"Stockpiling Beans",   emoji:"🟠", hex:"#ec7a1c", blurb:"40–59 · pantry check"},
+  {min:60, name:"Building a Bunker",   emoji:"🔴", hex:"#d6402a", blurb:"60–79 · concrete ordered"},
+  {min:80, name:"Full Chicken Little", emoji:"☄️", hex:"#7a1f5c", blurb:"80–100 · acorn impact"},
 ];
-const levelFor = s => LEVELS.reduce((a,l)=> s>=l.min ? l : a, LEVELS[0]);
+const AI_LEVELS = [
+  {min:0,  name:"Mild Robot Concern",           emoji:"🤖", hex:"#5e9e6b", blurb:"0–19 · beep boop"},
+  {min:20, name:"Side-Eyeing the Toaster",      emoji:"👀", hex:"#e2b829", blurb:"20–39 · appliance suspicion"},
+  {min:40, name:"Saying Please to the Chatbot", emoji:"🙏", hex:"#ec7a1c", blurb:"40–59 · just in case"},
+  {min:60, name:"Unplugging Everything",        emoji:"🔌", hex:"#d6402a", blurb:"60–79 · smart fridge watch"},
+  {min:80, name:"Full Robot Uprising",          emoji:"💥", hex:"#7a1f5c", blurb:"80–100 · the machines have risen"},
+];
+const levelIn = (levels, s) => levels.reduce((a,l)=> s>=l.min ? l : a, levels[0]);
+const levelFor = s => levelIn(LEVELS, s);
+const aiLevelFor = s => levelIn(AI_LEVELS, s);
+const darkText = l => l.min===20;
 
-// Keep in sync with LEXICON in scripts/update_doom.py
+// Keep in sync with LEXICON / AI_LEXICON in scripts/update_doom.py
 const LEXICON = {
   "apocalypse":3,"armageddon":3,"end times":3,"the end is near":3,"civilization":3,"extinction":3,
   "total collapse":3,"doomsday":3,"bunker":3,"we're cooked":3,"it's over":3,"its over":3,
@@ -218,104 +261,144 @@ const LEXICON = {
   "warning":1,"alarming":1,"dangerous":1,"threat":1,"fear":1,"worst":1,"disaster":1,"scary":1,
   "urgent":1,"shocking":1,"red flag":1,"uh oh":1,"yikes":1,"bad news":1,
 };
+const AI_LEXICON = {
+  "p(doom)":3,"ai apocalypse":3,"ai takeover":3,"rogue ai":3,"skynet":3,"terminator":3,"paperclip":3,
+  "superintelligence":3,"singularity":3,"agi is here":3,"lost control":3,"humanity is finished":3,
+  "extinction-level":3,"robot uprising":3,
+  "sentient":2,"it's alive":2,"lied to its creators":2,"tried to escape":2,"coming for your job":2,
+  "ai will replace":2,"replaced by ai":2,"nobody will have a job":2,"jobpocalypse":2,
+  "shut it all down":2,"pause ai":2,"unaligned":2,"misaligned":2,"nobody understands how it works":2,
+  "deepfake":2,"self-replicating":2,"agi":2,
+  "ai slop":1,"dead internet":1,"hallucinat":1,"uncanny":1,"ai bubble":1,"it's learning":1,
+  "jailbreak":1,"chatbot":1,"algorithm":1,"robots":1,
+};
 const DOOM_EMOJI = ["🚨","💀","☢️","⚠️","🔥","😱","🆘","☠️","📉","🪦"];
+const AI_EMOJI = ["🤖","👁️","🦾","👾"];
 const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
-
-function lexiconScore(text){
-  const t = text.toLowerCase().replace(/’/g,"'");
-  let pts = 0; const hits = [];
-  for (const [p,w] of Object.entries(LEXICON)){
-    if (new RegExp("(?<![a-z])"+esc(p)+"(?![a-z])").test(t)){ hits.push(p); pts += w*9; }
-  }
-  const emo = DOOM_EMOJI.reduce((n,e)=> n + text.split(e).length-1, 0);
-  pts += Math.min(emo,5)*6;
+const norm = t => t.toLowerCase().replace(/’/g,"'");
+const hasPhrase = (t,p) => new RegExp("(?<![a-z])"+esc(p)+(p==="hallucinat"?"":"(?![a-z])")).test(t);
+function dramaBonus(text, emoji){
+  let pts = Math.min(emoji.reduce((n,e)=> n + text.split(e).length-1, 0),5)*6;
   pts += Math.min((text.match(/!/g)||[]).length,5)*3;
   const letters = text.match(/\p{L}/gu)||[];
-  if (letters.length>15){
-    const caps = letters.filter(c=>c!==c.toLowerCase()).length/letters.length;
-    if (caps>0.5) pts += 20;
-  }
+  if (letters.length>15 && letters.filter(c=>c!==c.toLowerCase()).length/letters.length>0.5) pts += 20;
+  return pts;
+}
+function lexiconScore(text){
+  const t=norm(text); const hits=Object.keys(LEXICON).filter(p=>hasPhrase(t,p));
+  const pts=hits.reduce((n,h)=>n+LEXICON[h]*9,0)+dramaBonus(text,DOOM_EMOJI);
   return {score:Math.max(0,Math.min(100,pts)), hits};
 }
+function aiLexiconScore(text){
+  const t=norm(text); const aiHits=Object.keys(AI_LEXICON).filter(p=>hasPhrase(t,p));
+  if(!aiHits.length && !/(?<![a-z])(ai|a\.i\.|artificial intelligence)(?![a-z])/.test(t)) return {score:0,hits:[]};
+  const genHits=Object.keys(LEXICON).filter(p=>hasPhrase(t,p));
+  const pts=aiHits.reduce((n,h)=>n+AI_LEXICON[h]*9,0)+genHits.reduce((n,h)=>n+LEXICON[h]*5,0)
+    +dramaBonus(text,DOOM_EMOJI.concat(AI_EMOJI));
+  return {score:Math.max(0,Math.min(100,pts)), hits:aiHits.concat(genHits)};
+}
 
-/* ---------- gauge ---------- */
-const CX=200, CY=200, R=160;
+/* ---------- gauges ---------- */
+const NS="http://www.w3.org/2000/svg", CX=200, CY=200, R=160;
 const pt = (deg,r)=>{ const a=(180-deg)*Math.PI/180; return [CX+r*Math.cos(a), CY-r*Math.sin(a)]; };
 function arc(d0,d1,r0,r1){
   const [a,b]=pt(d0,r1),[c,d]=pt(d1,r1),[e,f]=pt(d1,r0),[g,h]=pt(d0,r0);
   return `M${a},${b} A${r1},${r1} 0 0 1 ${c},${d} L${e},${f} A${r0},${r0} 0 0 0 ${g},${h}Z`;
 }
-(function drawGauge(){
-  const bands=document.getElementById("bands"), ticks=document.getElementById("ticks");
-  LEVELS.forEach((l,i)=>{
-    const p=document.createElementNS("http://www.w3.org/2000/svg","path");
-    p.setAttribute("d",arc(i*36,(i+1)*36,R-46,R)); p.setAttribute("fill",l.hex);
-    p.setAttribute("stroke","#16130f"); p.setAttribute("stroke-width","3"); bands.appendChild(p);
+function el(tag, attrs, parent){ const n=document.createElementNS(NS,tag); for(const k in attrs) n.setAttribute(k,attrs[k]); parent&&parent.appendChild(n); return n; }
+function buildGauge(svg, levels, opts={}){
+  const ink=opts.ink||"#16130f", hub=opts.hub||"#ec7a1c";
+  levels.forEach((l,i)=>{
+    el("path",{d:arc(i*36,(i+1)*36,R-46,R),fill:l.hex,stroke:ink,"stroke-width":3},svg);
     const [x,y]=pt(i*36+18,R-23);
-    const t=document.createElementNS("http://www.w3.org/2000/svg","text");
-    t.setAttribute("x",x); t.setAttribute("y",y+6); t.setAttribute("text-anchor","middle");
-    t.setAttribute("font-size","17"); t.textContent=l.emoji; bands.appendChild(t);
+    el("text",{x,y:y+6,"text-anchor":"middle","font-size":17},svg).textContent=l.emoji;
   });
   for(let v=0; v<=100; v+=10){
     const [x1,y1]=pt(v*1.8,R+4),[x2,y2]=pt(v*1.8,R+(v%50?10:16));
-    const ln=document.createElementNS("http://www.w3.org/2000/svg","line");
-    Object.entries({x1,y1,x2,y2,stroke:"#16130f","stroke-width":v%50?2:4}).forEach(([k,val])=>ln.setAttribute(k,val));
-    ticks.appendChild(ln);
+    el("line",{x1,y1,x2,y2,stroke:opts.tick||ink,"stroke-width":v%50?2:4},svg);
   }
-})();
-function setNeedle(score){
-  document.getElementById("needle").style.transform=`rotate(${score*1.8-90}deg)`;
+  const jit=el("g",{class:"jitter"},svg), needle=el("g",{class:"needle"},jit);
+  el("polygon",{points:"196,200 204,200 200,48",fill:opts.needle||ink},needle);
+  el("circle",{cx:200,cy:200,r:16,fill:opts.needle||ink},svg);
+  el("circle",{cx:200,cy:200,r:6,fill:hub},svg);
+  return score => needle.style.transform=`rotate(${score*1.8-90}deg)`;
+}
+const setMain = buildGauge(document.getElementById("gauge"), LEVELS);
+const setAI = buildGauge(document.getElementById("aiGauge"), AI_LEVELS,
+  {ink:"#16130f", tick:"#f2e9d6", needle:"#f2e9d6", hub:"#ec7a1c"});
+
+/* ---------- render helpers ---------- */
+function countUp(elm, target){
+  let n=0; const step=()=>{ n=Math.min(target, n+Math.max(1,Math.ceil(target/30))); elm.textContent=n; if(n<target) requestAnimationFrame(step); };
+  if(target<=0){ elm.textContent=0; return; } step();
+}
+function paintLevel(elm, l){
+  elm.textContent=`${l.emoji} ${l.name}`; elm.style.background=l.hex; elm.style.color=darkText(l)?"#16130f":"#fff";
+}
+const fmtTime = iso => new Date(iso).toLocaleString([], {dateStyle:"medium", timeStyle:"short"});
+const methodText = (d, sample) => sample ? "sample data" :
+  `${d.sampleSize||"?"} items · scored by ${d.method==="claude"?"Claude":"word list"}`;
+function chips(list, emptyMsg){ return (list||[]).map(w=>`<span class="chip">"${w}"</span>`).join("") || `<span class="kicker">${emptyMsg}</span>`; }
+
+function drawTrend(svg, h, levels, line){
+  if(h.length<2){ svg.innerHTML=`<text x="180" y="58" text-anchor="middle" font-family="JetBrains Mono" font-size="12" fill="#8a7f6d">Trend appears after a few readings</text>`; return; }
+  const W=360,H=110,pad=6;
+  const x=i=>pad+i*(W-2*pad)/(h.length-1), y=v=>H-pad-(v/100)*(H-2*pad);
+  let bg=""; levels.forEach((l,i)=>{ const top=y(Math.min(100,(i+1)*20)), bot=y(i*20);
+    bg+=`<rect x="0" y="${top}" width="${W}" height="${bot-top}" fill="${l.hex}" opacity=".18"/>`; });
+  const path=h.map((p,i)=>`${i?"L":"M"}${x(i).toFixed(1)},${y(p.score).toFixed(1)}`).join("");
+  const last=h[h.length-1];
+  svg.innerHTML = bg + `<path d="${path}" fill="none" stroke="${line}" stroke-width="2.5" stroke-linejoin="round"/>`+
+    `<circle cx="${x(h.length-1)}" cy="${y(last.score)}" r="5" fill="#ec7a1c" stroke="${line}" stroke-width="2"/>`;
 }
 
 /* ---------- render ---------- */
-let current = null;
+let current=null;
 function render(d){
-  current = d;
-  const lvl = levelFor(d.score);
-  document.getElementById("sampleNote").style.display = d.isSample ? "block" : "none";
-  setTimeout(()=>setNeedle(d.score), 150);
-  // count up
-  const el=document.getElementById("score"); let n=0;
-  const step=()=>{ n=Math.min(d.score, n+Math.ceil(d.score/30)); el.textContent=n; if(n<d.score) requestAnimationFrame(step); };
-  step();
-  const lv=document.getElementById("level");
-  lv.textContent = `${lvl.emoji} ${lvl.name}`; lv.style.background = lvl.hex;
-  lv.style.color = lvl.min===20 ? "#16130f" : "#fff";
-  document.getElementById("forecast").textContent = d.forecast || "";
-  const up = new Date(d.updated);
-  document.getElementById("updated").textContent = "Last reading: " + up.toLocaleString([], {dateStyle:"medium", timeStyle:"short"});
-  document.getElementById("method").textContent = d.isSample ? "sample data" :
-    `${d.sampleSize||"?"} items · scored by ${d.method==="claude"?"Claude":"word list"}`;
+  current=d;
+  const sample=!!d.isSample, lvl=levelFor(d.score);
+  document.getElementById("sampleNote").style.display = sample ? "block" : "none";
+  setTimeout(()=>setMain(d.score),150);
+  countUp(document.getElementById("score"), d.score);
+  paintLevel(document.getElementById("level"), lvl);
+  document.getElementById("forecast").textContent = d.forecast||"";
+  document.getElementById("updated").textContent = "Last reading: "+fmtTime(d.updated);
+  document.getElementById("method").textContent = methodText(d, sample);
 
   const names={bluesky:"Bluesky",news:"Headlines",x:"X"};
   document.getElementById("sourceBars").innerHTML = Object.entries(d.bySource||{}).map(([k,v])=>
     `<div class="row"><span>${names[k]||k}</span><div class="bar"><i style="width:0;background:${levelFor(v).hex}" data-w="${v}"></i></div><span>${v}</span></div>`
   ).join("") || `<div class="kicker">No sources yet</div>`;
   setTimeout(()=>document.querySelectorAll(".bar i").forEach(i=>i.style.width=i.dataset.w+"%"),100);
+  document.getElementById("words").innerHTML = chips(d.topWords, "Suspiciously calm");
+  drawTrend(document.getElementById("trend"), d.history||[], LEVELS, "#16130f");
+  document.querySelectorAll("#legend div").forEach((e,i)=>e.classList.toggle("on", LEVELS[i]===lvl));
 
-  document.getElementById("words").innerHTML = (d.topWords||[]).map(w=>`<span class="chip">"${w}"</span>`).join("")
-    || `<span class="kicker">Suspiciously calm</span>`;
-
-  drawTrend(d.history||[]);
-  document.querySelectorAll("#legend div").forEach((el,i)=>el.classList.toggle("on", LEVELS[i]===lvl));
+  const ai=d.ai;
+  if(ai){
+    const al=aiLevelFor(ai.score);
+    setTimeout(()=>setAI(ai.score),350);
+    countUp(document.getElementById("aiScore"), ai.score);
+    paintLevel(document.getElementById("aiLevel"), al);
+    document.getElementById("aiForecast").textContent = ai.forecast||"";
+    document.getElementById("aiWords").innerHTML = chips(ai.topWords, "The robots are quiet. Too quiet.");
+    drawTrend(document.getElementById("aiTrend"), ai.history||[], AI_LEVELS, "#f2e9d6");
+    document.getElementById("aiUpdated").textContent = "Last reading: "+fmtTime(ai.updated);
+    document.getElementById("aiMethod").textContent = methodText(ai, sample);
+    document.querySelectorAll("#aiLegend div").forEach((e,i)=>e.classList.toggle("on", AI_LEVELS[i]===al));
+  } else {
+    setAI(0); document.getElementById("aiScore").textContent="--";
+    document.getElementById("aiLevel").textContent="Awaiting first reading";
+    document.getElementById("aiForecast").textContent="The robots have not reported in yet.";
+    drawTrend(document.getElementById("aiTrend"), [], AI_LEVELS, "#f2e9d6");
+  }
 }
 
-function drawTrend(h){
-  const svg=document.getElementById("trend");
-  if(h.length<2){ svg.innerHTML=`<text x="180" y="58" text-anchor="middle" font-family="JetBrains Mono" font-size="12" fill="#5f574a">Trend appears after a few readings</text>`; return; }
-  const W=360,H=110,pad=6;
-  const x=i=>pad+i*(W-2*pad)/(h.length-1), y=v=>H-pad-(v/100)*(H-2*pad);
-  let bg=""; LEVELS.forEach((l,i)=>{ const top=y(Math.min(100,(i+1)*20)), bot=y(i*20);
-    bg+=`<rect x="0" y="${top}" width="${W}" height="${bot-top}" fill="${l.hex}" opacity=".16"/>`; });
-  const line=h.map((p,i)=>`${i?"L":"M"}${x(i).toFixed(1)},${y(p.score).toFixed(1)}`).join("");
-  const last=h[h.length-1];
-  svg.innerHTML = bg + `<path d="${line}" fill="none" stroke="#16130f" stroke-width="2.5" stroke-linejoin="round"/>`+
-    `<circle cx="${x(h.length-1)}" cy="${y(last.score)}" r="5" fill="#ec7a1c" stroke="#16130f" stroke-width="2"/>`;
-}
-
-/* ---------- legend ---------- */
-document.getElementById("legend").innerHTML = LEVELS.map(l=>
-  `<div style="background:${l.hex};${l.min===20?"color:#16130f":""}"><b>${l.emoji} ${l.name}</b><span>${l.blurb}</span></div>`).join("");
+/* ---------- legends ---------- */
+const legendHTML = levels => levels.map(l=>
+  `<div style="background:${l.hex};${darkText(l)?"color:#16130f":""}"><b>${l.emoji} ${l.name}</b><span>${l.blurb}</span></div>`).join("");
+document.getElementById("legend").innerHTML = legendHTML(LEVELS);
+document.getElementById("aiLegend").innerHTML = legendHTML(AI_LEVELS);
 
 /* ---------- paste scorer ---------- */
 const VERDICTS = [
@@ -325,32 +408,48 @@ const VERDICTS = [
   "Bunker-grade panic. Someone has priced out concrete.",
   "FULL CHICKEN LITTLE. An acorn has been mistaken for the sky.",
 ];
+const AI_VERDICTS = [
+  "The robots are fine. This post is fine. Everything is fine.",
+  "Light toaster suspicion. Keep an eye on the microwave.",
+  "This post says please and thank you to software. Just in case.",
+  "This post has unplugged the smart fridge and is staring at the thermostat.",
+  "FULL ROBOT UPRISING. This post has welcomed our new overlords.",
+];
 const EXAMPLES = [
   ["Calm", "Light rain expected Tuesday. Bring an umbrella if you're heading out."],
   ["Spicy", "Nobody is talking about this. Mark my words, the crash is coming."],
   ["Unhinged", "WAKE UP PEOPLE!!! IT'S OVER. TOTAL COLLAPSE. WE'RE COOKED 🚨🚨💀"],
+  ["AI doom", "p(doom) is 90%. The AI takeover is here and nobody understands how it works 🤖🚨"],
 ];
 document.getElementById("examples").innerHTML = EXAMPLES.map(([l],i)=>`<button data-i="${i}">Try: ${l}</button>`).join("");
 document.getElementById("examples").addEventListener("click",e=>{
   const b=e.target.closest("button"); if(!b) return;
   document.getElementById("post").value = EXAMPLES[b.dataset.i][1]; measure();
 });
-let lastResult=null;
+function resultRow(label, score, l){
+  return `<div><div class="lab">${label}</div>
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <div class="rscore">${score}<small style="font-size:16px;color:var(--muted)">/100</small></div>
+      <div class="level" style="background:${l.hex};${darkText(l)?"color:#16130f":""};font-size:14px;margin:0">${l.emoji} ${l.name}</div>
+    </div>
+    <div class="thermo"><i style="left:0%" data-left="${score}"></i></div></div>`;
+}
 function measure(){
   const text=document.getElementById("post").value.trim();
   const box=document.getElementById("result");
   if(!text){ box.innerHTML=`<div class="empty">Paste something first. Even the apocalypse needs input.</div>`; return; }
-  const {score,hits}=lexiconScore(text); const l=levelFor(score);
-  lastResult={score,l};
-  box.innerHTML = `<div class="rscore">${score}<small style="font-size:20px;color:var(--muted)">/100</small></div>
-    <div class="level" style="background:${l.hex};${l.min===20?"color:#16130f":""};font-size:15px;align-self:flex-start">${l.emoji} ${l.name}</div>
-    <div class="thermo"><i style="left:0%"></i></div>
-    <div class="verdict">${VERDICTS[LEVELS.indexOf(l)]}</div>
-    <div class="hits">${hits.length?"Doom words found: "+hits.map(h=>`"${h}"`).join(", "):"No doom words found."}</div>
+  const m=lexiconScore(text), a=aiLexiconScore(text);
+  const ml=levelFor(m.score), al=aiLevelFor(a.score);
+  const aiWins = a.score > m.score;
+  const verdict = aiWins ? AI_VERDICTS[AI_LEVELS.indexOf(al)] : VERDICTS[LEVELS.indexOf(ml)];
+  const hits=[...new Set(m.hits.concat(a.hits))];
+  box.innerHTML = `<div class="dual">${resultRow("Sky Is Falling", m.score, ml)}${resultRow("Robot Uprising", a.score, al)}</div>
+    <div class="verdict">${verdict}</div>
+    <div class="hits">${hits.length?"Panic words found: "+hits.map(h=>`"${h}"`).join(", "):"No panic words found."}</div>
     <div style="margin-top:12px"><button class="btn ghost" id="copyPost" style="font-size:12px;padding:7px 10px">Copy my result</button></div>`;
-  requestAnimationFrame(()=>requestAnimationFrame(()=>box.querySelector(".thermo i").style.left=score+"%"));
+  requestAnimationFrame(()=>requestAnimationFrame(()=>box.querySelectorAll(".thermo i").forEach(i=>i.style.left=i.dataset.left+"%")));
   box.querySelector("#copyPost").addEventListener("click",()=>
-    copy(`I ran a post through the Doom-o-Meter: ${score}/100, ${l.emoji} ${l.name}. ${pageUrl()}`));
+    copy(`I ran a post through the Doom-o-Meter:\n☄️ Sky Is Falling: ${m.score}/100, ${ml.emoji} ${ml.name}\n🤖 Robot Uprising: ${a.score}/100, ${al.emoji} ${al.name}\n${pageUrl()}`));
 }
 document.getElementById("measure").addEventListener("click",measure);
 document.getElementById("post").addEventListener("keydown",e=>{ if(e.key==="Enter"&&(e.metaKey||e.ctrlKey)) measure(); });
@@ -364,7 +463,9 @@ async function copy(text){
 }
 document.getElementById("shareBtn").addEventListener("click",()=>{
   if(!current) return; const l=levelFor(current.score);
-  copy(`Today's Sky Is Falling Index: ${current.score}/100 ${l.emoji} ${l.name}\n"${current.forecast}"\n${pageUrl()}`);
+  let txt=`Today's Sky Is Falling Index: ${current.score}/100 ${l.emoji} ${l.name}\n"${current.forecast}"`;
+  if(current.ai){ const al=aiLevelFor(current.ai.score); txt+=`\nRobot Uprising Risk: ${current.ai.score}/100 ${al.emoji} ${al.name}`; }
+  copy(txt+`\n${pageUrl()}`);
 });
 
 /* ---------- load ---------- */
