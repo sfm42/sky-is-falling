@@ -1,26 +1,28 @@
 {
-  "updated": "2026-11-03T15:20:59+00:00",
-  "score": 34,
+  "updated": "2026-11-03T18:13:49+00:00",
+  "score": 31,
   "level": "Clutching Pearls",
   "emoji": "🟡",
   "forecast": "Partly anxious with scattered gasps. Keep a fainting couch handy.",
   "method": "word-list",
-  "sampleSize": 350,
+  "sampleSize": 650,
   "sources": {
+    "bluesky": 300,
     "mastodon": 300,
     "news": 50
   },
   "bySource": {
+    "bluesky": 17,
     "mastodon": 17,
-    "news": 1
+    "news": 0
   },
   "topWords": [
     "apocalypse",
     "collapse",
+    "doomed",
+    "crash",
     "it's over",
-    "end times",
-    "civilization",
-    "disaster"
+    "wake up"
   ],
   "history": [
     {
@@ -50,31 +52,37 @@
     {
       "t": "2026-11-03T15:20:59+00:00",
       "score": 34
+    },
+    {
+      "t": "2026-11-03T18:13:49+00:00",
+      "score": 31
     }
   ],
   "ai": {
-    "updated": "2026-11-03T15:20:59+00:00",
-    "score": 16,
-    "level": "Mild Robot Concern",
-    "emoji": "🤖",
-    "forecast": "Calm conditions. The robots are mostly just autocompleting emails today.",
+    "updated": "2026-11-03T18:13:49+00:00",
+    "score": 25,
+    "level": "Side-Eyeing the Toaster",
+    "emoji": "👀",
+    "forecast": "Light suspicion of household appliances, clearing by lunch.",
     "method": "word-list",
-    "sampleSize": 338,
+    "sampleSize": 642,
     "sources": {
-      "mastodon": 288,
+      "bluesky": 300,
+      "mastodon": 292,
       "news": 50
     },
     "bySource": {
+      "bluesky": 17,
       "mastodon": 8,
-      "news": 1
+      "news": 0
     },
     "topWords": [
       "agi",
       "superintelligence",
       "p(doom)",
-      "collapse",
-      "chatbot",
-      "warning"
+      "singularity",
+      "sentient",
+      "ai slop"
     ],
     "history": [
       {
@@ -100,11 +108,15 @@
       {
         "t": "2026-11-03T15:20:59+00:00",
         "score": 16
+      },
+      {
+        "t": "2026-11-03T18:13:49+00:00",
+        "score": 25
       }
     ],
-    "card": "data/cards/ai-202611030820.png",
-    "share": "share/ai.html?r=202611030820"
+    "card": "data/cards/ai-202611031113.png",
+    "share": "share/ai.html?r=202611031113"
   },
-  "card": "data/cards/main-202611030820.png",
-  "share": "share/main.html?r=202611030820"
+  "card": "data/cards/main-202611031113.png",
+  "share": "share/main.html?r=202611031113"
 }
