@@ -1,6 +1,6 @@
 {
-  "updated": "2026-11-02T21:03:15+00:00",
-  "score": 4,
+  "updated": "2026-11-03T00:37:29+00:00",
+  "score": 3,
   "level": "Mild Concern",
   "emoji": "🟢",
   "forecast": "Clear skies across the timeline. Light grumbling possible in the afternoon.",
@@ -10,12 +10,11 @@
     "news": 50
   },
   "bySource": {
-    "news": 2
+    "news": 1
   },
   "topWords": [
+    "crisis",
     "crash",
-    "meltdown",
-    "unprecedented",
     "panic",
     "warning",
     "threat"
@@ -28,11 +27,15 @@
     {
       "t": "2026-11-02T21:03:15+00:00",
       "score": 4
+    },
+    {
+      "t": "2026-11-03T00:37:29+00:00",
+      "score": 3
     }
   ],
   "ai": {
-    "updated": "2026-11-02T21:03:15+00:00",
-    "score": 1,
+    "updated": "2026-11-03T00:37:29+00:00",
+    "score": 2,
     "level": "Mild Robot Concern",
     "emoji": "🤖",
     "forecast": "Calm conditions. The robots are mostly just autocompleting emails today.",
@@ -42,15 +45,22 @@
       "news": 50
     },
     "bySource": {
-      "news": 0
+      "news": 1
     },
     "topWords": [
-      "deepfake"
+      "crash",
+      "deepfake",
+      "ai bubble",
+      "threat"
     ],
     "history": [
       {
         "t": "2026-11-02T21:03:15+00:00",
         "score": 1
+      },
+      {
+        "t": "2026-11-03T00:37:29+00:00",
+        "score": 2
       }
     ]
   }
