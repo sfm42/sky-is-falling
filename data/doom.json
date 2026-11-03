@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-03T15:09:20+00:00",
+  "updated": "2026-11-03T15:20:59+00:00",
   "score": 34,
   "level": "Clutching Pearls",
   "emoji": "🟡",
@@ -46,18 +46,22 @@
     {
       "t": "2026-11-03T15:09:20+00:00",
       "score": 34
+    },
+    {
+      "t": "2026-11-03T15:20:59+00:00",
+      "score": 34
     }
   ],
   "ai": {
-    "updated": "2026-11-03T15:09:20+00:00",
+    "updated": "2026-11-03T15:20:59+00:00",
     "score": 16,
     "level": "Mild Robot Concern",
     "emoji": "🤖",
     "forecast": "Calm conditions. The robots are mostly just autocompleting emails today.",
     "method": "word-list",
-    "sampleSize": 336,
+    "sampleSize": 338,
     "sources": {
-      "mastodon": 286,
+      "mastodon": 288,
       "news": 50
     },
     "bySource": {
@@ -92,11 +96,15 @@
       {
         "t": "2026-11-03T15:09:20+00:00",
         "score": 16
+      },
+      {
+        "t": "2026-11-03T15:20:59+00:00",
+        "score": 16
       }
     ],
-    "card": "data/cards/ai-202611030809.png",
-    "share": "share/ai.html?r=202611030809"
+    "card": "data/cards/ai-202611030820.png",
+    "share": "share/ai.html?r=202611030820"
   },
-  "card": "data/cards/main-202611030809.png",
-  "share": "share/main.html?r=202611030809"
+  "card": "data/cards/main-202611030820.png",
+  "share": "share/main.html?r=202611030820"
 }
