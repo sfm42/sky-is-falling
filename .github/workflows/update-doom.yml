@@ -20,6 +20,8 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
+      - name: Install image library
+        run: pip install --quiet pillow
       - name: Take a doom reading
         env:
           BSKY_HANDLE: ${{ secrets.BSKY_HANDLE }}
@@ -32,11 +34,13 @@ jobs:
           git config user.name "doom-meter-bot"
           git config user.email "doom-meter-bot@users.noreply.github.com"
           # Always save onto the latest main, even for re-runs of older commits
-          cp data/doom.json "$RUNNER_TEMP/doom.json"
+          mkdir -p "$RUNNER_TEMP/out" && cp -r data share "$RUNNER_TEMP/out/" 2>/dev/null || true
+          git stash --include-untracked --quiet || true
           git fetch origin main
           git checkout -B main origin/main
-          cp "$RUNNER_TEMP/doom.json" data/doom.json
-          git add data/doom.json
+          rm -rf data/cards share
+          cp -r "$RUNNER_TEMP/out/." .
+          git add -A data share
           git diff --cached --quiet && { echo "No change to save."; exit 0; }
           git commit -m "Doom reading $(date -u +%Y-%m-%dT%H:%MZ)"
           git push origin main

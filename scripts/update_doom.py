@@ -450,6 +450,13 @@ def main():
     elif "ai" in prev:
         out["ai"] = prev["ai"]
 
+    try:  # share cards + preview pages; never let this sink a reading
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import make_cards
+        make_cards.build(out)
+    except Exception as e:
+        print(f"Share cards skipped: {e}", file=sys.stderr)
+
     os.makedirs(os.path.dirname(DATA_PATH), exist_ok=True)
     with open(DATA_PATH, "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=2)

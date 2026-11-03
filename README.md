@@ -11,7 +11,9 @@ It measures **tone, not topic**, and stores **only overall numbers**. No account
 | File | What it does |
 |---|---|
 | `index.html` | The whole site: gauge, Doom Forecast, trend line, and the paste-a-post Doom-o-Meter |
-| `data/doom.json` | The latest reading (starts with sample data) |
+| `data/doom.json` | The latest reading |
+| `scripts/make_cards.py` | Draws the 1200×630 share snapshots (`data/cards/`) and the link-preview pages (`share/`) after each reading |
+| `assets/fonts/` | Fonts for the share snapshots (SIL Open Font License, see `OFL.txt`) |
 | `scripts/update_doom.py` | Fetches posts, scores them, writes `doom.json`. Standard library only, no installs |
 | `.github/workflows/update-doom.yml` | Runs the script every hour and commits the new reading |
 
@@ -31,6 +33,12 @@ It measures **tone, not topic**, and stores **only overall numbers**. No account
 News headlines and Mastodon (public hashtag timelines) need no key, so the meter works even with zero secrets. Bluesky is strongly recommended: social posts are where the doom posters live, and when at least 20 social posts are found the index is built from them (headlines still get their own bar).
 
 5. **First reading:** Actions → *Update Doom Index* → *Run workflow*. The sample banner disappears once real data lands.
+
+## Sharing
+
+Each meter has a **Share this meter** button. It opens a panel with the current snapshot and one-click posting to X, Bluesky, Threads, Facebook, LinkedIn, Reddit, WhatsApp and email, plus Download image, Copy image and Copy text. On phones a "Share image…" button opens the phone's own share sheet (Instagram, TikTok, Messages…).
+
+Shared links point to `share/main.html` or `share/ai.html`. Those pages carry the snapshot as their link preview, then forward visitors to the site. Every reading gets a uniquely named image so platforms don't show a stale preview.
 
 ## Tuning
 
