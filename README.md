@@ -42,7 +42,7 @@ Shared links point to `share/main.html` or `share/ai.html`. Those pages carry th
 
 ## Tuning
 
-- **How often:** edit the `cron` line in the workflow (`17 * * * *` = every hour at :17 past; `17 */2 * * *` = every 2 hours).
+- **How often:** the workflow tries at :07, :27 and :47 each hour and the script skips if a reading under 40 minutes old exists (`DOOM_MIN_GAP_MINUTES`), so you get about one reading an hour even when GitHub drops scheduled runs. Manual runs always take a reading.
 - **Sample sizes:** `DOOM_SOCIAL_SAMPLE` (Bluesky + Mastodon, free, default 300) and `DOOM_SAMPLE_SIZE` (news + X, default 50). The second is the X cost lever.
 - **Doom words:** edit `LEXICON` (general) and `AI_LEXICON` (AI panic) in `scripts/update_doom.py` **and** the matching lists in `index.html` (the paste scorer runs in the browser).
 - **What gets searched:** `MAIN_TERMS` / `AI_TERMS` (Bluesky and X searches) and `MAIN_FEEDS` / `AI_FEEDS` (news RSS) at the top of the script.

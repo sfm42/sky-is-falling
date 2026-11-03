@@ -2,7 +2,9 @@ name: Update Doom Index
 
 on:
   schedule:
-    - cron: "17 * * * *"      # every hour, at :17 past (avoids the busy :00 slot)
+    # Three tries per hour: GitHub sometimes skips scheduled runs when busy.
+    # The script skips if a reading less than 40 minutes old already exists.
+    - cron: "7,27,47 * * * *"
   workflow_dispatch:          # "Run workflow" button for manual readings
 
 permissions:
@@ -28,6 +30,7 @@ jobs:
           BSKY_APP_PASSWORD: ${{ secrets.BSKY_APP_PASSWORD }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
+          DOOM_FORCE: ${{ github.event_name == 'workflow_dispatch' }}
         run: python scripts/update_doom.py
       - name: Save the new reading
         run: |

@@ -436,6 +436,13 @@ def main():
     except Exception:
         prev = {}
 
+    min_gap = int(os.environ.get("DOOM_MIN_GAP_MINUTES", "40"))
+    if os.environ.get("DOOM_FORCE", "").lower() != "true" and prev.get("updated") and not prev.get("isSample"):
+        age = (now - dt.datetime.fromisoformat(prev["updated"])).total_seconds() / 60
+        if age < min_gap:
+            print(f"Latest reading is {age:.0f} min old (< {min_gap}); skipping this try.")
+            return 0
+
     main_meter = run_meter("main", now, prev)
     ai_meter = run_meter("ai", now, prev.get("ai"))
 
