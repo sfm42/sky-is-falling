@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-03T00:37:29+00:00",
+  "updated": "2026-11-03T02:19:37+00:00",
   "score": 3,
   "level": "Mild Concern",
   "emoji": "🟢",
@@ -16,8 +16,7 @@
     "crisis",
     "crash",
     "panic",
-    "warning",
-    "threat"
+    "warning"
   ],
   "history": [
     {
@@ -31,11 +30,15 @@
     {
       "t": "2026-11-03T00:37:29+00:00",
       "score": 3
+    },
+    {
+      "t": "2026-11-03T02:19:37+00:00",
+      "score": 3
     }
   ],
   "ai": {
-    "updated": "2026-11-03T00:37:29+00:00",
-    "score": 2,
+    "updated": "2026-11-03T02:19:37+00:00",
+    "score": 1,
     "level": "Mild Robot Concern",
     "emoji": "🤖",
     "forecast": "Calm conditions. The robots are mostly just autocompleting emails today.",
@@ -49,9 +52,7 @@
     },
     "topWords": [
       "crash",
-      "deepfake",
-      "ai bubble",
-      "threat"
+      "deepfake"
     ],
     "history": [
       {
@@ -61,6 +62,10 @@
       {
         "t": "2026-11-03T00:37:29+00:00",
         "score": 2
+      },
+      {
+        "t": "2026-11-03T02:19:37+00:00",
+        "score": 1
       }
     ]
   }
