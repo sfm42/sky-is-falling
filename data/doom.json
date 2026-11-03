@@ -1,20 +1,26 @@
 {
-  "updated": "2026-11-03T10:54:03+00:00",
-  "score": 2,
-  "level": "Mild Concern",
-  "emoji": "🟢",
-  "forecast": "Clear skies across the timeline. Light grumbling possible in the afternoon.",
+  "updated": "2026-11-03T15:09:20+00:00",
+  "score": 34,
+  "level": "Clutching Pearls",
+  "emoji": "🟡",
+  "forecast": "Partly anxious with scattered gasps. Keep a fainting couch handy.",
   "method": "word-list",
-  "sampleSize": 50,
+  "sampleSize": 350,
   "sources": {
+    "mastodon": 300,
     "news": 50
   },
   "bySource": {
+    "mastodon": 17,
     "news": 1
   },
   "topWords": [
-    "crash",
-    "threat"
+    "apocalypse",
+    "collapse",
+    "it's over",
+    "end times",
+    "civilization",
+    "disaster"
   ],
   "history": [
     {
@@ -36,28 +42,35 @@
     {
       "t": "2026-11-03T10:54:03+00:00",
       "score": 2
+    },
+    {
+      "t": "2026-11-03T15:09:20+00:00",
+      "score": 34
     }
   ],
   "ai": {
-    "updated": "2026-11-03T10:54:03+00:00",
-    "score": 2,
+    "updated": "2026-11-03T15:09:20+00:00",
+    "score": 16,
     "level": "Mild Robot Concern",
     "emoji": "🤖",
     "forecast": "Calm conditions. The robots are mostly just autocompleting emails today.",
     "method": "word-list",
-    "sampleSize": 50,
+    "sampleSize": 336,
     "sources": {
+      "mastodon": 286,
       "news": 50
     },
     "bySource": {
+      "mastodon": 8,
       "news": 1
     },
     "topWords": [
-      "unprecedented",
-      "fear",
-      "crash",
-      "worst",
-      "chatbot"
+      "agi",
+      "superintelligence",
+      "p(doom)",
+      "collapse",
+      "chatbot",
+      "warning"
     ],
     "history": [
       {
@@ -75,6 +88,10 @@
       {
         "t": "2026-11-03T10:54:03+00:00",
         "score": 2
+      },
+      {
+        "t": "2026-11-03T15:09:20+00:00",
+        "score": 16
       }
     ]
   }
