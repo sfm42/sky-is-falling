@@ -31,19 +31,37 @@ import xml.etree.ElementTree as ET
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_PATH = os.path.join(ROOT, "data", "doom.json")
 HISTORY_LEN = 168         # readings kept for the trend line (1 week hourly)
-PER_SOURCE = int(os.environ.get("DOOM_SAMPLE_SIZE", "50"))
+PER_SOURCE = int(os.environ.get("DOOM_SAMPLE_SIZE", "50"))          # news + X (X costs money per post)
+SOCIAL_PER_SOURCE = int(os.environ.get("DOOM_SOCIAL_SAMPLE", "300"))  # Bluesky + Mastodon (free)
 CLAUDE_MODEL = os.environ.get("DOOM_CLAUDE_MODEL", "claude-haiku-5-5")
 UA = {"User-Agent": "Mozilla/5.0 (compatible; sky-is-falling-index/1.0)"}
 
 # ---------------------------------------------------------------- search terms
 MAIN_TERMS = [
-    "it's over", "we're cooked", "collapse", "wake up", "the end is near",
-    "nobody is talking about", "doomed", "crash is coming", "apocalypse",
+    "it's over", "we're cooked", "we are cooked", "we're so cooked", "it's so over",
+    "the end is near", "end times", "apocalypse", "doomsday", "armageddon",
+    "total collapse", "society is collapsing", "civilization is collapsing",
+    "wake up people", "wake up sheeple", "nobody is talking about",
+    "they don't want you to know", "mark my words", "you've been warned",
+    "brace yourselves", "brace for impact", "crash is coming", "the crash is here",
+    "stock up now", "buy gold", "get out while you can", "we're doomed",
+    "we are doomed", "point of no return", "this is the end", "nobody is safe",
+    "worse than 2008", "it's all collapsing", "prepare yourselves",
 ]
 AI_TERMS = [
     "p(doom)", "AI takeover", "AI apocalypse", "rogue AI", "superintelligence",
-    "AI is coming for", "AI replace", "sentient AI", "AGI", "AI slop",
+    "AI is coming for", "AI will replace", "replaced by AI", "sentient AI",
+    "AGI is here", "AGI by", "AI slop", "the singularity", "robot uprising",
+    "AI will kill", "AI extinction", "shut it all down", "pause AI",
+    "AI is lying", "AI escaped", "nobody understands AI", "AI jobpocalypse",
+    "AI bubble", "dead internet",
 ]
+
+# Public Mastodon hashtag timelines (no account or key needed)
+MASTODON_INSTANCES = ["mastodon.social", "mstdn.social", "mas.to"]
+MAIN_TAGS = ["collapse", "doom", "itsover", "apocalypse", "endtimes", "doomer",
+             "prepping", "crisis", "wakeup"]
+AI_TAGS = ["ai", "agi", "aisafety", "airisk", "pdoom", "aihype", "llm"]
 
 MAIN_FEEDS = [
     "https://news.google.com/rss?hl=en-US&gl=US&ceid=US:en",
@@ -165,7 +183,7 @@ def fetch_bluesky(terms):
     if not (os.environ.get("BSKY_HANDLE") and os.environ.get("BSKY_APP_PASSWORD")):
         return []
     auth = bsky_auth()
-    texts, per_term = [], max(5, PER_SOURCE // len(terms))
+    texts, per_term = [], min(25, max(5, SOCIAL_PER_SOURCE // len(terms) + 3))
     for term in terms:
         q = urllib.parse.urlencode({"q": f'"{term}"', "limit": per_term, "sort": "latest", "lang": "en"})
         try:
@@ -173,7 +191,38 @@ def fetch_bluesky(terms):
             texts += [p["record"].get("text", "") for p in res.get("posts", [])]
         except Exception as e:  # one bad term shouldn't sink the run
             print(f"  bluesky '{term}' failed: {e}", file=sys.stderr)
-    return [t for t in texts if t][:PER_SOURCE]
+    seen, out = set(), []
+    for t in texts:
+        if t and t not in seen:
+            seen.add(t)
+            out.append(t)
+    return out[:SOCIAL_PER_SOURCE]
+
+
+def _strip_html(html):
+    import html as _h
+    text = re.sub(r"<br\s*/?>|</p>", " ", html or "")
+    text = re.sub(r"<[^>]+>", "", text)
+    return re.sub(r"\s+", " ", _h.unescape(text)).strip()
+
+
+def fetch_mastodon(tags):
+    texts, seen = [], set()
+    for tag in tags:
+        for inst in MASTODON_INSTANCES:
+            try:
+                res = http_json(f"https://{inst}/api/v1/timelines/tag/{urllib.parse.quote(tag)}?limit=40")
+            except Exception as e:
+                print(f"  mastodon {inst} #{tag} failed: {e}", file=sys.stderr)
+                continue
+            for st in res:
+                if st.get("language") not in (None, "en") or st.get("reblog"):
+                    continue
+                t = _strip_html(st.get("content", ""))
+                if t and st.get("uri") not in seen:
+                    seen.add(st.get("uri"))
+                    texts.append(t)
+    return texts[:SOCIAL_PER_SOURCE]
 
 
 def fetch_feeds(urls):
@@ -201,7 +250,12 @@ def fetch_x(terms):
     token = os.environ.get("X_BEARER_TOKEN")
     if not token:
         return []
-    query = "(" + " OR ".join(f'"{t}"' for t in terms[:6]) + ") lang:en -is:retweet"
+    picked = []
+    for t in terms:
+        if len(" OR ".join(f'"{x}"' for x in picked + [t])) > 440:
+            break
+        picked.append(t)
+    query = "(" + " OR ".join(f'"{t}"' for t in picked) + ") lang:en -is:retweet"
     q = urllib.parse.urlencode({"query": query, "max_results": min(100, max(10, PER_SOURCE))})
     res = http_json(f"https://api.x.com/2/tweets/search/recent?{q}",
                     headers={"Authorization": f"Bearer {token}"})
@@ -222,7 +276,14 @@ def claude(prompt, max_tokens=2000):
     return "".join(b.get("text", "") for b in res.get("content", []))
 
 
-def claude_scores(texts, kind):
+def claude_scores(texts, kind, batch=100):
+    out = []
+    for i in range(0, len(texts), batch):
+        out += _claude_scores(texts[i:i + batch], kind)
+    return out
+
+
+def _claude_scores(texts, kind):
     numbered = "\n".join(f"{i}. {t[:280].replace(chr(10), ' ')}" for i, t in enumerate(texts))
     what = ("alarmist / sky-is-falling" if kind == "main"
             else "panicked about AI (robot uprising, job doom, sentient-AI hype). Items not about AI score 0")
@@ -232,7 +293,7 @@ def claude_scores(texts, kind):
         "Judge the tone, not the topic: a calm report on a serious event scores low.\n"
         "Reply with ONLY a JSON array of integers, one per item, same order.\n\n" + numbered
     )
-    out = claude(prompt)
+    out = claude(prompt, max_tokens=1200)
     arr = json.loads(out[out.index("["): out.rindex("]") + 1])
     if len(arr) != len(texts):
         raise ValueError("score count mismatch")
@@ -297,12 +358,14 @@ def level_for(score, levels):
 
 # ---------------------------------------------------------------- one meter
 def run_meter(kind, now, prev):
-    terms, feeds = (MAIN_TERMS, MAIN_FEEDS) if kind == "main" else (AI_TERMS, AI_FEEDS)
+    terms, feeds, tags = ((MAIN_TERMS, MAIN_FEEDS, MAIN_TAGS) if kind == "main"
+                          else (AI_TERMS, AI_FEEDS, AI_TAGS))
     scorer = lexicon_score if kind == "main" else ai_lexicon_score
     levels = LEVELS if kind == "main" else AI_LEVELS
 
     sources, items = {}, []
     for name, fn in (("bluesky", lambda: fetch_bluesky(terms)),
+                     ("mastodon", lambda: fetch_mastodon(tags)),
                      ("news", lambda: fetch_feeds(feeds)),
                      ("x", lambda: fetch_x(terms))):
         try:
@@ -326,8 +389,12 @@ def run_meter(kind, now, prev):
         except Exception as e:
             print(f"[{kind}] Claude scoring failed, using word list: {e}", file=sys.stderr)
 
-    # Index = average of the spiciest half (doom is loud; calm posts are quiet)
-    ranked = sorted(scores, reverse=True)
+    # Index = average of the spiciest half (doom is loud; calm posts are quiet).
+    # Social posts are where the doom posters live, so when any are present
+    # the index is built from them and headlines are only shown as their own bar.
+    social = [s for (src, _), s in zip(items, scores) if src != "news"]
+    pool = social if len(social) >= 20 else scores
+    ranked = sorted(pool, reverse=True)
     top = ranked[: max(1, len(ranked) // 2)]
     index = round(sum(top) / len(top))
 

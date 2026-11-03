@@ -28,14 +28,14 @@ It measures **tone, not topic**, and stores **only overall numbers**. No account
 | `ANTHROPIC_API_KEY` | Claude scores the posts (much smarter than the word list) and writes the daily forecast | Pennies a day with Haiku |
 | `X_BEARER_TOKEN` | Adds X posts | ~$0.005 per post read. 50 posts × 24 runs/day ≈ $180/month (lower DOOM_SAMPLE_SIZE or the schedule to cut this) |
 
-News headlines (Google News RSS) need no key, so the meter works even with zero secrets.
+News headlines and Mastodon (public hashtag timelines) need no key, so the meter works even with zero secrets. Bluesky is strongly recommended: social posts are where the doom posters live, and when at least 20 social posts are found the index is built from them (headlines still get their own bar).
 
 5. **First reading:** Actions → *Update Doom Index* → *Run workflow*. The sample banner disappears once real data lands.
 
 ## Tuning
 
 - **How often:** edit the `cron` line in the workflow (`17 * * * *` = every hour at :17 past; `17 */2 * * *` = every 2 hours).
-- **Sample size per source:** set a `DOOM_SAMPLE_SIZE` env var in the workflow (default 50). This is the main X cost lever.
+- **Sample sizes:** `DOOM_SOCIAL_SAMPLE` (Bluesky + Mastodon, free, default 300) and `DOOM_SAMPLE_SIZE` (news + X, default 50). The second is the X cost lever.
 - **Doom words:** edit `LEXICON` (general) and `AI_LEXICON` (AI panic) in `scripts/update_doom.py` **and** the matching lists in `index.html` (the paste scorer runs in the browser).
 - **What gets searched:** `MAIN_TERMS` / `AI_TERMS` (Bluesky and X searches) and `MAIN_FEEDS` / `AI_FEEDS` (news RSS) at the top of the script.
 - **Red X in Actions?** The run fails on purpose when no source returned anything. Open the run's log to see which feeds failed.

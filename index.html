@@ -66,7 +66,7 @@
   .btn:active{transform:translate(3px,3px); box-shadow:1px 1px 0 var(--ink)}
   .btn.ghost{background:transparent}
   .side{display:flex; flex-direction:column; gap:22px}
-  .bars .row{display:grid; grid-template-columns:76px 1fr 34px; gap:10px; align-items:center; margin:9px 0;
+  .bars .row{display:grid; grid-template-columns:84px 1fr 34px; gap:10px; align-items:center; margin:9px 0;
     font:700 13px "JetBrains Mono",monospace; text-transform:uppercase}
   .bar{height:16px; border:2px solid var(--ink); background:var(--paper2)}
   .bar i{display:block; height:100%; background:var(--hazard); transition:width 1.2s ease}
@@ -365,7 +365,7 @@ function render(d){
   document.getElementById("updated").textContent = "Last reading: "+fmtTime(d.updated);
   document.getElementById("method").textContent = methodText(d, sample);
 
-  const names={bluesky:"Bluesky",news:"Headlines",x:"X"};
+  const names={bluesky:"Bluesky",mastodon:"Mastodon",news:"Headlines",x:"X"};
   document.getElementById("sourceBars").innerHTML = Object.entries(d.bySource||{}).map(([k,v])=>
     `<div class="row"><span>${names[k]||k}</span><div class="bar"><i style="width:0;background:${levelFor(v).hex}" data-w="${v}"></i></div><span>${v}</span></div>`
   ).join("") || `<div class="kicker">No sources yet</div>`;
