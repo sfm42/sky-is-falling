@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-04T06:17:11+00:00",
+  "updated": "2026-11-04T07:17:11+00:00",
   "score": 31,
   "level": "Clutching Pearls",
   "emoji": "🟡",
@@ -21,8 +21,8 @@
     "collapse",
     "crash",
     "it's over",
-    "doomed",
-    "wake up"
+    "wake up",
+    "doomed"
   ],
   "history": [
     {
@@ -108,19 +108,23 @@
     {
       "t": "2026-11-04T06:17:11+00:00",
       "score": 31
+    },
+    {
+      "t": "2026-11-04T07:17:11+00:00",
+      "score": 31
     }
   ],
   "ai": {
-    "updated": "2026-11-04T06:17:11+00:00",
+    "updated": "2026-11-04T07:17:11+00:00",
     "score": 25,
     "level": "Side-Eyeing the Toaster",
     "emoji": "👀",
     "forecast": "Light suspicion of household appliances, clearing by lunch.",
     "method": "word-list",
-    "sampleSize": 632,
+    "sampleSize": 630,
     "sources": {
       "bluesky": 300,
-      "mastodon": 282,
+      "mastodon": 280,
       "news": 50
     },
     "bySource": {
@@ -132,8 +136,8 @@
       "agi",
       "superintelligence",
       "p(doom)",
+      "ai slop",
       "sentient",
-      "apocalypse",
       "singularity"
     ],
     "history": [
@@ -216,11 +220,15 @@
       {
         "t": "2026-11-04T06:17:11+00:00",
         "score": 25
+      },
+      {
+        "t": "2026-11-04T07:17:11+00:00",
+        "score": 25
       }
     ],
-    "card": "data/cards/ai-202611032317.png",
-    "share": "share/ai.html?r=202611032317"
+    "card": "data/cards/ai-202611040017.png",
+    "share": "share/ai.html?r=202611040017"
   },
-  "card": "data/cards/main-202611032317.png",
-  "share": "share/main.html?r=202611032317"
+  "card": "data/cards/main-202611040017.png",
+  "share": "share/main.html?r=202611040017"
 }
