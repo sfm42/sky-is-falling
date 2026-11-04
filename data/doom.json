@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-04T12:17:13+00:00",
+  "updated": "2026-11-04T13:17:14+00:00",
   "score": 31,
   "level": "Clutching Pearls",
   "emoji": "🟡",
@@ -132,10 +132,14 @@
     {
       "t": "2026-11-04T12:17:13+00:00",
       "score": 31
+    },
+    {
+      "t": "2026-11-04T13:17:14+00:00",
+      "score": 31
     }
   ],
   "ai": {
-    "updated": "2026-11-04T12:17:13+00:00",
+    "updated": "2026-11-04T13:17:14+00:00",
     "score": 25,
     "level": "Side-Eyeing the Toaster",
     "emoji": "👀",
@@ -150,15 +154,15 @@
     "bySource": {
       "bluesky": 17,
       "mastodon": 8,
-      "news": 1
+      "news": 0
     },
     "topWords": [
       "agi",
       "superintelligence",
       "p(doom)",
       "sentient",
-      "rogue ai",
-      "singularity"
+      "singularity",
+      "rogue ai"
     ],
     "history": [
       {
@@ -264,11 +268,15 @@
       {
         "t": "2026-11-04T12:17:13+00:00",
         "score": 25
+      },
+      {
+        "t": "2026-11-04T13:17:14+00:00",
+        "score": 25
       }
     ],
-    "card": "data/cards/ai-202611040517.png",
-    "share": "share/ai.html?r=202611040517"
+    "card": "data/cards/ai-202611040617.png",
+    "share": "share/ai.html?r=202611040617"
   },
-  "card": "data/cards/main-202611040517.png",
-  "share": "share/main.html?r=202611040517"
+  "card": "data/cards/main-202611040617.png",
+  "share": "share/main.html?r=202611040617"
 }
