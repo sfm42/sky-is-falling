@@ -5,7 +5,12 @@ on:
     # Three tries per hour: GitHub sometimes skips scheduled runs when busy.
     # The script skips if a reading less than 40 minutes old already exists.
     - cron: "7,27,47 * * * *"
-  workflow_dispatch:          # "Run workflow" button for manual readings
+  workflow_dispatch:          # "Run workflow" button, and the cron-job.org hourly timer
+    inputs:
+      force:
+        description: "Take a reading even if one was taken in the last 40 minutes"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -30,7 +35,7 @@ jobs:
           BSKY_APP_PASSWORD: ${{ secrets.BSKY_APP_PASSWORD }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
-          DOOM_FORCE: ${{ github.event_name == 'workflow_dispatch' }}
+          DOOM_FORCE: ${{ inputs.force || false }}
         run: python scripts/update_doom.py
       - name: Save the new reading
         run: |

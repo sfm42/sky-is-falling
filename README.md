@@ -34,6 +34,15 @@ News headlines and Mastodon (public hashtag timelines) need no key, so the meter
 
 5. **First reading:** Actions → *Update Doom Index* → *Run workflow*. The sample banner disappears once real data lands.
 
+## How the needle is set
+
+Each reading blends two signals:
+
+- **Panic volume (65%)**: doom posts per hour on Bluesky and Mastodon, estimated from post timestamps and compared with the median of the last ~3 days of readings. Normal = 50, double = 75, quadruple = 100, half = 25. For the first 3 readings it's still learning, so only intensity counts.
+- **Intensity (35%)**: how dramatic the loudest half of the posts sound (word list, or Claude if `ANTHROPIC_API_KEY` is set).
+
+Change the blend with the `DOOM_VOLUME_WEIGHT` env var (default `0.65`).
+
 ## Sharing
 
 Each meter has a **Share this meter** button. It opens a panel with the current snapshot and one-click posting to X, Bluesky, Threads, Facebook, LinkedIn, Reddit, WhatsApp and email, plus Download image, Copy image and Copy text. On phones a "Share image…" button opens the phone's own share sheet (Instagram, TikTok, Messages…).
@@ -42,7 +51,7 @@ Shared links point to `share/main.html` or `share/ai.html`. Those pages carry th
 
 ## Tuning
 
-- **How often:** the workflow tries at :07, :27 and :47 each hour and the script skips if a reading under 40 minutes old exists (`DOOM_MIN_GAP_MINUTES`), so you get about one reading an hour even when GitHub drops scheduled runs. Manual runs always take a reading.
+- **How often:** the workflow tries at :07, :27 and :47 each hour and the script skips if a reading under 40 minutes old exists (`DOOM_MIN_GAP_MINUTES`), so you get about one reading an hour even when GitHub drops scheduled runs. Manual runs skip too, unless you tick **force** in the Run workflow dialog.
 - **Sample sizes:** `DOOM_SOCIAL_SAMPLE` (Bluesky + Mastodon, free, default 300) and `DOOM_SAMPLE_SIZE` (news + X, default 50). The second is the X cost lever.
 - **Doom words:** edit `LEXICON` (general) and `AI_LEXICON` (AI panic) in `scripts/update_doom.py` **and** the matching lists in `index.html` (the paste scorer runs in the browser).
 - **What gets searched:** `MAIN_TERMS` / `AI_TERMS` (Bluesky and X searches) and `MAIN_FEEDS` / `AI_FEEDS` (news RSS) at the top of the script.

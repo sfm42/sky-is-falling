@@ -20,6 +20,7 @@ If no items at all are fetched the script exits with an error so the GitHub
 Actions run shows a red X instead of silently doing nothing.
 """
 import json
+import math
 import os
 import re
 import sys
@@ -179,24 +180,69 @@ def bsky_auth():
     return _bsky_auth
 
 
-def fetch_bluesky(terms):
-    if not (os.environ.get("BSKY_HANDLE") and os.environ.get("BSKY_APP_PASSWORD")):
-        return []
-    auth = bsky_auth()
-    texts, per_term = [], min(25, max(5, SOCIAL_PER_SOURCE // len(terms) + 3))
-    for term in terms:
-        q = urllib.parse.urlencode({"q": f'"{term}"', "limit": per_term, "sort": "latest", "lang": "en"})
-        try:
-            res = http_json(f"https://bsky.social/xrpc/app.bsky.feed.searchPosts?{q}", headers=auth)
-            texts += [p["record"].get("text", "") for p in res.get("posts", [])]
-        except Exception as e:  # one bad term shouldn't sink the run
-            print(f"  bluesky '{term}' failed: {e}", file=sys.stderr)
+# ---------------------------------------------------------------- volume
+RATE_WINDOW_H = 6          # look-back window when a search returns fewer than `limit` posts
+VOLUME_WEIGHT = float(os.environ.get("DOOM_VOLUME_WEIGHT", "0.65"))
+BASELINE_LEN = 72          # readings used for "normal" (about 3 days hourly)
+BASELINE_MIN = 3           # readings needed before volume counts
+
+
+def _ts(s):
+    try:
+        return dt.datetime.fromisoformat(s.replace("Z", "+00:00"))
+    except Exception:
+        return None
+
+
+def est_rate(times, limit, now):
+    """Posts per hour for one search, from the timestamps of its newest results.
+    A full page means the posts are dense: rate = posts / time they span.
+    A partial page means we saw everything in the window: rate = count / window."""
+    times = sorted([t for t in times if t], reverse=True)
+    if not times:
+        return 0.0
+    if len(times) >= limit:
+        span_h = max((times[0] - times[-1]).total_seconds() / 3600, 1 / 60)
+        return (len(times) - 1) / span_h
+    cutoff = now - dt.timedelta(hours=RATE_WINDOW_H)
+    return sum(1 for t in times if t >= cutoff) / RATE_WINDOW_H
+
+
+def _dedupe_sample(texts, n):
     seen, out = set(), []
     for t in texts:
         if t and t not in seen:
             seen.add(t)
             out.append(t)
-    return out[:SOCIAL_PER_SOURCE]
+    if len(out) > n:  # even spread across all search terms, not just the first ones
+        step = len(out) / n
+        out = [out[int(i * step)] for i in range(n)]
+    return out
+
+
+def fetch_bluesky(terms):
+    """Returns (texts, doom posts per hour)."""
+    if not (os.environ.get("BSKY_HANDLE") and os.environ.get("BSKY_APP_PASSWORD")):
+        return [], None
+    auth, limit = bsky_auth(), 25
+    now = dt.datetime.now(dt.timezone.utc)
+    since = (now - dt.timedelta(hours=RATE_WINDOW_H)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    texts, rate, ok = [], 0.0, 0
+    for term in terms:
+        q = urllib.parse.urlencode({"q": f'"{term}"', "limit": limit, "sort": "latest",
+                                    "lang": "en", "since": since})
+        try:
+            res = http_json(f"https://bsky.social/xrpc/app.bsky.feed.searchPosts?{q}", headers=auth)
+        except Exception as e:  # one bad term shouldn't sink the run
+            print(f"  bluesky '{term}' failed: {e}", file=sys.stderr)
+            continue
+        posts = res.get("posts", [])
+        texts += [p["record"].get("text", "") for p in posts]
+        rate += est_rate([_ts(p.get("indexedAt", "")) for p in posts], limit, now)
+        ok += 1
+    # scale up for failed terms so one hiccup doesn't look like a calm hour
+    rate = rate * len(terms) / ok if ok else None
+    return _dedupe_sample(texts, SOCIAL_PER_SOURCE), rate
 
 
 def _strip_html(html):
@@ -207,14 +253,20 @@ def _strip_html(html):
 
 
 def fetch_mastodon(tags):
-    texts, seen = [], set()
+    """Returns (texts, tagged posts per hour)."""
+    texts, seen, limit = [], set(), 40
+    now = dt.datetime.now(dt.timezone.utc)
+    rate, ok, tried = 0.0, 0, 0
     for tag in tags:
         for inst in MASTODON_INSTANCES:
+            tried += 1
             try:
-                res = http_json(f"https://{inst}/api/v1/timelines/tag/{urllib.parse.quote(tag)}?limit=40")
+                res = http_json(f"https://{inst}/api/v1/timelines/tag/{urllib.parse.quote(tag)}?limit={limit}")
             except Exception as e:
                 print(f"  mastodon {inst} #{tag} failed: {e}", file=sys.stderr)
                 continue
+            ok += 1
+            rate += est_rate([_ts(st.get("created_at", "")) for st in res], limit, now)
             for st in res:
                 if st.get("language") not in (None, "en") or st.get("reblog"):
                     continue
@@ -222,7 +274,8 @@ def fetch_mastodon(tags):
                 if t and st.get("uri") not in seen:
                     seen.add(st.get("uri"))
                     texts.append(t)
-    return texts[:SOCIAL_PER_SOURCE]
+    rate = rate * tried / ok if ok else None
+    return _dedupe_sample(texts, SOCIAL_PER_SOURCE), rate
 
 
 def fetch_feeds(urls):
@@ -363,7 +416,7 @@ def run_meter(kind, now, prev):
     scorer = lexicon_score if kind == "main" else ai_lexicon_score
     levels = LEVELS if kind == "main" else AI_LEVELS
 
-    sources, items = {}, []
+    sources, items, rates = {}, [], {}
     for name, fn in (("bluesky", lambda: fetch_bluesky(terms)),
                      ("mastodon", lambda: fetch_mastodon(tags)),
                      ("news", lambda: fetch_feeds(feeds)),
@@ -373,6 +426,10 @@ def run_meter(kind, now, prev):
         except Exception as e:
             print(f"[{kind}] {name}: skipped ({e})", file=sys.stderr)
             got = []
+        if isinstance(got, tuple):
+            got, rate = got
+            if rate is not None:
+                rates[name] = round(rate, 2)
         if got:
             sources[name] = len(got)
             items += [(name, t) for t in got]
@@ -396,7 +453,28 @@ def run_meter(kind, now, prev):
     pool = social if len(social) >= 20 else scores
     ranked = sorted(pool, reverse=True)
     top = ranked[: max(1, len(ranked) // 2)]
-    index = round(sum(top) / len(top))
+    intensity = round(sum(top) / len(top))
+
+    # Volume: doom posts per hour vs. this meter's own recent normal.
+    # Normal = 50, double = 75, quadruple = 100, half = 25.
+    past = [h for h in (prev or {}).get("history", []) if not h.get("sample")]
+    ratios = {}
+    for src, r in rates.items():
+        base = sorted(h["vol"][src] for h in past[-BASELINE_LEN:]
+                      if isinstance(h.get("vol"), dict) and h["vol"].get(src))
+        if len(base) >= BASELINE_MIN and r is not None:
+            median = base[len(base) // 2]
+            if median > 0:
+                ratios[src] = max(r, 0.01) / median
+    if ratios:
+        # geometric mean across sources so one source can't dominate
+        ratio = math.exp(sum(math.log(v) for v in ratios.values()) / len(ratios))
+        volume = max(0, min(100, round(50 + 25 * math.log2(ratio))))
+        index = round(VOLUME_WEIGHT * volume + (1 - VOLUME_WEIGHT) * intensity)
+        learning = False
+    else:
+        ratio, volume, learning = None, None, bool(rates)
+        index = intensity
 
     by_source = {}
     for (src, _), s in zip(items, scores):
@@ -418,12 +496,19 @@ def run_meter(kind, now, prev):
             print(f"[{kind}] forecast failed: {e}", file=sys.stderr)
 
     history = [h for h in (prev or {}).get("history", []) if not h.get("sample")]
-    history.append({"t": now.isoformat(), "score": index})
-    print(f"[{kind}] index {index} — {emoji} {level} ({method}, n={len(texts)})")
+    entry = {"t": now.isoformat(), "score": index}
+    if rates:
+        entry["vol"] = rates
+    history.append(entry)
+    print(f"[{kind}] index {index} — {emoji} {level} ({method}, n={len(texts)}) "
+          f"intensity={intensity} volume={volume} ratio={ratio and round(ratio, 2)} rates={rates}")
     return {
         "updated": now.isoformat(), "score": index, "level": level, "emoji": emoji,
         "forecast": forecast, "method": method, "sampleSize": len(texts),
         "sources": sources, "bySource": by_source, "topWords": top_words,
+        "intensity": intensity,
+        "volume": {"score": volume, "ratio": ratio and round(ratio, 2), "learning": learning,
+                   "postsPerHour": round(sum(rates.values())) if rates else None},
         "history": history[-HISTORY_LEN:],
     }
 

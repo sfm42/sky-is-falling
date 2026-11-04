@@ -135,6 +135,12 @@
   .share-actions{display:flex; flex-wrap:wrap; gap:8px}
   .share-actions .btn{font-size:12px; padding:8px 10px}
   .share-note{font-size:13px; color:var(--muted); margin:14px 0 0}
+  .vol{margin-top:14px; padding-top:12px; border-top:2px dashed var(--ink); font:700 13px "JetBrains Mono",monospace}
+  .vol:empty{display:none}
+  .vol b{font-size:20px; font-family:"Archivo Black",sans-serif; margin-right:6px}
+  .vol .hint{display:block; font-weight:400; color:var(--muted); font-size:12px; margin-top:4px}
+  .vol.dark{border-top:0; padding-top:0; margin:14px 0 4px; color:var(--paper)}
+  .vol.dark .hint{color:#b9ad97}
   footer{margin-top:34px; font-size:14px; color:var(--muted); border-top:3px solid var(--ink); padding-top:16px;
     display:grid; grid-template-columns:2fr 1fr; gap:20px}
   @media (max-width:820px){footer{grid-template-columns:1fr}}
@@ -183,6 +189,7 @@
       <section class="card bars" aria-labelledby="s-h">
         <h2 id="s-h">Panic by Source</h2>
         <div id="sourceBars"></div>
+        <div class="vol" id="volLine"></div>
       </section>
       <section class="card" aria-labelledby="w-h">
         <h2 id="w-h">Trending Doom Words</h2>
@@ -212,6 +219,7 @@
           <b>⚡ Robot Uprising Forecast</b>
           <p id="aiForecast">Asking the robots nicely…</p>
         </div>
+        <div class="vol dark" id="aiVolLine"></div>
         <div class="sub">Trending AI panic words</div>
         <div class="chips" id="aiWords"></div>
         <div class="sub">AI panic over time</div>
@@ -242,7 +250,7 @@
 
   <footer>
     <div>
-      <strong>How it works.</strong> Every hour, a robot reads a sample of public posts and headlines that contain doom words, rates how dramatic each one sounds, and averages the loudest half. A second robot does the same for AI chatter to set the Robot Uprising Risk. Both measure <em>tone</em>, not topic: a calm report about something serious scores low. No accounts are named, tracked or stored, only the overall numbers.
+      <strong>How it works.</strong> Every hour, a robot reads a sample of public posts and headlines that contain doom words, rates how dramatic each one sounds, and averages the loudest half. A second robot does the same for AI chatter to set the Robot Uprising Risk. Each needle blends two things: how many doom posts are appearing compared with a normal hour, and how dramatic they sound. It measures <em>tone</em>, not topic: a calm report about something serious scores low. No accounts are named, tracked or stored, only the overall numbers.
     </div>
     <div>
       <strong>Disclaimer.</strong> For entertainment only. Not a forecast of anything. If the needle is in the red, please drink some water and go outside.
@@ -396,6 +404,14 @@ function drawTrend(svg, h, levels, line){
     `<circle cx="${x(h.length-1)}" cy="${y(last.score)}" r="5" fill="#ec7a1c" stroke="${line}" stroke-width="2"/>`;
 }
 
+function volHTML(v){
+  if(!v || (v.score==null && !v.learning)) return "";
+  if(v.learning) return `📈 Panic volume: learning what normal looks like…<span class="hint">About ${v.postsPerHour??"?"} doom posts an hour so far. The needle starts reacting to spikes after a few hourly readings.</span>`;
+  const r=v.ratio, word = r>=1.8?"way above":r>=1.15?"above":r>0.87?"about":r>0.55?"below":"way below";
+  const fmt = r>=1.15||r<=0.87 ? `${r.toFixed(1)}× normal` : "normal";
+  return `📈 Panic volume: <b>${fmt}</b><span class="hint">About ${v.postsPerHour} doom posts an hour, ${word} the usual level.</span>`;
+}
+
 /* ---------- render ---------- */
 let current=null;
 function render(d){
@@ -415,6 +431,7 @@ function render(d){
   ).join("") || `<div class="kicker">No sources yet</div>`;
   setTimeout(()=>document.querySelectorAll(".bar i").forEach(i=>i.style.width=i.dataset.w+"%"),100);
   document.getElementById("words").innerHTML = chips(d.topWords, "Suspiciously calm");
+  document.getElementById("volLine").innerHTML = volHTML(d.volume);
   drawTrend(document.getElementById("trend"), d.history||[], LEVELS, "#16130f");
   document.querySelectorAll("#legend div").forEach((e,i)=>e.classList.toggle("on", LEVELS[i]===lvl));
 
@@ -426,6 +443,7 @@ function render(d){
     paintLevel(document.getElementById("aiLevel"), al);
     document.getElementById("aiForecast").textContent = ai.forecast||"";
     document.getElementById("aiWords").innerHTML = chips(ai.topWords, "The robots are quiet. Too quiet.");
+    document.getElementById("aiVolLine").innerHTML = volHTML(ai.volume);
     drawTrend(document.getElementById("aiTrend"), ai.history||[], AI_LEVELS, "#f2e9d6");
     document.getElementById("aiUpdated").textContent = "Last reading: "+fmtTime(ai.updated);
     document.getElementById("aiMethod").textContent = methodText(ai, sample);
