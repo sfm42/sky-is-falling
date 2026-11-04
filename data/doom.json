@@ -1,20 +1,20 @@
 {
-  "updated": "2026-11-04T17:17:16+00:00",
+  "updated": "2026-11-04T18:15:22+00:00",
   "score": 28,
   "level": "Clutching Pearls",
   "emoji": "🟡",
   "forecast": "Partly anxious with scattered gasps. Keep a fainting couch handy.",
   "method": "word-list",
-  "sampleSize": 612,
+  "sampleSize": 613,
   "sources": {
-    "bluesky": 262,
+    "bluesky": 263,
     "mastodon": 300,
     "news": 50
   },
   "bySource": {
     "bluesky": 19,
     "mastodon": 12,
-    "news": 1
+    "news": 0
   },
   "topWords": [
     "apocalypse",
@@ -29,7 +29,7 @@
     "score": null,
     "ratio": null,
     "learning": true,
-    "postsPerHour": 118
+    "postsPerHour": 69
   },
   "history": [
     {
@@ -163,25 +163,33 @@
         "bluesky": 110.13,
         "mastodon": 7.58
       }
+    },
+    {
+      "t": "2026-11-04T18:15:22+00:00",
+      "score": 28,
+      "vol": {
+        "bluesky": 61.49,
+        "mastodon": 7.56
+      }
     }
   ],
   "ai": {
-    "updated": "2026-11-04T17:17:16+00:00",
+    "updated": "2026-11-04T18:15:22+00:00",
     "score": 18,
     "level": "Mild Robot Concern",
     "emoji": "🤖",
     "forecast": "Calm conditions. The robots are mostly just autocompleting emails today.",
     "method": "word-list",
-    "sampleSize": 415,
+    "sampleSize": 418,
     "sources": {
       "bluesky": 85,
-      "mastodon": 280,
+      "mastodon": 283,
       "news": 50
     },
     "bySource": {
-      "bluesky": 12,
+      "bluesky": 13,
       "mastodon": 8,
-      "news": 0
+      "news": 1
     },
     "topWords": [
       "agi",
@@ -196,7 +204,7 @@
       "score": null,
       "ratio": null,
       "learning": true,
-      "postsPerHour": 106
+      "postsPerHour": 74
     },
     "history": [
       {
@@ -326,11 +334,19 @@
           "bluesky": 14.5,
           "mastodon": 91.55
         }
+      },
+      {
+        "t": "2026-11-04T18:15:22+00:00",
+        "score": 18,
+        "vol": {
+          "bluesky": 22.87,
+          "mastodon": 51.59
+        }
       }
     ],
-    "card": "data/cards/ai-202611041017.png",
-    "share": "share/ai.html?r=202611041017"
+    "card": "data/cards/ai-202611041115.png",
+    "share": "share/ai.html?r=202611041115"
   },
-  "card": "data/cards/main-202611041017.png",
-  "share": "share/main.html?r=202611041017"
+  "card": "data/cards/main-202611041115.png",
+  "share": "share/main.html?r=202611041115"
 }
