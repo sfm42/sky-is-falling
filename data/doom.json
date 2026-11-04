@@ -1,35 +1,35 @@
 {
-  "updated": "2026-11-04T21:17:13+00:00",
-  "score": 34,
+  "updated": "2026-11-04T22:17:25+00:00",
+  "score": 38,
   "level": "Clutching Pearls",
   "emoji": "🟡",
   "forecast": "Partly anxious with scattered gasps. Keep a fainting couch handy.",
   "method": "word-list",
-  "sampleSize": 636,
+  "sampleSize": 633,
   "sources": {
-    "bluesky": 286,
+    "bluesky": 283,
     "mastodon": 300,
     "news": 50
   },
   "bySource": {
     "bluesky": 17,
-    "mastodon": 11,
+    "mastodon": 12,
     "news": 1
   },
   "topWords": [
     "apocalypse",
     "collapse",
-    "end times",
     "it's over",
-    "crisis",
-    "mark my words"
+    "end times",
+    "mark my words",
+    "crisis"
   ],
-  "intensity": 26,
+  "intensity": 27,
   "volume": {
-    "score": 39,
-    "ratio": 0.74,
+    "score": 44,
+    "ratio": 0.84,
     "learning": false,
-    "postsPerHour": 56
+    "postsPerHour": 71
   },
   "history": [
     {
@@ -195,24 +195,32 @@
         "bluesky": 49.44,
         "mastodon": 6.31
       }
+    },
+    {
+      "t": "2026-11-04T22:17:25+00:00",
+      "score": 38,
+      "vol": {
+        "bluesky": 64.99,
+        "mastodon": 6.28
+      }
     }
   ],
   "ai": {
-    "updated": "2026-11-04T21:17:13+00:00",
+    "updated": "2026-11-04T22:17:25+00:00",
     "score": 7,
     "level": "Mild Robot Concern",
     "emoji": "🤖",
     "forecast": "Calm conditions. The robots are mostly just autocompleting emails today.",
     "method": "word-list",
-    "sampleSize": 444,
+    "sampleSize": 445,
     "sources": {
-      "bluesky": 99,
+      "bluesky": 100,
       "mastodon": 295,
       "news": 50
     },
     "bySource": {
-      "bluesky": 14,
-      "mastodon": 8,
+      "bluesky": 15,
+      "mastodon": 7,
       "news": 0
     },
     "topWords": [
@@ -226,9 +234,9 @@
     "intensity": 19,
     "volume": {
       "score": 0,
-      "ratio": 0.24,
+      "ratio": 0.21,
       "learning": false,
-      "postsPerHour": 33
+      "postsPerHour": 28
     },
     "history": [
       {
@@ -390,11 +398,19 @@
           "bluesky": 30.47,
           "mastodon": 2.33
         }
+      },
+      {
+        "t": "2026-11-04T22:17:25+00:00",
+        "score": 7,
+        "vol": {
+          "bluesky": 25.28,
+          "mastodon": 2.33
+        }
       }
     ],
-    "card": "data/cards/ai-202611041417.png",
-    "share": "share/ai.html?r=202611041417"
+    "card": "data/cards/ai-202611041517.png",
+    "share": "share/ai.html?r=202611041517"
   },
-  "card": "data/cards/main-202611041417.png",
-  "share": "share/main.html?r=202611041417"
+  "card": "data/cards/main-202611041517.png",
+  "share": "share/main.html?r=202611041517"
 }
