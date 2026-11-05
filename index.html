@@ -486,7 +486,9 @@ const EXAMPLES = [
 document.getElementById("examples").innerHTML = EXAMPLES.map(([l],i)=>`<button data-i="${i}">Try: ${l}</button>`).join("");
 document.getElementById("examples").addEventListener("click",e=>{
   const b=e.target.closest("button"); if(!b) return;
-  document.getElementById("post").value = EXAMPLES[b.dataset.i][1]; measure();
+  document.getElementById("post").value = EXAMPLES[b.dataset.i][1];
+  track("doom-o-meter/example-"+EXAMPLES[b.dataset.i][0].toLowerCase().replace(/\s+/g,"-"), "Doom-o-Meter example: "+EXAMPLES[b.dataset.i][0]);
+  measure(true);
 });
 function resultRow(label, score, l){
   return `<div><div class="lab">${label}</div>
@@ -496,11 +498,12 @@ function resultRow(label, score, l){
     </div>
     <div class="thermo"><i style="left:0%" data-left="${score}"></i></div></div>`;
 }
-function measure(){
+function measure(fromExample){
   const text=document.getElementById("post").value.trim();
   const box=document.getElementById("result");
   if(!text){ box.innerHTML=`<div class="empty">Paste something first. Even the apocalypse needs input.</div>`; return; }
   const m=lexiconScore(text), a=aiLexiconScore(text);
+  if(!fromExample) track("doom-o-meter/measure", "Doom-o-Meter: measured own post");
   const ml=levelFor(m.score), al=aiLevelFor(a.score);
   const aiWins = a.score > m.score;
   const verdict = aiWins ? AI_VERDICTS[AI_LEVELS.indexOf(al)] : VERDICTS[LEVELS.indexOf(ml)];
@@ -510,14 +513,19 @@ function measure(){
     <div class="hits">${hits.length?"Panic words found: "+hits.map(h=>`"${h}"`).join(", "):"No panic words found."}</div>
     <div style="margin-top:12px"><button class="btn ghost" id="copyPost" style="font-size:12px;padding:7px 10px">Copy my result</button></div>`;
   requestAnimationFrame(()=>requestAnimationFrame(()=>box.querySelectorAll(".thermo i").forEach(i=>i.style.left=i.dataset.left+"%")));
-  box.querySelector("#copyPost").addEventListener("click",()=>
-    copy(`I ran a post through the Doom-o-Meter:\n☄️ Sky Is Falling: ${m.score}/100, ${ml.emoji} ${ml.name}\n🤖 Robot Uprising: ${a.score}/100, ${al.emoji} ${al.name}\n${pageUrl()}`));
+  box.querySelector("#copyPost").addEventListener("click",()=>{ track("doom-o-meter/copy-result","Doom-o-Meter: copied result");
+    copy(`I ran a post through the Doom-o-Meter:\n☄️ Sky Is Falling: ${m.score}/100, ${ml.emoji} ${ml.name}\n🤖 Robot Uprising: ${a.score}/100, ${al.emoji} ${al.name}\n${pageUrl()}`); });
 }
-document.getElementById("measure").addEventListener("click",measure);
-document.getElementById("post").addEventListener("keydown",e=>{ if(e.key==="Enter"&&(e.metaKey||e.ctrlKey)) measure(); });
+document.getElementById("measure").addEventListener("click",()=>measure(false));
+document.getElementById("post").addEventListener("keydown",e=>{ if(e.key==="Enter"&&(e.metaKey||e.ctrlKey)) measure(false); });
+
+/* ---------- analytics (GoatCounter, cookieless) ---------- */
+function track(path, title){
+  try{ if(window.goatcounter && window.goatcounter.count) window.goatcounter.count({path, title: title||path, event:true}); }catch(e){}
+}
 
 /* ---------- share ---------- */
-function pageUrl(){ try{ return location.protocol.startsWith("http") ? location.href.split("#")[0] : ""; }catch(e){ return ""; } }
+function pageUrl(){ try{ return location.protocol.startsWith("http") ? location.origin + location.pathname : ""; }catch(e){ return ""; } }
 function toast(msg){ const t=document.getElementById("toast"); t.textContent=msg; t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),2200); }
 async function copy(text){
   try{ await navigator.clipboard.writeText(text.trim()); toast("Copied. Spread the panic responsibly."); }
@@ -564,26 +572,35 @@ function openShare(kind){
   const nat=document.getElementById("shareNative");
   nat.hidden = !(s.img && navigator.canShare && navigator.canShare({files:[new File([""],"t.png",{type:"image/png"})]}));
   document.getElementById("sharePlatforms").innerHTML = PLATFORMS.map(([n,f])=>
-    `<a href="${f(s.text,s.url)}" target="_blank" rel="noopener">${n}</a>`).join("");
+    `<a href="${f(s.text,s.url)}" target="_blank" rel="noopener" data-platform="${n}">${n}</a>`).join("");
   const back=document.getElementById("shareBack"); back.hidden=false;
+  track(`share/${kind}/open`, `Share panel opened (${s.name})`);
   document.getElementById("shareClose").focus();
 }
 function closeShare(){ document.getElementById("shareBack").hidden=true; if(lastFocus) lastFocus.focus(); }
 document.querySelectorAll("[data-share]").forEach(b=>b.addEventListener("click",()=>openShare(b.dataset.share)));
+document.getElementById("sharePlatforms").addEventListener("click",e=>{
+  const a=e.target.closest("a[data-platform]"); if(!a||!shareState) return;
+  track(`share/${shareState.kind}/${a.dataset.platform.toLowerCase()}`, `Shared ${shareState.name} to ${a.dataset.platform}`);
+});
 document.getElementById("shareClose").addEventListener("click",closeShare);
 document.getElementById("shareBack").addEventListener("click",e=>{ if(e.target.id==="shareBack") closeShare(); });
 document.addEventListener("keydown",e=>{ if(e.key==="Escape" && !document.getElementById("shareBack").hidden) closeShare(); });
-document.getElementById("shareCopyText").addEventListener("click",()=> shareState && copy(shareState.text+"\n"+shareState.url));
+document.getElementById("shareCopyText").addEventListener("click",()=>{ if(!shareState) return;
+  track(`share/${shareState.kind}/copy-text`, `Copied text: ${shareState.name}`); copy(shareState.text+"\n"+shareState.url); });
 document.getElementById("shareDownload").addEventListener("click",async()=>{
+  if(shareState) track(`share/${shareState.kind}/download`, `Downloaded image: ${shareState.name}`);
   try{ const b=await cardBlob(); const a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download=shareState.file;
     document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),4000); toast("Image saved. Go forth and alarm."); }
   catch(e){ toast("Couldn't download. Right-click the picture to save it."); }
 });
 document.getElementById("shareCopyImg").addEventListener("click",async()=>{
+  if(shareState) track(`share/${shareState.kind}/copy-image`, `Copied image: ${shareState.name}`);
   try{ const b=await cardBlob(); await navigator.clipboard.write([new ClipboardItem({"image/png":b})]); toast("Image copied. Paste it into your post."); }
   catch(e){ toast("Couldn't copy the image. Try Download instead."); }
 });
 document.getElementById("shareNative").addEventListener("click",async()=>{
+  if(shareState) track(`share/${shareState.kind}/native`, `Phone share sheet: ${shareState.name}`);
   try{ const b=await cardBlob(); const f=new File([b],shareState.file,{type:"image/png"});
     await navigator.share({files:[f], text:shareState.text+"\n"+shareState.url}); }
   catch(e){ if(e && e.name!=="AbortError") toast("Sharing didn't work here. Try Download instead."); }
@@ -594,5 +611,6 @@ const fallback = JSON.parse(document.getElementById("fallback-data").textContent
 fetch("data/doom.json?ts="+Date.now()).then(r=>{ if(!r.ok) throw 0; return r.json(); })
   .then(render).catch(()=>render(fallback));
 </script>
+<script data-goatcounter="https://skyisfalling.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>

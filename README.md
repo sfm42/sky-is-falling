@@ -49,6 +49,21 @@ Each meter has a **Share this meter** button. It opens a panel with the current 
 
 Shared links point to `share/main.html` or `share/ai.html`. Those pages carry the snapshot as their link preview, then forward visitors to the site. Every reading gets a uniquely named image so platforms don't show a stale preview.
 
+## Analytics
+
+Traffic is counted with [GoatCounter](https://www.goatcounter.com) (cookieless, no consent banner needed). Dashboard: https://skyisfalling.goatcounter.com
+
+Besides page views, the site sends these click events:
+
+| Event | Meaning |
+|---|---|
+| `share/main/open`, `share/ai/open` | Share panel opened on a meter |
+| `share/<meter>/<platform>` | Platform clicked (`x`, `bluesky`, `threads`, `facebook`, `linkedin`, `reddit`, `whatsapp`, `email`) |
+| `share/<meter>/download` · `copy-image` · `copy-text` · `native` | Snapshot downloaded, image copied, text copied, phone share sheet |
+| `doom-o-meter/measure` · `example-*` · `copy-result` | Paste-a-post scorer used |
+
+Visitors arriving through a shared link show up with the referrer `shared-sky-is-falling` or `shared-robot-uprising`.
+
 ## Tuning
 
 - **How often:** the workflow tries at :07, :27 and :47 each hour and the script skips if a reading under 40 minutes old exists (`DOOM_MIN_GAP_MINUTES`), so you get about one reading an hour even when GitHub drops scheduled runs. Manual runs skip too, unless you tick **force** in the Run workflow dialog.

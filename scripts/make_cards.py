@@ -39,6 +39,7 @@ METERS = {
         "plain_title": "Sky Is Falling Index",
         "dark": False,
         "anchor": "",
+        "ref": "shared-sky-is-falling",
         "levels": ["Mild Concern", "Clutching Pearls", "Stockpiling Beans",
                    "Building a Bunker", "Full Chicken Little"],
     },
@@ -47,6 +48,7 @@ METERS = {
         "plain_title": "Robot Uprising Risk",
         "dark": True,
         "anchor": "#robot-uprising",
+        "ref": "shared-robot-uprising",
         "levels": ["Mild Robot Concern", "Side-Eyeing the Toaster",
                    "Saying Please to the Chatbot", "Unplugging Everything",
                    "Full Robot Uprising"],
@@ -196,7 +198,7 @@ def share_page(kind, meter, image_url, page_url, site):
     li = level_index(meter.get("score", 0))
     title = f"{cfg['plain_title']}: {meter.get('score', 0)}/100, {cfg['levels'][li]}"
     desc = meter.get("forecast", "") + " The internet's official-ish panic gauge, updated hourly."
-    target = "../" + cfg["anchor"]
+    target = f"../?ref={cfg['ref']}" + cfg["anchor"]
     e = lambda s: html.escape(s, quote=True)
     return f"""<!DOCTYPE html>
 <html lang="en">
