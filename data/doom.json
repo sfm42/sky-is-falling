@@ -1,6 +1,6 @@
 {
-  "updated": "2026-11-06T10:17:12+00:00",
-  "score": 31,
+  "updated": "2026-11-06T11:17:14+00:00",
+  "score": 30,
   "level": "Clutching Pearls",
   "emoji": "🟡",
   "forecast": "Partly anxious with scattered gasps. Keep a fainting couch handy.",
@@ -12,9 +12,9 @@
     "news": 50
   },
   "bySource": {
-    "bluesky": 22,
+    "bluesky": 23,
     "mastodon": 12,
-    "news": 1
+    "news": 2
   },
   "topWords": [
     "apocalypse",
@@ -22,14 +22,14 @@
     "it's over",
     "doomsday",
     "crisis",
-    "end times"
+    "armageddon"
   ],
   "intensity": 28,
   "volume": {
-    "score": 32,
-    "ratio": 0.61,
+    "score": 31,
+    "ratio": 0.59,
     "learning": false,
-    "postsPerHour": 31
+    "postsPerHour": 29
   },
   "history": [
     {
@@ -491,19 +491,27 @@
         "bluesky": 25.89,
         "mastodon": 5.23
       }
+    },
+    {
+      "t": "2026-11-06T11:17:14+00:00",
+      "score": 30,
+      "vol": {
+        "bluesky": 24.16,
+        "mastodon": 5.23
+      }
     }
   ],
   "ai": {
-    "updated": "2026-11-06T10:17:12+00:00",
-    "score": 43,
+    "updated": "2026-11-06T11:17:14+00:00",
+    "score": 41,
     "level": "Saying Please to the Chatbot",
     "emoji": "🙏",
     "forecast": "Widespread politeness toward software. Experts advise saying thank you, just in case.",
     "method": "word-list",
-    "sampleSize": 380,
+    "sampleSize": 381,
     "sources": {
-      "bluesky": 66,
-      "mastodon": 264,
+      "bluesky": 68,
+      "mastodon": 263,
       "news": 50
     },
     "bySource": {
@@ -521,10 +529,10 @@
     ],
     "intensity": 18,
     "volume": {
-      "score": 56,
-      "ratio": 1.17,
+      "score": 54,
+      "ratio": 1.1,
       "learning": false,
-      "postsPerHour": 110
+      "postsPerHour": 121
     },
     "history": [
       {
@@ -982,11 +990,19 @@
           "bluesky": 28.41,
           "mastodon": 81.71
         }
+      },
+      {
+        "t": "2026-11-06T11:17:14+00:00",
+        "score": 41,
+        "vol": {
+          "bluesky": 20.69,
+          "mastodon": 100.1
+        }
       }
     ],
-    "card": "data/cards/ai-202611060317.png",
-    "share": "share/ai.html?r=202611060317"
+    "card": "data/cards/ai-202611060417.png",
+    "share": "share/ai.html?r=202611060417"
   },
-  "card": "data/cards/main-202611060317.png",
-  "share": "share/main.html?r=202611060317"
+  "card": "data/cards/main-202611060417.png",
+  "share": "share/main.html?r=202611060417"
 }
