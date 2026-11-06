@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panic Archive 2380 · The Sky Is Falling Index</title>
+<meta name="description" content="Live behavioral telemetry from the 21st-century internet, recovered and annotated by the 2380 Panic Archive.">
+<meta property="og:title" content="Panic Archive 2380 · The Sky Is Falling Index">
+<meta property="og:description" content="Live behavioral telemetry from the 21st-century internet, recovered and annotated by the 2380 Panic Archive.">
+<meta property="og:image" content="https://sfm42.github.io/sky-is-falling/data/cards/main-latest.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Michroma&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#04060b; --panel:#080d16; --panel2:#0b1320; --line:#1b2838; --line2:#2a3c52;
+    --text:#d7e1ec; --dim:#6f8299; --faint:#3a4b60; --amber:#ffb547;
+    --c0:#5fe3a1; --c1:#ffd45c; --c2:#ff9a3d; --c3:#ff4b3e; --c4:#ff2e7e;
+    --alert:var(--c0); --alert-rgb:95,227,161;
+    --mono:"IBM Plex Mono",ui-monospace,monospace; --wide:"Michroma",sans-serif; --sans:"IBM Plex Sans Condensed",system-ui,sans-serif;
+  }
+  body[data-alert="1"]{--alert:var(--c1); --alert-rgb:255,212,92}
+  body[data-alert="2"]{--alert:var(--c2); --alert-rgb:255,154,61}
+  body[data-alert="3"]{--alert:var(--c3); --alert-rgb:255,75,62}
+  body[data-alert="4"]{--alert:var(--c4); --alert-rgb:255,46,126}
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--void); color:var(--text); font-family:var(--sans); line-height:1.45; min-height:100vh; overflow-x:hidden;
+    background-image:
+      radial-gradient(ellipse at 50% -10%, rgba(var(--alert-rgb),.10), transparent 60%),
+      linear-gradient(rgba(120,160,200,.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(120,160,200,.045) 1px, transparent 1px);
+    background-size:auto, 44px 44px, 44px 44px; transition:background-color 1s}
+  /* scanlines + vignette */
+  body::before{content:""; position:fixed; inset:0; pointer-events:none; z-index:50;
+    background:repeating-linear-gradient(0deg, rgba(0,0,0,.18) 0 1px, transparent 1px 3px); mix-blend-mode:multiply}
+  body::after{content:""; position:fixed; inset:0; pointer-events:none; z-index:49; box-shadow:inset 0 0 160px rgba(0,0,0,.75)}
+  /* red-alert sweep at condition 4 */
+  .sweep{position:fixed; inset:0; pointer-events:none; z-index:48; opacity:0}
+  body[data-alert="4"] .sweep{opacity:1; background:linear-gradient(180deg, transparent 0%, rgba(var(--alert-rgb),.16) 50%, transparent 100%);
+    background-size:100% 40%; background-repeat:no-repeat; animation:sweep 3.2s linear infinite}
+  @keyframes sweep{from{background-position:0 -40%} to{background-position:0 140%}}
+  body.shake .wrap{animation:shake .5s 2}
+  @keyframes shake{20%{transform:translate(-3px,1px)}40%{transform:translate(3px,-1px)}60%{transform:translate(-2px,-1px)}80%{transform:translate(2px,1px)}}
+
+  a{color:var(--alert)}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 22px 70px; position:relative; z-index:1}
+
+  /* top status bar */
+  .status{position:sticky; top:0; z-index:40; background:rgba(4,6,11,.88); backdrop-filter:blur(6px); border-bottom:1px solid var(--line)}
+  .status .row{max-width:1180px; margin:0 auto; padding:10px 22px; display:flex; gap:18px; align-items:center; justify-content:space-between;
+    font:500 11px var(--mono); letter-spacing:.14em; text-transform:uppercase; color:var(--dim)}
+  .status b{color:var(--text); font-weight:600}
+  .status .left{display:flex; align-items:center; gap:10px}
+  .sigil{width:14px; height:14px; border:1.5px solid var(--alert); transform:rotate(45deg); box-shadow:0 0 10px rgba(var(--alert-rgb),.6)}
+  .signal i{display:inline-block; width:4px; margin-left:2px; background:var(--alert); vertical-align:bottom; opacity:.9}
+  .audio{font:600 11px var(--mono); letter-spacing:.14em; color:var(--dim); background:transparent; border:1px solid var(--line2); padding:6px 10px; cursor:pointer}
+  .audio[aria-pressed="true"]{color:var(--alert); border-color:var(--alert)}
+  @media (max-width:760px){.status .hide-sm{display:none}}
+
+  /* chevron hazard band (conditions 3-4) */
+  .chevrons{height:0; overflow:hidden; transition:height .6s;
+    background:repeating-linear-gradient(-45deg, rgba(var(--alert-rgb),.85) 0 14px, transparent 14px 28px)}
+  body[data-alert="3"] .chevrons, body[data-alert="4"] .chevrons{height:8px; animation:chev 1.2s linear infinite}
+  @keyframes chev{to{background-position:39.6px 0}}
+
+  /* ticker */
+  .ticker{border-bottom:1px solid var(--line); overflow:hidden; white-space:nowrap; font:500 12px var(--mono); letter-spacing:.12em;
+    text-transform:uppercase; color:var(--amber); padding:9px 0; background:rgba(255,181,71,.03)}
+  .ticker span{display:inline-block; padding-left:100%; animation:tick var(--tick-speed,60s) linear infinite}
+  @keyframes tick{to{transform:translateX(-100%)}}
+
+  /* hero */
+  .hero{padding:46px 0 26px; display:grid; grid-template-columns:1fr auto; gap:24px; align-items:end}
+  @media (max-width:860px){.hero{grid-template-columns:1fr}}
+  .eyebrow{font:500 11px var(--mono); letter-spacing:.3em; text-transform:uppercase; color:var(--alert)}
+  h1{font:400 clamp(30px,5.2vw,62px)/1.05 var(--wide); letter-spacing:.02em; margin:14px 0 14px; text-transform:uppercase;
+    text-shadow:0 0 26px rgba(var(--alert-rgb),.25)}
+  h1 .dim{color:var(--dim)}
+  .lede{max-width:640px; color:var(--dim); font-size:17px; margin:0}
+  .lede b{color:var(--text); font-weight:500}
+  .condition{border:1px solid var(--alert); padding:16px 20px; min-width:270px; position:relative; background:rgba(var(--alert-rgb),.05);
+    box-shadow:0 0 30px rgba(var(--alert-rgb),.12) inset}
+  .condition small{display:block; font:500 10px var(--mono); letter-spacing:.24em; color:var(--dim); text-transform:uppercase}
+  .condition strong{display:block; font:400 26px var(--wide); color:var(--alert); margin:6px 0 2px; letter-spacing:.04em}
+  .condition span{font:500 12px var(--mono); letter-spacing:.1em; color:var(--text); text-transform:uppercase}
+  .blink{animation:blink 1.1s steps(2) infinite}
+  @keyframes blink{50%{opacity:.25}}
+
+  /* bracketed panels */
+  .panel{position:relative; background:linear-gradient(180deg, var(--panel2), var(--panel)); border:1px solid var(--line); padding:22px}
+  .panel::before,.panel::after{content:""; position:absolute; width:18px; height:18px; border:2px solid var(--line2); pointer-events:none}
+  .panel::before{top:-1px; left:-1px; border-right:0; border-bottom:0}
+  .panel::after{bottom:-1px; right:-1px; border-left:0; border-top:0}
+  .panel.hot::before,.panel.hot::after{border-color:rgba(var(--m-rgb),.9)}
+  .phead{display:flex; justify-content:space-between; align-items:baseline; gap:10px; border-bottom:1px dashed var(--line2); padding-bottom:10px; margin-bottom:12px;
+    font:500 11px var(--mono); letter-spacing:.2em; text-transform:uppercase; color:var(--dim)}
+  .phead b{color:var(--text); font-weight:600}
+
+  .instruments{display:grid; grid-template-columns:1fr 1fr; gap:22px}
+  @media (max-width:900px){.instruments{grid-template-columns:1fr}}
+  .inst{--m:var(--c0); --m-rgb:95,227,161}
+  .gauge{display:block; width:100%; max-width:430px; margin:4px auto 0; overflow:visible}
+  .g-track{fill:none; stroke:#121c29; stroke-width:16}
+  .g-fill{fill:none; stroke:var(--m); stroke-width:16; stroke-linecap:butt; transition:stroke-dashoffset 1.8s cubic-bezier(.2,.9,.2,1), stroke .8s;
+    filter:drop-shadow(0 0 8px rgba(var(--m-rgb),.75))}
+  .g-tick{stroke:var(--faint); stroke-width:1.2; transition:stroke .3s}
+  .g-tick.major{stroke-width:2}
+  .g-tick.on{stroke:var(--m)}
+  .g-seg{fill:var(--dim); font:500 8.5px var(--mono); letter-spacing:.1em}
+  .g-marker{transition:transform 1.8s cubic-bezier(.2,.9,.2,1); transform-origin:150px 150px}
+  .g-score{fill:var(--text); font:400 58px var(--wide); text-anchor:middle; letter-spacing:.02em}
+  .g-of{fill:var(--dim); font:500 11px var(--mono); text-anchor:middle; letter-spacing:.2em}
+  .g-level{fill:var(--m); font:400 11.5px var(--wide); text-anchor:middle; letter-spacing:.06em}
+  .flicker{animation:flick 6s infinite}
+  @keyframes flick{0%,96%,100%{opacity:1} 97%{opacity:.55} 98%{opacity:1} 99%{opacity:.7}}
+
+  .readouts{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:10px}
+  @media (max-width:520px){.readouts{grid-template-columns:repeat(2,1fr)}}
+  .ro{background:var(--panel); padding:10px 12px}
+  .ro small{display:block; font:500 9.5px var(--mono); letter-spacing:.18em; color:var(--dim); text-transform:uppercase}
+  .ro b{display:block; font:400 17px var(--wide); margin-top:4px; color:var(--text)}
+  .ro b.hot{color:var(--m)}
+  .note{margin-top:16px; border-left:2px solid var(--m); padding:2px 0 2px 14px}
+  .note small{font:500 10px var(--mono); letter-spacing:.22em; color:var(--m); text-transform:uppercase}
+  .note p{margin:6px 0 0; font-size:17px; color:var(--text)}
+  .specimens{display:flex; flex-wrap:wrap; gap:6px; margin-top:14px}
+  .specimens span{font:500 11.5px var(--mono); border:1px solid var(--line2); padding:4px 8px; color:var(--text); letter-spacing:.04em}
+  .specimens span::before{content:"› "; color:var(--m)}
+  .trend{margin-top:14px; height:64px; width:100%; display:block}
+  .pfoot{display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:16px; flex-wrap:wrap;
+    font:500 10.5px var(--mono); letter-spacing:.12em; color:var(--dim); text-transform:uppercase}
+
+  .btn{font:600 11.5px var(--mono); letter-spacing:.2em; text-transform:uppercase; color:var(--void); background:var(--m, var(--alert));
+    border:0; padding:11px 16px; cursor:pointer; clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);
+    box-shadow:0 0 18px rgba(var(--m-rgb, var(--alert-rgb)),.35); transition:filter .15s, transform .08s}
+  .btn:hover{filter:brightness(1.12)} .btn:active{transform:translateY(1px)}
+  .btn.ghost{background:transparent; color:var(--text); border:1px solid var(--line2); clip-path:none; box-shadow:none}
+  .btn.ghost:hover{border-color:var(--alert); color:var(--alert)}
+  button:focus-visible, a:focus-visible, textarea:focus-visible{outline:2px solid var(--alert); outline-offset:3px}
+
+  /* analyzer */
+  .lab{margin-top:22px}
+  .lab-grid{display:grid; grid-template-columns:1.15fr 1fr; gap:22px}
+  @media (max-width:900px){.lab-grid{grid-template-columns:1fr}}
+  textarea{width:100%; min-height:140px; resize:vertical; background:#060a12; border:1px solid var(--line2); color:var(--text);
+    font:14px/1.55 var(--mono); padding:12px}
+  .samples{display:flex; flex-wrap:wrap; gap:6px; margin:10px 0 14px}
+  .samples button{font:500 11px var(--mono); letter-spacing:.08em; color:var(--dim); background:transparent; border:1px dashed var(--line2); padding:5px 9px; cursor:pointer}
+  .samples button:hover{color:var(--alert); border-color:var(--alert)}
+  .result{border:1px solid var(--line); background:#060a12; padding:18px; min-height:220px; font-family:var(--mono)}
+  .result .idle{color:var(--dim); font-size:13px; letter-spacing:.06em}
+  .meterline{margin-bottom:16px}
+  .meterline .top{display:flex; justify-content:space-between; font:500 10.5px var(--mono); letter-spacing:.18em; text-transform:uppercase; color:var(--dim)}
+  .meterline .top b{color:var(--text)}
+  .bar{height:10px; background:#101a27; margin-top:7px; position:relative; overflow:hidden}
+  .bar i{position:absolute; inset:0 auto 0 0; width:0; transition:width 1.2s cubic-bezier(.2,.9,.2,1)}
+  .verdict{font:500 15px/1.5 var(--sans); color:var(--text); margin-top:6px}
+  .hits{font-size:11px; color:var(--dim); margin-top:8px; letter-spacing:.04em}
+
+  /* condition scale */
+  .scale{display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-top:22px}
+  @media (max-width:900px){.scale{grid-template-columns:1fr 1fr}}
+  .cond{border:1px solid var(--line); padding:12px; background:var(--panel); position:relative}
+  .cond i{display:block; height:3px; margin:-12px -12px 10px}
+  .cond small{font:500 10px var(--mono); letter-spacing:.2em; color:var(--dim)}
+  .cond b{display:block; font:400 11px var(--wide); margin:6px 0 4px; letter-spacing:.04em}
+  .cond span{font:12px var(--sans); color:var(--dim)}
+  .cond.on{border-color:var(--alert); box-shadow:0 0 20px rgba(var(--alert-rgb),.15)}
+
+  footer{margin-top:36px; border-top:1px solid var(--line); padding-top:18px; display:grid; grid-template-columns:2fr 1fr; gap:24px; color:var(--dim); font-size:14px}
+  @media (max-width:760px){footer{grid-template-columns:1fr}}
+  footer b{color:var(--text); font-weight:500}
+
+  /* share dialog */
+  .share-back{position:fixed; inset:0; background:rgba(2,4,8,.82); z-index:60; display:flex; align-items:center; justify-content:center; padding:16px}
+  .share-back[hidden]{display:none}
+  .share-modal{width:min(640px,100%); max-height:calc(100vh - 32px); overflow:auto; border-color:var(--alert)}
+  .share-modal h2{font:400 22px var(--wide); margin:0 44px 6px 0; letter-spacing:.04em}
+  .share-sub{margin:0 0 14px; color:var(--dim); font:13px var(--mono)}
+  .share-x{position:absolute; top:14px; right:14px; width:34px; height:34px; background:transparent; border:1px solid var(--line2); color:var(--text); cursor:pointer}
+  #sharePreview{width:100%; aspect-ratio:1200/630; object-fit:cover; display:block; border:1px solid var(--line2)}
+  .share-label{font:500 10.5px var(--mono); letter-spacing:.2em; text-transform:uppercase; color:var(--dim); margin:16px 0 8px}
+  .share-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:6px}
+  @media (max-width:520px){.share-grid{grid-template-columns:repeat(2,1fr)}}
+  .share-grid a{display:block; text-align:center; text-decoration:none; color:var(--text); border:1px solid var(--line2); padding:10px 6px; font:600 12px var(--mono); letter-spacing:.08em}
+  .share-grid a:hover{border-color:var(--alert); color:var(--alert); background:rgba(var(--alert-rgb),.06)}
+  .share-actions{display:flex; flex-wrap:wrap; gap:6px}
+  .share-native{width:100%; margin-top:14px}
+  .share-note{font-size:12.5px; color:var(--dim); margin:14px 0 0}
+
+  .toast{position:fixed; left:50%; bottom:24px; transform:translateX(-50%) translateY(120px); background:#0b1320; border:1px solid var(--alert); color:var(--text);
+    padding:11px 16px; font:500 12px var(--mono); letter-spacing:.1em; z-index:70; transition:transform .25s, opacity .25s; opacity:0; visibility:hidden}
+  .toast.show{transform:translateX(-50%); opacity:1; visibility:visible}
+
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none !important; transition:none !important}
+    .ticker span{padding-left:16px}
+  }
+</style>
+</head>
+<body data-alert="0">
+<div class="sweep" aria-hidden="true"></div>
+
+<div class="status">
+  <div class="row">
+    <div class="left"><span class="sigil" aria-hidden="true"></span><span><b>Panic Archive</b> · Est. 2380</span></div>
+    <span class="hide-sm" id="cycle">Archive cycle ----.---</span>
+    <span class="hide-sm">Source year <b>2026</b> · Signal <span class="signal" aria-hidden="true"><i style="height:5px"></i><i style="height:8px"></i><i style="height:11px"></i><i style="height:14px;opacity:.3"></i></span></span>
+    <button class="audio" id="audioBtn" aria-pressed="false" title="Console audio">Audio: off</button>
+  </div>
+  <div class="chevrons" aria-hidden="true"></div>
+  <div class="ticker" aria-hidden="true"><span id="ticker">Establishing link to the year 2026…</span></div>
+</div>
+
+<div class="wrap">
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Live behavioral telemetry · Recovered transmission</div>
+      <h1>The Sky Is Falling<br><span class="dim">Index</span></h1>
+      <p class="lede">The 2380 Panic Archive monitors the 21st-century internet in real time, measuring how often <b>humans of 2026</b> announce the end of everything. Researchers remain baffled.</p>
+    </div>
+    <div class="condition" role="status" aria-live="polite">
+      <small>Archive condition</small>
+      <strong id="condCode"><span class="blink">●</span> C-0</strong>
+      <span id="condName">Calibrating</span>
+    </div>
+  </section>
+
+  <div class="instruments">
+    <section class="panel inst" id="inst-main" aria-labelledby="t-main">
+      <div class="phead"><span id="t-main"><b>Instrument 01</b> · Atmospheric panic</span><span id="up-main">--</span></div>
+      <div class="gaugeBox" data-g="main"></div>
+      <div class="readouts" id="ro-main"></div>
+      <div class="note"><small>Archivist field note</small><p id="note-main">Awaiting transmission…</p></div>
+      <div class="specimens" id="sp-main"></div>
+      <svg class="trend" id="tr-main" viewBox="0 0 400 64" preserveAspectRatio="none" aria-hidden="true"></svg>
+      <div class="pfoot"><span id="src-main"></span><button class="btn" data-share="main">Request clearance to share</button></div>
+    </section>
+
+    <section class="panel inst" id="robot-uprising" aria-labelledby="t-ai">
+      <div class="phead"><span id="t-ai"><b>Instrument 02</b> · Machine anxiety</span><span id="up-ai">--</span></div>
+      <div class="gaugeBox" data-g="ai"></div>
+      <div class="readouts" id="ro-ai"></div>
+      <div class="note"><small>Archivist field note</small><p id="note-ai">Awaiting transmission…</p></div>
+      <div class="specimens" id="sp-ai"></div>
+      <svg class="trend" id="tr-ai" viewBox="0 0 400 64" preserveAspectRatio="none" aria-hidden="true"></svg>
+      <div class="pfoot"><span id="src-ai"></span><button class="btn" data-share="ai">Request clearance to share</button></div>
+    </section>
+  </div>
+
+  <section class="panel lab inst" id="lab" aria-labelledby="t-lab" style="--m:var(--alert);--m-rgb:var(--alert-rgb)">
+    <div class="phead"><span id="t-lab"><b>Specimen lab</b> · Submit a 2026 transmission for analysis</span><span>Local analysis · nothing leaves your terminal</span></div>
+    <div class="lab-grid">
+      <div>
+        <label for="post" class="sr" style="position:absolute;left:-9999px">Specimen text</label>
+        <textarea id="post" placeholder="Paste a post, headline or group-chat message from your era…"></textarea>
+        <div class="samples" id="samples"></div>
+        <button class="btn" id="measure">Analyze specimen</button>
+      </div>
+      <div class="result" id="result" aria-live="polite"><div class="idle">&gt; Lab idle. Awaiting specimen_</div></div>
+    </div>
+  </section>
+
+  <div class="scale" id="scale"></div>
+
+  <footer>
+    <div><b>Methodology.</b> Every hour the Archive samples about 1,300 public posts and headlines from the 2026 internet (Bluesky, Mastodon and news feeds). Each instrument blends <b>panic volume</b>, how many doom posts appear compared with a normal hour, with <b>intensity</b>, how dramatic they sound. No individual humans are named, tracked or stored. Only the overall readings are archived.</div>
+    <div><b>Disclaimer.</b> For entertainment only. The Archive confirms the sky did not, in fact, fall. <a href="../">Return to the 2026 interface →</a></div>
+  </footer>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="share-back" id="shareBack" hidden>
+  <div class="panel share-modal" role="dialog" aria-modal="true" aria-labelledby="shareTitle">
+    <button class="share-x" id="shareClose" aria-label="Close">✕</button>
+    <h2 id="shareTitle">Clearance granted</h2>
+    <p class="share-sub" id="shareSub"></p>
+    <img id="sharePreview" alt="Snapshot of the current meter reading">
+    <button class="btn share-native" id="shareNative" hidden>Transmit via device</button>
+    <div class="share-label">Broadcast to</div>
+    <div class="share-grid" id="sharePlatforms"></div>
+    <div class="share-label">Or extract</div>
+    <div class="share-actions">
+      <button class="btn ghost" id="shareDownload">Download image</button>
+      <button class="btn ghost" id="shareCopyImg">Copy image</button>
+      <button class="btn ghost" id="shareCopyText">Copy text + link</button>
+    </div>
+    <p class="share-note">Links show the snapshot as their preview. For Instagram or TikTok, download the image and post it.</p>
+  </div>
+</div>
+
+<script>
+/* ---------------- config ---------------- */
+const SITE = "https://sfm42.github.io/sky-is-falling/";
+const COLORS = ["#5fe3a1","#ffd45c","#ff9a3d","#ff4b3e","#ff2e7e"];
+const RGB = ["95,227,161","255,212,92","255,154,61","255,75,62","255,46,126"];
+const LEVELS = {
+  main:["Mild Concern","Clutching Pearls","Stockpiling Beans","Building a Bunker","Full Chicken Little"],
+  ai:["Mild Robot Concern","Side-Eyeing the Toaster","Saying Please to the Chatbot","Unplugging Everything","Full Robot Uprising"],
+};
+const COND_BLURB = ["Specimens calm","Light gasping observed","Pantry checks underway","Concrete being ordered","Acorn impact reported"];
+const lvl = s => Math.min(4, Math.max(0, Math.floor((s||0)/20)));
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* ---------------- archive clock ---------------- */
+function cycle(){
+  const n=new Date(), start=new Date(n.getFullYear(),0,0), day=Math.floor((n-start)/864e5);
+  $("cycle").innerHTML = `Archive cycle <b>2380.${String(day).padStart(3,"0")}</b> · ${n.toLocaleTimeString([], {hour12:false})}`;
+}
+cycle(); setInterval(cycle, 1000);
+
+/* ---------------- gauges ---------------- */
+const NS="http://www.w3.org/2000/svg", CX=150, CY=150, R=112, A0=-120, SWEEP=240;
+const P=(deg,r)=>{const a=deg*Math.PI/180; return [CX+r*Math.sin(a), CY-r*Math.cos(a)];};
+function mk(tag,attrs,parent){const n=document.createElementNS(NS,tag); for(const k in attrs) n.setAttribute(k,attrs[k]); parent&&parent.appendChild(n); return n;}
+const gauges={};
+function buildGauge(kind){
+  const box=document.querySelector(`.gaugeBox[data-g="${kind}"]`);
+  const svg=mk("svg",{viewBox:"0 0 300 250",class:"gauge",role:"img","aria-label":kind==="ai"?"Machine anxiety gauge":"Atmospheric panic gauge"},box);
+  const [sx,sy]=P(A0,R),[ex,ey]=P(A0+SWEEP,R);
+  const d=`M${sx},${sy} A${R},${R} 0 1 1 ${ex},${ey}`;
+  mk("path",{d,class:"g-track"},svg);
+  const fill=mk("path",{d,class:"g-fill",pathLength:100,"stroke-dasharray":100,"stroke-dashoffset":100},svg);
+  const ticks=[];
+  for(let v=0; v<=100; v+=2){
+    const a=A0+SWEEP*v/100, major=v%10===0, [x1,y1]=P(a,R+13), [x2,y2]=P(a,R+(major?24:18));
+    ticks.push([v, mk("line",{x1,y1,x2,y2,class:"g-tick"+(major?" major":"")},svg)]);
+  }
+  for(let c=0;c<5;c++){
+    const [x,y]=P(A0+SWEEP*(c*20+10)/100, R+36);
+    mk("text",{x,y:y+3,"text-anchor":"middle",class:"g-seg"},svg).textContent="C-"+c;
+  }
+  const mg=mk("g",{class:"g-marker"},svg);
+  mk("polygon",{points:`${CX-6},${CY-R+22} ${CX+6},${CY-R+22} ${CX},${CY-R+9}`,fill:"var(--m)"},mg);
+  mg.style.transform=`rotate(${A0}deg)`;
+  const score=mk("text",{x:CX,y:CY+14,class:"g-score flicker"},svg); score.textContent="--";
+  mk("text",{x:CX,y:CY+38,class:"g-of"},svg).textContent="/ 100";
+  const level=mk("text",{x:CX,y:CY+92,class:"g-level"},svg); level.textContent="Calibrating";
+  gauges[kind]={fill,ticks,mg,score,level};
+}
+buildGauge("main"); buildGauge("ai");
+
+function decrypt(el, target){
+  if(reduced){ el.textContent=target; return; }
+  let f=0; const frames=26;
+  const t=setInterval(()=>{
+    f++;
+    if(f>=frames){ clearInterval(t); el.textContent=target; return; }
+    const approach=Math.round(target*f/frames);
+    el.textContent = f<frames*0.55 ? String(Math.floor(Math.random()*100)).padStart(2,"0") : approach;
+  },45);
+}
+function setGauge(kind, score){
+  const g=gauges[kind], L=lvl(score), panel=kind==="ai"?$("robot-uprising"):$("inst-main");
+  panel.style.setProperty("--m", COLORS[L]); panel.style.setProperty("--m-rgb", RGB[L]);
+  panel.classList.toggle("hot", L>=3);
+  requestAnimationFrame(()=>{
+    g.fill.setAttribute("stroke-dashoffset", 100-score);
+    g.mg.style.transform=`rotate(${A0+SWEEP*score/100}deg)`;
+  });
+  g.ticks.forEach(([v,el],i)=> setTimeout(()=>el.classList.toggle("on", v<=score), reduced?0:i*22));
+  decrypt(g.score, score);
+  g.level.textContent = LEVELS[kind][L].toUpperCase();
+}
+
+/* ---------------- archivist copy ---------------- */
+const NOTE = {
+  main:[
+    "Specimen population remains largely calm. Several humans observed touching grass.",
+    "Mild gasping detected across the network. Fainting couches remain on standby.",
+    "Humans are inventorying canned goods. The Archive notes most beans will expire uneaten.",
+    "Concrete orders spiking. Specimens are building bunkers they will mostly use for storage.",
+    "Total acorn-impact event. Specimens are certain the sky is falling. It is not.",
+  ],
+  ai:[
+    "Machines are mostly autocompleting emails. Humans remain unbothered.",
+    "Specimens eyeing household appliances with mild suspicion.",
+    "Humans have begun thanking software, just in case. The Archive finds this charming.",
+    "Smart fridges are being unplugged. Thermostats report feeling judged.",
+    "Specimens believe the machines have risen. The machines were recommending socks.",
+  ],
+};
+function fieldNote(kind, m){
+  const L=lvl(m.score), v=m.volume||{}, w=(m.topWords||[])[0];
+  let s = NOTE[kind][L];
+  if(v.postsPerHour && w) s = `Specimens are declaring "${w}" at roughly ${v.postsPerHour} posts per hour. ` + s;
+  return s;
+}
+function readouts(kind, m){
+  const v=m.volume||{}, L=lvl(m.score);
+  const vol = v.learning ? "LEARNING" : (v.ratio!=null ? v.ratio.toFixed(1)+"×" : "--");
+  const cells=[
+    ["Panic volume", vol, v.ratio>=1.15],
+    ["Posts / hour", v.postsPerHour ?? "--", false],
+    ["Intensity", m.intensity ?? "--", false],
+    ["Specimens", m.sampleSize ?? "--", false],
+  ];
+  return cells.map(([k,val,hot])=>`<div class="ro"><small>${k}</small><b class="${hot?"hot":""}">${esc(val)}</b></div>`).join("");
+}
+function trend(svg, h){
+  if(!h || h.length<2){ svg.innerHTML=`<text x="200" y="38" text-anchor="middle" font-family="IBM Plex Mono" font-size="11" fill="#6f8299" letter-spacing="2">TREND ACCUMULATING</text>`; return; }
+  const W=400,H=64,pad=4, x=i=>pad+i*(W-2*pad)/(h.length-1), y=v=>H-pad-(v/100)*(H-2*pad);
+  let grid=""; for(let g=20; g<100; g+=20) grid+=`<line x1="0" x2="${W}" y1="${y(g)}" y2="${y(g)}" stroke="#16212f" stroke-width="1"/>`;
+  const pts=h.map((p,i)=>`${x(i).toFixed(1)},${y(p.score).toFixed(1)}`);
+  const last=h[h.length-1];
+  svg.innerHTML = grid +
+    `<polygon points="${pad},${H} ${pts.join(" ")} ${W-pad},${H}" fill="rgba(var(--m-rgb),.10)"/>`+
+    `<polyline points="${pts.join(" ")}" fill="none" stroke="var(--m)" stroke-width="1.6" vector-effect="non-scaling-stroke"/>`+
+    `<circle cx="${x(h.length-1)}" cy="${y(last.score)}" r="3.2" fill="var(--m)"/>`;
+}
+function ago(iso){
+  const m=Math.round((Date.now()-new Date(iso))/60000);
+  return m<1?"just now": m<60?`${m} min ago`: `${Math.round(m/60)} hr ago`;
+}
+
+/* ---------------- render ---------------- */
+let current=null;
+function render(d){
+  current=d;
+  const meters={main:d, ai:d.ai};
+  let maxL=0;
+  for(const kind of ["main","ai"]){
+    const m=meters[kind]; if(!m) continue;
+    const L=lvl(m.score); maxL=Math.max(maxL,L);
+    setGauge(kind, m.score);
+    $("ro-"+kind).innerHTML=readouts(kind,m);
+    $("note-"+kind).textContent=fieldNote(kind,m);
+    $("sp-"+kind).innerHTML=(m.topWords||[]).map(w=>`<span>${esc(w)}</span>`).join("");
+    trend($("tr-"+kind), m.history);
+    $("up-"+kind).textContent="Last sample " + ago(m.updated);
+    const src=Object.entries(m.sources||{}).map(([k,n])=>`${k} ${n}`).join(" · ");
+    $("src-"+kind).textContent=src;
+  }
+  setCondition(maxL);
+  buildTicker(d);
+}
+function setCondition(L){
+  const prev=+document.body.dataset.alert;
+  document.body.dataset.alert=L;
+  $("condCode").innerHTML=`<span class="blink">●</span> C-${L}`;
+  $("condName").textContent=COND_BLURB[L];
+  document.querySelectorAll(".cond").forEach((c,i)=>c.classList.toggle("on", i===L));
+  document.documentElement.style.setProperty("--tick-speed", [70,62,52,42,32][L]+"s");
+  if(L===4 && !reduced){ document.body.classList.add("shake"); setTimeout(()=>document.body.classList.remove("shake"),1100); }
+  if(L>=3 && L!==prev) Audio2380.klaxon();
+}
+function buildTicker(d){
+  const parts=[];
+  const add=(m,label)=>{ if(!m) return;
+    const v=m.volume||{}, L=lvl(m.score);
+    parts.push(`${label}: ${m.score}/100 · ${LEVELS[label==="Atmospheric panic"?"main":"ai"][L]}`);
+    if(v.postsPerHour) parts.push(`${v.postsPerHour} doom transmissions per hour`);
+    if(v.ratio && !v.learning) parts.push(`panic volume ${v.ratio.toFixed(1)}× normal`);
+    (m.topWords||[]).slice(0,3).forEach(w=>parts.push(`specimens repeating "${w}"`));
+  };
+  add(d,"Atmospheric panic"); add(d.ai,"Machine anxiety");
+  parts.push("researchers remain baffled","the sky remains attached","please do not feed the doomscrollers");
+  $("ticker").textContent = "◆ " + parts.join("  ◆  ") + "  ◆";
+}
+
+/* ---------------- condition scale ---------------- */
+$("scale").innerHTML = COND_BLURB.map((b,i)=>
+  `<div class="cond"><i style="background:${COLORS[i]}"></i><small>CONDITION ${i} · ${i*20}–${i===4?100:i*20+19}</small><b style="color:${COLORS[i]}">${LEVELS.main[i].toUpperCase()}</b><span>${LEVELS.ai[i]} · ${b}</span></div>`).join("");
+
+/* ---------------- specimen lab (same word lists as the main site) ---------------- */
+const LEXICON = {
+  "apocalypse":3,"armageddon":3,"end times":3,"the end is near":3,"civilization":3,"extinction":3,
+  "total collapse":3,"doomsday":3,"bunker":3,"we're cooked":3,"it's over":3,"its over":3,
+  "nobody is safe":3,"point of no return":3,
+  "collapse":2,"crash":2,"catastrophe":2,"catastrophic":2,"crisis":2,"doomed":2,"panic":2,
+  "wake up":2,"brace yourselves":2,"nobody is talking about":2,"they don't want you to know":2,
+  "mark my words":2,"imminent":2,"meltdown":2,"chaos":2,"stock up":2,"terrifying":2,
+  "unprecedented":2,"breaking":2,
+  "warning":1,"alarming":1,"dangerous":1,"threat":1,"fear":1,"worst":1,"disaster":1,"scary":1,
+  "urgent":1,"shocking":1,"red flag":1,"uh oh":1,"yikes":1,"bad news":1,
+};
+const AI_LEXICON = {
+  "p(doom)":3,"ai apocalypse":3,"ai takeover":3,"rogue ai":3,"skynet":3,"terminator":3,"paperclip":3,
+  "superintelligence":3,"singularity":3,"agi is here":3,"lost control":3,"humanity is finished":3,
+  "extinction-level":3,"robot uprising":3,
+  "sentient":2,"it's alive":2,"lied to its creators":2,"tried to escape":2,"coming for your job":2,
+  "ai will replace":2,"replaced by ai":2,"nobody will have a job":2,"jobpocalypse":2,
+  "shut it all down":2,"pause ai":2,"unaligned":2,"misaligned":2,"nobody understands how it works":2,
+  "deepfake":2,"self-replicating":2,"agi":2,
+  "ai slop":1,"dead internet":1,"hallucinat":1,"uncanny":1,"ai bubble":1,"it's learning":1,
+  "jailbreak":1,"chatbot":1,"algorithm":1,"robots":1,
+};
+const DOOM_EMOJI=["🚨","💀","☢️","⚠️","🔥","😱","🆘","☠️","📉","🪦"], AI_EMOJI=["🤖","👁️","🦾","👾"];
+const rx = s=>s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+const norm = t=>t.toLowerCase().replace(/’/g,"'");
+const has = (t,p)=>new RegExp("(?<![a-z])"+rx(p)+(p==="hallucinat"?"":"(?![a-z])")).test(t);
+function bonus(text, emo){
+  let pts=Math.min(emo.reduce((n,e)=>n+text.split(e).length-1,0),5)*6 + Math.min((text.match(/!/g)||[]).length,5)*3;
+  const L=text.match(/\p{L}/gu)||[]; if(L.length>15 && L.filter(c=>c!==c.toLowerCase()).length/L.length>.5) pts+=20; return pts;
+}
+function scoreMain(text){ const t=norm(text), h=Object.keys(LEXICON).filter(p=>has(t,p));
+  return {score:Math.min(100,h.reduce((n,k)=>n+LEXICON[k]*9,0)+bonus(text,DOOM_EMOJI)), hits:h}; }
+function scoreAI(text){ const t=norm(text), a=Object.keys(AI_LEXICON).filter(p=>has(t,p));
+  if(!a.length && !/(?<![a-z])(ai|a\.i\.|artificial intelligence)(?![a-z])/.test(t)) return {score:0,hits:[]};
+  const g=Object.keys(LEXICON).filter(p=>has(t,p));
+  return {score:Math.min(100,a.reduce((n,k)=>n+AI_LEXICON[k]*9,0)+g.reduce((n,k)=>n+LEXICON[k]*5,0)+bonus(text,DOOM_EMOJI.concat(AI_EMOJI))), hits:a.concat(g)}; }
+const VERDICT = {
+  main:["Specimen is calm. Possibly sedated, possibly just having a nice day.",
+        "Specimen exhibits light pearl-clutching. No intervention required.",
+        "Specimen is mentally inventorying its pantry. Classic 21st-century behavior.",
+        "Specimen has priced out concrete. The Archive has seen this many times.",
+        "FULL CHICKEN LITTLE. Specimen has mistaken an acorn for the sky."],
+  ai:["Specimen is unbothered by machines. Rare for the era.",
+      "Specimen is side-eyeing a toaster. Toaster declined to comment.",
+      "Specimen says please to software. The Archive approves of the manners.",
+      "Specimen has unplugged its smart fridge and is staring at the thermostat.",
+      "FULL ROBOT UPRISING. Specimen has welcomed its new overlords. (They were spreadsheets.)"],
+};
+const SAMPLES=[
+  ["Calm specimen","Light rain expected Tuesday. Bring an umbrella if you're heading out."],
+  ["Agitated specimen","Nobody is talking about this. Mark my words, the crash is coming."],
+  ["Hysterical specimen","WAKE UP PEOPLE!!! IT'S OVER. TOTAL COLLAPSE. WE'RE COOKED 🚨🚨💀"],
+  ["Machine-anxious specimen","p(doom) is 90%. The AI takeover is here and nobody understands how it works 🤖🚨"],
+];
+$("samples").innerHTML=SAMPLES.map(([l],i)=>`<button data-i="${i}">${l}</button>`).join("");
+$("samples").addEventListener("click",e=>{ const b=e.target.closest("button"); if(!b) return;
+  $("post").value=SAMPLES[b.dataset.i][1]; track("2380/lab/example-"+b.dataset.i, "2380 lab sample: "+SAMPLES[b.dataset.i][0]); analyze(true); });
+function analyze(fromSample){
+  const text=$("post").value.trim(), box=$("result");
+  if(!text){ box.innerHTML=`<div class="idle">&gt; No specimen detected. Even the apocalypse needs input_</div>`; return; }
+  if(!fromSample) track("2380/lab/analyze","2380 lab: analyzed own specimen");
+  const m=scoreMain(text), a=scoreAI(text), lm=lvl(m.score), la=lvl(a.score);
+  const verdict = a.score>m.score ? VERDICT.ai[la] : VERDICT.main[lm];
+  const row=(label,s,L,names)=>`<div class="meterline"><div class="top"><span>${label}</span><b style="color:${COLORS[L]}">${s}/100 · ${names[L]}</b></div><div class="bar"><i data-w="${s}" style="background:${COLORS[L]};box-shadow:0 0 12px ${COLORS[L]}"></i></div></div>`;
+  const hits=[...new Set(m.hits.concat(a.hits))];
+  box.innerHTML = `<div class="idle" style="margin-bottom:14px">&gt; Analysis complete.</div>`+
+    row("Atmospheric panic", m.score, lm, LEVELS.main) + row("Machine anxiety", a.score, la, LEVELS.ai) +
+    `<div class="verdict">${verdict}</div><div class="hits">${hits.length?"Markers detected: "+hits.map(h=>`"${esc(h)}"`).join(", "):"No panic markers detected."}</div>`+
+    `<div style="margin-top:14px"><button class="btn ghost" id="copyRes">Copy lab report</button></div>`;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>box.querySelectorAll(".bar i").forEach(i=>i.style.width=i.dataset.w+"%")));
+  $("copyRes").addEventListener("click",()=>{ track("2380/lab/copy","2380 lab: copied report");
+    copy(`2380 Panic Archive lab report on my specimen:\nAtmospheric panic: ${m.score}/100, ${LEVELS.main[lm]}\nMachine anxiety: ${a.score}/100, ${LEVELS.ai[la]}\n${SITE}2380/`); });
+}
+$("measure").addEventListener("click",()=>analyze(false));
+$("post").addEventListener("keydown",e=>{ if(e.key==="Enter"&&(e.metaKey||e.ctrlKey)) analyze(false); });
+
+/* ---------------- audio (generated, off by default) ---------------- */
+const Audio2380 = (()=>{
+  let ctx=null, hum=null, on=false;
+  function ensure(){ if(!ctx){ const C=window.AudioContext||window.webkitAudioContext; if(!C) return null; ctx=new C(); } return ctx; }
+  function startHum(){
+    const c=ensure(); if(!c) return;
+    const g=c.createGain(); g.gain.value=0; g.connect(c.destination);
+    const o1=c.createOscillator(), o2=c.createOscillator(); o1.type="sine"; o2.type="sine"; o1.frequency.value=55; o2.frequency.value=82.5;
+    const lp=c.createBiquadFilter(); lp.type="lowpass"; lp.frequency.value=300;
+    o1.connect(lp); o2.connect(lp); lp.connect(g); o1.start(); o2.start();
+    g.gain.linearRampToValueAtTime(0.035, c.currentTime+1.2);
+    hum={g,o1,o2};
+  }
+  function stopHum(){ if(!hum||!ctx) return; const t=ctx.currentTime; hum.g.gain.linearRampToValueAtTime(0,t+.4); const h=hum; setTimeout(()=>{h.o1.stop();h.o2.stop();},500); hum=null; }
+  function klaxon(){
+    if(!on) return; const c=ensure(); if(!c) return;
+    const g=c.createGain(); g.connect(c.destination); const o=c.createOscillator(); o.type="sawtooth"; o.connect(g);
+    const t=c.currentTime; g.gain.setValueAtTime(0,t);
+    for(let i=0;i<3;i++){ const s=t+i*0.7; o.frequency.setValueAtTime(440,s); o.frequency.linearRampToValueAtTime(660,s+.35);
+      g.gain.linearRampToValueAtTime(.05,s+.05); g.gain.linearRampToValueAtTime(0,s+.6); }
+    o.start(t); o.stop(t+2.2);
+  }
+  function toggle(){
+    on=!on; const c=ensure(); if(c && c.state==="suspended") c.resume();
+    on ? startHum() : stopHum();
+    $("audioBtn").setAttribute("aria-pressed", on); $("audioBtn").textContent="Audio: "+(on?"on":"off");
+    if(on && +document.body.dataset.alert>=3) klaxon();
+    track("2380/audio/"+(on?"on":"off"), "2380 audio "+(on?"on":"off"));
+  }
+  return {toggle, klaxon};
+})();
+$("audioBtn").addEventListener("click", Audio2380.toggle);
+
+/* ---------------- analytics ---------------- */
+function track(path,title){ try{ if(window.goatcounter&&window.goatcounter.count) window.goatcounter.count({path,title:title||path,event:true}); }catch(e){} }
+
+/* ---------------- share ---------------- */
+function toast(msg){ const t=$("toast"); t.textContent=msg; t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),2400); }
+async function copy(text){ try{ await navigator.clipboard.writeText(text.trim()); toast("Copied to clipboard. Transmit responsibly."); } catch(e){ toast("Copy blocked. Select and copy by hand."); } }
+const PLATFORMS=[
+  ["X",(t,u)=>`https://x.com/intent/post?text=${encodeURIComponent(t)}&url=${encodeURIComponent(u)}`],
+  ["Bluesky",(t,u)=>`https://bsky.app/intent/compose?text=${encodeURIComponent(t+"\n"+u)}`],
+  ["Threads",(t,u)=>`https://www.threads.net/intent/post?text=${encodeURIComponent(t+"\n"+u)}`],
+  ["Facebook",(t,u)=>`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(u)}`],
+  ["LinkedIn",(t,u)=>`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(u)}`],
+  ["Reddit",(t,u)=>`https://www.reddit.com/submit?url=${encodeURIComponent(u)}&title=${encodeURIComponent(t)}`],
+  ["WhatsApp",(t,u)=>`https://wa.me/?text=${encodeURIComponent(t+"\n"+u)}`],
+  ["Email",(t,u)=>`mailto:?subject=${encodeURIComponent("The Sky Is Falling Index")}&body=${encodeURIComponent(t+"\n\n"+u)}`],
+];
+let shareState=null, lastFocus=null;
+function openShare(kind){
+  if(!current) return; const m = kind==="ai"?current.ai:current; if(!m) return;
+  const L=lvl(m.score), name = kind==="ai"?"Machine anxiety":"Atmospheric panic";
+  const text=`2380 Panic Archive report: humans of 2026 are at ${name} ${m.score}/100, ${LEVELS[kind][L]}. Researchers remain baffled.`;
+  const url = m.share ? new URL(m.share, SITE).href : SITE;
+  const img = m.card ? new URL(m.card, SITE).href : null;
+  shareState={kind,name,text,url,img,file:`panic-archive-${kind}-${m.score}.png`,blob:null};
+  lastFocus=document.activeElement;
+  $("shareSub").textContent=`> ${name.toUpperCase()} · ${m.score}/100 · CONDITION ${L}`;
+  const p=$("sharePreview"); p.hidden=!img; if(img) p.src=img;
+  ["shareDownload","shareCopyImg"].forEach(id=>$(id).hidden=!img);
+  if(!(window.ClipboardItem && navigator.clipboard && navigator.clipboard.write)) $("shareCopyImg").hidden=true;
+  $("shareNative").hidden=!(img && navigator.canShare && navigator.canShare({files:[new File([""],"t.png",{type:"image/png"})]}));
+  $("sharePlatforms").innerHTML=PLATFORMS.map(([n,f])=>`<a href="${f(text,url)}" target="_blank" rel="noopener" data-platform="${n}">${n}</a>`).join("");
+  $("shareBack").hidden=false; $("shareClose").focus();
+  track(`2380/share/${kind}/open`, `2380 share panel opened (${name})`);
+}
+function closeShare(){ $("shareBack").hidden=true; if(lastFocus) lastFocus.focus(); }
+async function cardBlob(){ if(!shareState.blob){ const r=await fetch(shareState.img); if(!r.ok) throw 0; shareState.blob=await r.blob(); } return shareState.blob; }
+document.querySelectorAll("[data-share]").forEach(b=>b.addEventListener("click",()=>openShare(b.dataset.share)));
+$("shareClose").addEventListener("click",closeShare);
+$("shareBack").addEventListener("click",e=>{ if(e.target.id==="shareBack") closeShare(); });
+document.addEventListener("keydown",e=>{ if(e.key==="Escape" && !$("shareBack").hidden) closeShare(); });
+$("sharePlatforms").addEventListener("click",e=>{ const a=e.target.closest("a[data-platform]"); if(a&&shareState) track(`2380/share/${shareState.kind}/${a.dataset.platform.toLowerCase()}`, `2380 shared ${shareState.name} to ${a.dataset.platform}`); });
+$("shareCopyText").addEventListener("click",()=>{ if(!shareState) return; track(`2380/share/${shareState.kind}/copy-text`); copy(shareState.text+"\n"+shareState.url); });
+$("shareDownload").addEventListener("click",async()=>{ track(`2380/share/${shareState.kind}/download`);
+  try{ const b=await cardBlob(), a=document.createElement("a"); a.href=URL.createObjectURL(b); a.download=shareState.file; document.body.appendChild(a); a.click(); a.remove(); toast("Image extracted."); }
+  catch(e){ toast("Download failed. Right-click the image to save it."); } });
+$("shareCopyImg").addEventListener("click",async()=>{ track(`2380/share/${shareState.kind}/copy-image`);
+  try{ await navigator.clipboard.write([new ClipboardItem({"image/png":await cardBlob()})]); toast("Image copied. Paste it into your post."); }
+  catch(e){ toast("Couldn't copy the image. Try Download."); } });
+$("shareNative").addEventListener("click",async()=>{ track(`2380/share/${shareState.kind}/native`);
+  try{ const f=new File([await cardBlob()],shareState.file,{type:"image/png"}); await navigator.share({files:[f],text:shareState.text+"\n"+shareState.url}); }
+  catch(e){ if(e&&e.name!=="AbortError") toast("Device transmit failed. Try Download."); } });
+
+/* ---------------- load ---------------- */
+const params=new URLSearchParams(location.search);
+fetch("../data/doom.json?ts="+Date.now()).then(r=>{ if(!r.ok) throw 0; return r.json(); })
+  .then(d=>{
+    // ?demo=0..4 previews each alert condition without touching live data
+    if(params.has("demo")){ const L=Math.max(0,Math.min(4,+params.get("demo")||0)); d.score=L*20+12; if(d.ai) d.ai.score=Math.max(0,L*20+5); }
+    render(d);
+  })
+  .catch(()=>{ $("note-main").textContent="Transmission lost. The Archive will retry next cycle."; });
+setInterval(()=>fetch("../data/doom.json?ts="+Date.now()).then(r=>r.json()).then(d=>{ if(!params.has("demo") && d.updated!==current?.updated) render(d); }).catch(()=>{}), 5*60*1000);
+</script>
+<script data-goatcounter="https://skyisfalling.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>
