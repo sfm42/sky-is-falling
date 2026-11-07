@@ -1,35 +1,35 @@
 {
-  "updated": "2026-11-07T22:17:15+00:00",
-  "score": 40,
+  "updated": "2026-11-07T23:17:11+00:00",
+  "score": 42,
   "level": "Stockpiling Beans",
   "emoji": "🟠",
   "forecast": "Heavy hysteria moving in. Canned goods advisory in effect until further notice.",
   "method": "word-list",
-  "sampleSize": 590,
+  "sampleSize": 587,
   "sources": {
-    "bluesky": 240,
+    "bluesky": 237,
     "mastodon": 300,
     "news": 50
   },
   "bySource": {
     "bluesky": 20,
     "mastodon": 12,
-    "news": 0
+    "news": 1
   },
   "topWords": [
     "apocalypse",
     "collapse",
-    "end times",
     "it's over",
+    "end times",
     "doomsday",
-    "mark my words"
+    "armageddon"
   ],
   "intensity": 28,
   "volume": {
-    "score": 47,
-    "ratio": 0.93,
+    "score": 50,
+    "ratio": 0.99,
     "learning": false,
-    "postsPerHour": 64
+    "postsPerHour": 70
   },
   "history": [
     {
@@ -779,35 +779,43 @@
         "bluesky": 59.62,
         "mastodon": 4.66
       }
+    },
+    {
+      "t": "2026-11-07T23:17:11+00:00",
+      "score": 42,
+      "vol": {
+        "bluesky": 65.55,
+        "mastodon": 4.66
+      }
     }
   ],
   "ai": {
-    "updated": "2026-11-07T22:17:15+00:00",
+    "updated": "2026-11-07T23:17:11+00:00",
     "score": 24,
     "level": "Side-Eyeing the Toaster",
     "emoji": "👀",
     "forecast": "Light suspicion of household appliances, clearing by lunch.",
     "method": "word-list",
-    "sampleSize": 418,
+    "sampleSize": 407,
     "sources": {
-      "bluesky": 79,
-      "mastodon": 289,
+      "bluesky": 80,
+      "mastodon": 277,
       "news": 50
     },
     "bySource": {
-      "bluesky": 15,
+      "bluesky": 16,
       "mastodon": 7,
       "news": 0
     },
     "topWords": [
       "agi",
       "ai slop",
-      "ai bubble",
       "superintelligence",
-      "p(doom)",
-      "collapse"
+      "ai bubble",
+      "singularity",
+      "dangerous"
     ],
-    "intensity": 18,
+    "intensity": 19,
     "volume": {
       "score": 27,
       "ratio": 0.53,
@@ -1558,11 +1566,19 @@
           "bluesky": 16.85,
           "mastodon": 25.99
         }
+      },
+      {
+        "t": "2026-11-07T23:17:11+00:00",
+        "score": 24,
+        "vol": {
+          "bluesky": 15.51,
+          "mastodon": 27.17
+        }
       }
     ],
-    "card": "data/cards/ai-202611071517.png",
-    "share": "share/ai.html?r=202611071517"
+    "card": "data/cards/ai-202611071617.png",
+    "share": "share/ai.html?r=202611071617"
   },
-  "card": "data/cards/main-202611071517.png",
-  "share": "share/main.html?r=202611071517"
+  "card": "data/cards/main-202611071617.png",
+  "share": "share/main.html?r=202611071617"
 }
