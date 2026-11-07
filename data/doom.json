@@ -1,13 +1,13 @@
 {
-  "updated": "2026-11-07T03:17:13+00:00",
-  "score": 39,
+  "updated": "2026-11-07T04:17:12+00:00",
+  "score": 35,
   "level": "Clutching Pearls",
   "emoji": "🟡",
   "forecast": "Partly anxious with scattered gasps. Keep a fainting couch handy.",
   "method": "word-list",
-  "sampleSize": 571,
+  "sampleSize": 560,
   "sources": {
-    "bluesky": 221,
+    "bluesky": 210,
     "mastodon": 300,
     "news": 50
   },
@@ -20,16 +20,16 @@
     "apocalypse",
     "collapse",
     "it's over",
-    "end times",
     "mark my words",
+    "end times",
     "doomsday"
   ],
   "intensity": 29,
   "volume": {
-    "score": 45,
-    "ratio": 0.86,
+    "score": 38,
+    "ratio": 0.73,
     "learning": false,
-    "postsPerHour": 58
+    "postsPerHour": 43
   },
   "history": [
     {
@@ -627,19 +627,27 @@
         "bluesky": 52.41,
         "mastodon": 5.11
       }
+    },
+    {
+      "t": "2026-11-07T04:17:12+00:00",
+      "score": 35,
+      "vol": {
+        "bluesky": 37.89,
+        "mastodon": 5.05
+      }
     }
   ],
   "ai": {
-    "updated": "2026-11-07T03:17:13+00:00",
+    "updated": "2026-11-07T04:17:12+00:00",
     "score": 24,
     "level": "Side-Eyeing the Toaster",
     "emoji": "👀",
     "forecast": "Light suspicion of household appliances, clearing by lunch.",
     "method": "word-list",
-    "sampleSize": 434,
+    "sampleSize": 424,
     "sources": {
-      "bluesky": 94,
-      "mastodon": 290,
+      "bluesky": 88,
+      "mastodon": 286,
       "news": 50
     },
     "bySource": {
@@ -660,7 +668,7 @@
       "score": 28,
       "ratio": 0.54,
       "learning": false,
-      "postsPerHour": 46
+      "postsPerHour": 47
     },
     "history": [
       {
@@ -1254,11 +1262,19 @@
           "bluesky": 19.39,
           "mastodon": 26.73
         }
+      },
+      {
+        "t": "2026-11-07T04:17:12+00:00",
+        "score": 24,
+        "vol": {
+          "bluesky": 17.67,
+          "mastodon": 29.12
+        }
       }
     ],
-    "card": "data/cards/ai-202611062017.png",
-    "share": "share/ai.html?r=202611062017"
+    "card": "data/cards/ai-202611062117.png",
+    "share": "share/ai.html?r=202611062117"
   },
-  "card": "data/cards/main-202611062017.png",
-  "share": "share/main.html?r=202611062017"
+  "card": "data/cards/main-202611062117.png",
+  "share": "share/main.html?r=202611062117"
 }
