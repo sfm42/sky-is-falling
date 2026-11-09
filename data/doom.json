@@ -1,13 +1,13 @@
 {
-  "updated": "2026-11-09T04:17:12+00:00",
-  "score": 42,
-  "level": "Stockpiling Beans",
-  "emoji": "🟠",
-  "forecast": "Heavy hysteria moving in. Canned goods advisory in effect until further notice.",
+  "updated": "2026-11-09T05:17:12+00:00",
+  "score": 38,
+  "level": "Clutching Pearls",
+  "emoji": "🟡",
+  "forecast": "Partly anxious with scattered gasps. Keep a fainting couch handy.",
   "method": "word-list",
-  "sampleSize": 528,
+  "sampleSize": 526,
   "sources": {
-    "bluesky": 178,
+    "bluesky": 176,
     "mastodon": 300,
     "news": 50
   },
@@ -26,10 +26,10 @@
   ],
   "intensity": 28,
   "volume": {
-    "score": 50,
-    "ratio": 0.99,
+    "score": 44,
+    "ratio": 0.84,
     "learning": false,
-    "postsPerHour": 65
+    "postsPerHour": 49
   },
   "history": [
     {
@@ -1019,19 +1019,27 @@
         "bluesky": 60.31,
         "mastodon": 4.36
       }
+    },
+    {
+      "t": "2026-11-09T05:17:12+00:00",
+      "score": 38,
+      "vol": {
+        "bluesky": 44.88,
+        "mastodon": 4.32
+      }
     }
   ],
   "ai": {
-    "updated": "2026-11-09T04:17:12+00:00",
-    "score": 40,
+    "updated": "2026-11-09T05:17:12+00:00",
+    "score": 41,
     "level": "Saying Please to the Chatbot",
     "emoji": "🙏",
     "forecast": "Widespread politeness toward software. Experts advise saying thank you, just in case.",
     "method": "word-list",
-    "sampleSize": 434,
+    "sampleSize": 428,
     "sources": {
-      "bluesky": 99,
-      "mastodon": 285,
+      "bluesky": 95,
+      "mastodon": 283,
       "news": 50
     },
     "bySource": {
@@ -1042,17 +1050,17 @@
     "topWords": [
       "agi",
       "superintelligence",
-      "ai slop",
       "ai bubble",
+      "ai slop",
       "p(doom)",
       "collapse"
     ],
     "intensity": 19,
     "volume": {
-      "score": 51,
-      "ratio": 1.03,
+      "score": 53,
+      "ratio": 1.07,
       "learning": false,
-      "postsPerHour": 77
+      "postsPerHour": 83
     },
     "history": [
       {
@@ -2038,11 +2046,19 @@
           "bluesky": 28.38,
           "mastodon": 48.75
         }
+      },
+      {
+        "t": "2026-11-09T05:17:12+00:00",
+        "score": 41,
+        "vol": {
+          "bluesky": 27.02,
+          "mastodon": 55.85
+        }
       }
     ],
-    "card": "data/cards/ai-202611082117.png",
-    "share": "share/ai.html?r=202611082117"
+    "card": "data/cards/ai-202611082217.png",
+    "share": "share/ai.html?r=202611082217"
   },
-  "card": "data/cards/main-202611082117.png",
-  "share": "share/main.html?r=202611082117"
+  "card": "data/cards/main-202611082217.png",
+  "share": "share/main.html?r=202611082217"
 }
