@@ -1,13 +1,13 @@
 {
-  "updated": "2026-11-09T08:17:14+00:00",
+  "updated": "2026-11-09T09:17:12+00:00",
   "score": 34,
   "level": "Clutching Pearls",
   "emoji": "🟡",
   "forecast": "Partly anxious with scattered gasps. Keep a fainting couch handy.",
   "method": "word-list",
-  "sampleSize": 515,
+  "sampleSize": 505,
   "sources": {
-    "bluesky": 165,
+    "bluesky": 155,
     "mastodon": 300,
     "news": 50
   },
@@ -19,17 +19,17 @@
   "topWords": [
     "apocalypse",
     "collapse",
-    "doomsday",
     "it's over",
+    "doomsday",
     "end times",
-    "armageddon"
+    "crisis"
   ],
-  "intensity": 28,
+  "intensity": 29,
   "volume": {
-    "score": 37,
-    "ratio": 0.7,
+    "score": 36,
+    "ratio": 0.68,
     "learning": false,
-    "postsPerHour": 35
+    "postsPerHour": 34
   },
   "history": [
     {
@@ -1051,40 +1051,48 @@
         "bluesky": 31.08,
         "mastodon": 4.25
       }
+    },
+    {
+      "t": "2026-11-09T09:17:12+00:00",
+      "score": 34,
+      "vol": {
+        "bluesky": 29.38,
+        "mastodon": 4.16
+      }
     }
   ],
   "ai": {
-    "updated": "2026-11-09T08:17:14+00:00",
-    "score": 52,
+    "updated": "2026-11-09T09:17:12+00:00",
+    "score": 45,
     "level": "Saying Please to the Chatbot",
     "emoji": "🙏",
     "forecast": "Widespread politeness toward software. Experts advise saying thank you, just in case.",
     "method": "word-list",
-    "sampleSize": 402,
+    "sampleSize": 397,
     "sources": {
-      "bluesky": 83,
-      "mastodon": 269,
+      "bluesky": 79,
+      "mastodon": 268,
       "news": 50
     },
     "bySource": {
       "bluesky": 16,
-      "mastodon": 7,
+      "mastodon": 8,
       "news": 1
     },
     "topWords": [
       "agi",
+      "superintelligence",
       "ai slop",
       "ai bubble",
-      "superintelligence",
       "p(doom)",
       "collapse"
     ],
     "intensity": 19,
     "volume": {
-      "score": 69,
-      "ratio": 1.68,
+      "score": 59,
+      "ratio": 1.29,
       "learning": false,
-      "postsPerHour": 131
+      "postsPerHour": 113
     },
     "history": [
       {
@@ -2102,11 +2110,19 @@
           "bluesky": 41.41,
           "mastodon": 89.26
         }
+      },
+      {
+        "t": "2026-11-09T09:17:12+00:00",
+        "score": 45,
+        "vol": {
+          "bluesky": 26.97,
+          "mastodon": 86.47
+        }
       }
     ],
-    "card": "data/cards/ai-202611090117.png",
-    "share": "share/ai.html?r=202611090117"
+    "card": "data/cards/ai-202611090217.png",
+    "share": "share/ai.html?r=202611090217"
   },
-  "card": "data/cards/main-202611090117.png",
-  "share": "share/main.html?r=202611090117"
+  "card": "data/cards/main-202611090217.png",
+  "share": "share/main.html?r=202611090217"
 }
