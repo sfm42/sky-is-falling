@@ -1,19 +1,19 @@
 {
-  "updated": "2026-11-09T19:17:12+00:00",
-  "score": 42,
+  "updated": "2026-11-09T20:05:50+00:00",
+  "score": 43,
   "level": "Stockpiling Beans",
   "emoji": "🟠",
   "forecast": "Heavy hysteria moving in. Canned goods advisory in effect until further notice.",
   "method": "word-list",
-  "sampleSize": 575,
+  "sampleSize": 587,
   "sources": {
-    "bluesky": 225,
+    "bluesky": 237,
     "mastodon": 300,
     "news": 50
   },
   "bySource": {
-    "bluesky": 20,
-    "mastodon": 12,
+    "bluesky": 19,
+    "mastodon": 11,
     "news": 0
   },
   "topWords": [
@@ -26,10 +26,10 @@
   ],
   "intensity": 28,
   "volume": {
-    "score": 49,
-    "ratio": 0.98,
+    "score": 51,
+    "ratio": 1.02,
     "learning": false,
-    "postsPerHour": 63
+    "postsPerHour": 68
   },
   "history": [
     {
@@ -1139,19 +1139,27 @@
         "bluesky": 58.79,
         "mastodon": 4.01
       }
+    },
+    {
+      "t": "2026-11-09T20:05:50+00:00",
+      "score": 43,
+      "vol": {
+        "bluesky": 63.8,
+        "mastodon": 4.0
+      }
     }
   ],
   "ai": {
-    "updated": "2026-11-09T19:17:12+00:00",
-    "score": 55,
+    "updated": "2026-11-09T20:05:50+00:00",
+    "score": 44,
     "level": "Saying Please to the Chatbot",
     "emoji": "🙏",
     "forecast": "Widespread politeness toward software. Experts advise saying thank you, just in case.",
     "method": "word-list",
-    "sampleSize": 437,
+    "sampleSize": 446,
     "sources": {
-      "bluesky": 102,
-      "mastodon": 285,
+      "bluesky": 105,
+      "mastodon": 291,
       "news": 50
     },
     "bySource": {
@@ -1169,10 +1177,10 @@
     ],
     "intensity": 19,
     "volume": {
-      "score": 74,
-      "ratio": 1.94,
+      "score": 57,
+      "ratio": 1.22,
       "learning": false,
-      "postsPerHour": 143
+      "postsPerHour": 125
     },
     "history": [
       {
@@ -2278,11 +2286,19 @@
           "bluesky": 62.66,
           "mastodon": 80.76
         }
+      },
+      {
+        "t": "2026-11-09T20:05:50+00:00",
+        "score": 44,
+        "vol": {
+          "bluesky": 18.97,
+          "mastodon": 106.0
+        }
       }
     ],
-    "card": "data/cards/ai-202611091217.png",
-    "share": "share/ai.html?r=202611091217"
+    "card": "data/cards/ai-202611091305.png",
+    "share": "share/ai.html?r=202611091305"
   },
-  "card": "data/cards/main-202611091217.png",
-  "share": "share/main.html?r=202611091217"
+  "card": "data/cards/main-202611091305.png",
+  "share": "share/main.html?r=202611091305"
 }
