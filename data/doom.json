@@ -1,19 +1,19 @@
 {
-  "updated": "2026-11-10T03:17:13+00:00",
-  "score": 41,
+  "updated": "2026-11-10T04:17:14+00:00",
+  "score": 44,
   "level": "Stockpiling Beans",
   "emoji": "🟠",
   "forecast": "Heavy hysteria moving in. Canned goods advisory in effect until further notice.",
   "method": "word-list",
-  "sampleSize": 536,
+  "sampleSize": 524,
   "sources": {
-    "bluesky": 186,
+    "bluesky": 174,
     "mastodon": 300,
     "news": 50
   },
   "bySource": {
     "bluesky": 20,
-    "mastodon": 11,
+    "mastodon": 12,
     "news": 0
   },
   "topWords": [
@@ -26,10 +26,10 @@
   ],
   "intensity": 28,
   "volume": {
-    "score": 48,
-    "ratio": 0.94,
+    "score": 52,
+    "ratio": 1.06,
     "learning": false,
-    "postsPerHour": 57
+    "postsPerHour": 71
   },
   "history": [
     {
@@ -1203,23 +1203,31 @@
         "bluesky": 52.96,
         "mastodon": 3.94
       }
+    },
+    {
+      "t": "2026-11-10T04:17:14+00:00",
+      "score": 44,
+      "vol": {
+        "bluesky": 67.45,
+        "mastodon": 3.93
+      }
     }
   ],
   "ai": {
-    "updated": "2026-11-10T03:17:13+00:00",
+    "updated": "2026-11-10T04:17:14+00:00",
     "score": 31,
     "level": "Side-Eyeing the Toaster",
     "emoji": "👀",
     "forecast": "Light suspicion of household appliances, clearing by lunch.",
     "method": "word-list",
-    "sampleSize": 408,
+    "sampleSize": 415,
     "sources": {
-      "bluesky": 81,
-      "mastodon": 277,
+      "bluesky": 83,
+      "mastodon": 282,
       "news": 50
     },
     "bySource": {
-      "bluesky": 14,
+      "bluesky": 13,
       "mastodon": 8,
       "news": 1
     },
@@ -1234,9 +1242,9 @@
     "intensity": 18,
     "volume": {
       "score": 38,
-      "ratio": 0.73,
+      "ratio": 0.71,
       "learning": false,
-      "postsPerHour": 54
+      "postsPerHour": 52
     },
     "history": [
       {
@@ -2406,11 +2414,19 @@
           "bluesky": 20.57,
           "mastodon": 33.41
         }
+      },
+      {
+        "t": "2026-11-10T04:17:14+00:00",
+        "score": 31,
+        "vol": {
+          "bluesky": 20.63,
+          "mastodon": 31.68
+        }
       }
     ],
-    "card": "data/cards/ai-202611092017.png",
-    "share": "share/ai.html?r=202611092017"
+    "card": "data/cards/ai-202611092117.png",
+    "share": "share/ai.html?r=202611092117"
   },
-  "card": "data/cards/main-202611092017.png",
-  "share": "share/main.html?r=202611092017"
+  "card": "data/cards/main-202611092117.png",
+  "share": "share/main.html?r=202611092117"
 }
