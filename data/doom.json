@@ -1,13 +1,13 @@
 {
-  "updated": "2026-11-13T09:58:56+00:00",
-  "score": 46,
+  "updated": "2026-11-13T11:17:12+00:00",
+  "score": 44,
   "level": "Stockpiling Beans",
   "emoji": "🟠",
   "forecast": "Heavy hysteria moving in. Canned goods advisory in effect until further notice.",
   "method": "word-list",
-  "sampleSize": 508,
+  "sampleSize": 496,
   "sources": {
-    "bluesky": 158,
+    "bluesky": 146,
     "mastodon": 300,
     "news": 50
   },
@@ -20,26 +20,18 @@
     "apocalypse",
     "collapse",
     "it's over",
-    "doomsday",
     "end times",
+    "doomsday",
     "doomed"
   ],
   "intensity": 28,
   "volume": {
-    "score": 55,
-    "ratio": 1.14,
+    "score": 52,
+    "ratio": 1.05,
     "learning": false,
-    "postsPerHour": 63
+    "postsPerHour": 54
   },
   "history": [
-    {
-      "t": "2026-11-06T11:17:14+00:00",
-      "score": 30,
-      "vol": {
-        "bluesky": 24.16,
-        "mastodon": 5.23
-      }
-    },
     {
       "t": "2026-11-06T12:17:13+00:00",
       "score": 31,
@@ -1375,19 +1367,27 @@
         "bluesky": 56.34,
         "mastodon": 6.23
       }
+    },
+    {
+      "t": "2026-11-13T11:17:12+00:00",
+      "score": 44,
+      "vol": {
+        "bluesky": 47.76,
+        "mastodon": 6.27
+      }
     }
   ],
   "ai": {
-    "updated": "2026-11-13T09:58:56+00:00",
-    "score": 45,
-    "level": "Saying Please to the Chatbot",
-    "emoji": "🙏",
-    "forecast": "Widespread politeness toward software. Experts advise saying thank you, just in case.",
+    "updated": "2026-11-13T11:17:12+00:00",
+    "score": 39,
+    "level": "Side-Eyeing the Toaster",
+    "emoji": "👀",
+    "forecast": "Light suspicion of household appliances, clearing by lunch.",
     "method": "word-list",
-    "sampleSize": 428,
+    "sampleSize": 431,
     "sources": {
-      "bluesky": 104,
-      "mastodon": 274,
+      "bluesky": 105,
+      "mastodon": 276,
       "news": 50
     },
     "bySource": {
@@ -1397,28 +1397,20 @@
     },
     "topWords": [
       "agi",
+      "ai slop",
       "ai bubble",
       "superintelligence",
-      "ai slop",
       "rogue ai",
-      "p(doom)"
+      "collapse"
     ],
     "intensity": 20,
     "volume": {
-      "score": 58,
-      "ratio": 1.25,
+      "score": 49,
+      "ratio": 0.97,
       "learning": false,
-      "postsPerHour": 117
+      "postsPerHour": 85
     },
     "history": [
-      {
-        "t": "2026-11-06T11:17:14+00:00",
-        "score": 41,
-        "vol": {
-          "bluesky": 20.69,
-          "mastodon": 100.1
-        }
-      },
       {
         "t": "2026-11-06T12:17:13+00:00",
         "score": 48,
@@ -2754,11 +2746,19 @@
           "bluesky": 29.13,
           "mastodon": 88.08
         }
+      },
+      {
+        "t": "2026-11-13T11:17:12+00:00",
+        "score": 39,
+        "vol": {
+          "bluesky": 26.92,
+          "mastodon": 57.9
+        }
       }
     ],
-    "card": "data/cards/ai-202611130258.png",
-    "share": "share/ai.html?r=202611130258"
+    "card": "data/cards/ai-202611130417.png",
+    "share": "share/ai.html?r=202611130417"
   },
-  "card": "data/cards/main-202611130258.png",
-  "share": "share/main.html?r=202611130258"
+  "card": "data/cards/main-202611130417.png",
+  "share": "share/main.html?r=202611130417"
 }
