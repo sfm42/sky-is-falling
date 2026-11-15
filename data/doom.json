@@ -1,6 +1,6 @@
 {
-  "updated": "2026-11-15T02:17:13+00:00",
-  "score": 42,
+  "updated": "2026-11-15T03:17:12+00:00",
+  "score": 46,
   "level": "Stockpiling Beans",
   "emoji": "🟠",
   "forecast": "Heavy hysteria moving in. Canned goods advisory in effect until further notice.",
@@ -26,20 +26,12 @@
   ],
   "intensity": 28,
   "volume": {
-    "score": 50,
-    "ratio": 0.99,
+    "score": 56,
+    "ratio": 1.19,
     "learning": false,
-    "postsPerHour": 69
+    "postsPerHour": 96
   },
   "history": [
-    {
-      "t": "2026-11-08T03:17:13+00:00",
-      "score": 38,
-      "vol": {
-        "bluesky": 43.45,
-        "mastodon": 4.82
-      }
-    },
     {
       "t": "2026-11-08T04:17:12+00:00",
       "score": 40,
@@ -1375,18 +1367,26 @@
         "bluesky": 61.95,
         "mastodon": 7.19
       }
+    },
+    {
+      "t": "2026-11-15T03:17:12+00:00",
+      "score": 46,
+      "vol": {
+        "bluesky": 88.92,
+        "mastodon": 7.19
+      }
     }
   ],
   "ai": {
-    "updated": "2026-11-15T02:17:13+00:00",
-    "score": 23,
+    "updated": "2026-11-15T03:17:12+00:00",
+    "score": 20,
     "level": "Side-Eyeing the Toaster",
     "emoji": "👀",
     "forecast": "Light suspicion of household appliances, clearing by lunch.",
     "method": "word-list",
-    "sampleSize": 440,
+    "sampleSize": 429,
     "sources": {
-      "bluesky": 90,
+      "bluesky": 79,
       "mastodon": 300,
       "news": 50
     },
@@ -1401,24 +1401,16 @@
       "superintelligence",
       "p(doom)",
       "ai bubble",
-      "collapse"
+      "singularity"
     ],
-    "intensity": 18,
+    "intensity": 17,
     "volume": {
-      "score": 25,
-      "ratio": 0.49,
+      "score": 22,
+      "ratio": 0.45,
       "learning": false,
-      "postsPerHour": 42
+      "postsPerHour": 39
     },
     "history": [
-      {
-        "t": "2026-11-08T03:17:13+00:00",
-        "score": 19,
-        "vol": {
-          "bluesky": 12.0,
-          "mastodon": 24.02
-        }
-      },
       {
         "t": "2026-11-08T04:17:12+00:00",
         "score": 20,
@@ -2754,11 +2746,19 @@
           "bluesky": 20.59,
           "mastodon": 21.44
         }
+      },
+      {
+        "t": "2026-11-15T03:17:12+00:00",
+        "score": 20,
+        "vol": {
+          "bluesky": 18.31,
+          "mastodon": 20.46
+        }
       }
     ],
-    "card": "data/cards/ai-202611141917.png",
-    "share": "share/ai.html?r=202611141917"
+    "card": "data/cards/ai-202611142017.png",
+    "share": "share/ai.html?r=202611142017"
   },
-  "card": "data/cards/main-202611141917.png",
-  "share": "share/main.html?r=202611141917"
+  "card": "data/cards/main-202611142017.png",
+  "share": "share/main.html?r=202611142017"
 }
