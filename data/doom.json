@@ -1,45 +1,37 @@
 {
-  "updated": "2026-11-16T21:17:11+00:00",
+  "updated": "2026-11-16T22:17:30+00:00",
   "score": 47,
   "level": "Stockpiling Beans",
   "emoji": "🟠",
   "forecast": "Heavy hysteria moving in. Canned goods advisory in effect until further notice.",
   "method": "word-list",
-  "sampleSize": 596,
+  "sampleSize": 598,
   "sources": {
-    "bluesky": 246,
+    "bluesky": 248,
     "mastodon": 300,
     "news": 50
   },
   "bySource": {
-    "bluesky": 20,
+    "bluesky": 21,
     "mastodon": 12,
-    "news": 1
+    "news": 0
   },
   "topWords": [
     "apocalypse",
     "collapse",
     "it's over",
-    "end times",
     "doomsday",
-    "crisis"
+    "end times",
+    "armageddon"
   ],
-  "intensity": 29,
+  "intensity": 30,
   "volume": {
     "score": 56,
-    "ratio": 1.17,
+    "ratio": 1.19,
     "learning": false,
-    "postsPerHour": 114
+    "postsPerHour": 116
   },
   "history": [
-    {
-      "t": "2026-11-09T22:17:12+00:00",
-      "score": 45,
-      "vol": {
-        "bluesky": 75.13,
-        "mastodon": 3.99
-      }
-    },
     {
       "t": "2026-11-09T23:17:14+00:00",
       "score": 46,
@@ -1375,25 +1367,33 @@
         "bluesky": 107.58,
         "mastodon": 5.93
       }
+    },
+    {
+      "t": "2026-11-16T22:17:30+00:00",
+      "score": 47,
+      "vol": {
+        "bluesky": 110.6,
+        "mastodon": 5.9
+      }
     }
   ],
   "ai": {
-    "updated": "2026-11-16T21:17:11+00:00",
-    "score": 50,
+    "updated": "2026-11-16T22:17:30+00:00",
+    "score": 48,
     "level": "Saying Please to the Chatbot",
     "emoji": "🙏",
     "forecast": "Widespread politeness toward software. Experts advise saying thank you, just in case.",
     "method": "word-list",
-    "sampleSize": 492,
+    "sampleSize": 501,
     "sources": {
-      "bluesky": 160,
-      "mastodon": 282,
-      "news": 50
+      "bluesky": 168,
+      "mastodon": 298,
+      "news": 35
     },
     "bySource": {
       "bluesky": 15,
-      "mastodon": 8,
-      "news": 2
+      "mastodon": 7,
+      "news": 0
     },
     "topWords": [
       "agi",
@@ -1403,22 +1403,14 @@
       "ai bubble",
       "replaced by ai"
     ],
-    "intensity": 21,
+    "intensity": 20,
     "volume": {
-      "score": 65,
-      "ratio": 1.52,
+      "score": 63,
+      "ratio": 1.44,
       "learning": false,
-      "postsPerHour": 112
+      "postsPerHour": 109
     },
     "history": [
-      {
-        "t": "2026-11-09T22:17:12+00:00",
-        "score": 31,
-        "vol": {
-          "bluesky": 18.17,
-          "mastodon": 39.85
-        }
-      },
       {
         "t": "2026-11-09T23:17:14+00:00",
         "score": 31,
@@ -2754,11 +2746,19 @@
           "bluesky": 58.4,
           "mastodon": 53.45
         }
+      },
+      {
+        "t": "2026-11-16T22:17:30+00:00",
+        "score": 48,
+        "vol": {
+          "bluesky": 41.34,
+          "mastodon": 67.4
+        }
       }
     ],
-    "card": "data/cards/ai-202611161417.png",
-    "share": "share/ai.html?r=202611161417"
+    "card": "data/cards/ai-202611161517.png",
+    "share": "share/ai.html?r=202611161517"
   },
-  "card": "data/cards/main-202611161417.png",
-  "share": "share/main.html?r=202611161417"
+  "card": "data/cards/main-202611161517.png",
+  "share": "share/main.html?r=202611161517"
 }
