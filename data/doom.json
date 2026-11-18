@@ -1,13 +1,13 @@
 {
-  "updated": "2026-11-18T21:17:21+00:00",
-  "score": 52,
+  "updated": "2026-11-18T22:17:25+00:00",
+  "score": 48,
   "level": "Stockpiling Beans",
   "emoji": "🟠",
   "forecast": "Heavy hysteria moving in. Canned goods advisory in effect until further notice.",
   "method": "word-list",
-  "sampleSize": 616,
+  "sampleSize": 610,
   "sources": {
-    "bluesky": 266,
+    "bluesky": 260,
     "mastodon": 300,
     "news": 50
   },
@@ -24,22 +24,14 @@
     "end times",
     "mark my words"
   ],
-  "intensity": 30,
+  "intensity": 29,
   "volume": {
-    "score": 64,
-    "ratio": 1.47,
+    "score": 58,
+    "ratio": 1.24,
     "learning": false,
-    "postsPerHour": 165
+    "postsPerHour": 119
   },
   "history": [
-    {
-      "t": "2026-11-11T21:17:22+00:00",
-      "score": 48,
-      "vol": {
-        "bluesky": 85.01,
-        "mastodon": 4.12
-      }
-    },
     {
       "t": "2026-11-11T22:17:14+00:00",
       "score": 50,
@@ -1375,19 +1367,27 @@
         "bluesky": 158.85,
         "mastodon": 6.19
       }
+    },
+    {
+      "t": "2026-11-18T22:17:25+00:00",
+      "score": 48,
+      "vol": {
+        "bluesky": 112.95,
+        "mastodon": 6.19
+      }
     }
   ],
   "ai": {
-    "updated": "2026-11-18T21:17:21+00:00",
-    "score": 49,
-    "level": "Saying Please to the Chatbot",
-    "emoji": "🙏",
-    "forecast": "Widespread politeness toward software. Experts advise saying thank you, just in case.",
+    "updated": "2026-11-18T22:17:25+00:00",
+    "score": 39,
+    "level": "Side-Eyeing the Toaster",
+    "emoji": "👀",
+    "forecast": "Light suspicion of household appliances, clearing by lunch.",
     "method": "word-list",
-    "sampleSize": 495,
+    "sampleSize": 483,
     "sources": {
-      "bluesky": 145,
-      "mastodon": 300,
+      "bluesky": 141,
+      "mastodon": 292,
       "news": 50
     },
     "bySource": {
@@ -1400,25 +1400,17 @@
       "ai bubble",
       "superintelligence",
       "ai slop",
-      "rogue ai",
-      "singularity"
+      "singularity",
+      "rogue ai"
     ],
     "intensity": 20,
     "volume": {
-      "score": 65,
-      "ratio": 1.5,
+      "score": 49,
+      "ratio": 0.96,
       "learning": false,
-      "postsPerHour": 150
+      "postsPerHour": 87
     },
     "history": [
-      {
-        "t": "2026-11-11T21:17:22+00:00",
-        "score": 66,
-        "vol": {
-          "bluesky": 66.43,
-          "mastodon": 230.31
-        }
-      },
       {
         "t": "2026-11-11T22:17:14+00:00",
         "score": 39,
@@ -2754,11 +2746,19 @@
           "bluesky": 38.87,
           "mastodon": 110.98
         }
+      },
+      {
+        "t": "2026-11-18T22:17:25+00:00",
+        "score": 39,
+        "vol": {
+          "bluesky": 33.54,
+          "mastodon": 53.77
+        }
       }
     ],
-    "card": "data/cards/ai-202611181417.png",
-    "share": "share/ai.html?r=202611181417"
+    "card": "data/cards/ai-202611181517.png",
+    "share": "share/ai.html?r=202611181517"
   },
-  "card": "data/cards/main-202611181417.png",
-  "share": "share/main.html?r=202611181417"
+  "card": "data/cards/main-202611181517.png",
+  "share": "share/main.html?r=202611181517"
 }
