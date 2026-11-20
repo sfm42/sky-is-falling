@@ -1,18 +1,18 @@
 {
-  "updated": "2026-11-20T18:17:21+00:00",
-  "score": 34,
+  "updated": "2026-11-20T19:17:12+00:00",
+  "score": 37,
   "level": "Clutching Pearls",
   "emoji": "🟡",
   "forecast": "Partly anxious with scattered gasps. Keep a fainting couch handy.",
   "method": "word-list",
-  "sampleSize": 561,
+  "sampleSize": 580,
   "sources": {
-    "bluesky": 211,
+    "bluesky": 230,
     "mastodon": 300,
     "news": 50
   },
   "bySource": {
-    "bluesky": 20,
+    "bluesky": 19,
     "mastodon": 13,
     "news": 0
   },
@@ -21,25 +21,17 @@
     "collapse",
     "it's over",
     "doomsday",
-    "armageddon",
+    "end times",
     "crisis"
   ],
   "intensity": 29,
   "volume": {
-    "score": 36,
-    "ratio": 0.67,
+    "score": 42,
+    "ratio": 0.8,
     "learning": false,
-    "postsPerHour": 43
+    "postsPerHour": 59
   },
   "history": [
-    {
-      "t": "2026-11-13T18:17:12+00:00",
-      "score": 46,
-      "vol": {
-        "bluesky": 59.75,
-        "mastodon": 6.53
-      }
-    },
     {
       "t": "2026-11-13T19:17:15+00:00",
       "score": 55,
@@ -1375,19 +1367,27 @@
         "bluesky": 38.0,
         "mastodon": 5.34
       }
+    },
+    {
+      "t": "2026-11-20T19:17:12+00:00",
+      "score": 37,
+      "vol": {
+        "bluesky": 53.45,
+        "mastodon": 5.34
+      }
     }
   ],
   "ai": {
-    "updated": "2026-11-20T18:17:21+00:00",
-    "score": 41,
+    "updated": "2026-11-20T19:17:12+00:00",
+    "score": 42,
     "level": "Saying Please to the Chatbot",
     "emoji": "🙏",
     "forecast": "Widespread politeness toward software. Experts advise saying thank you, just in case.",
     "method": "word-list",
-    "sampleSize": 471,
+    "sampleSize": 472,
     "sources": {
-      "bluesky": 140,
-      "mastodon": 281,
+      "bluesky": 147,
+      "mastodon": 275,
       "news": 50
     },
     "bySource": {
@@ -1397,28 +1397,20 @@
     },
     "topWords": [
       "agi",
-      "ai bubble",
       "superintelligence",
       "ai slop",
+      "ai bubble",
       "p(doom)",
       "singularity"
     ],
-    "intensity": 20,
+    "intensity": 21,
     "volume": {
-      "score": 52,
-      "ratio": 1.04,
+      "score": 54,
+      "ratio": 1.11,
       "learning": false,
-      "postsPerHour": 128
+      "postsPerHour": 141
     },
     "history": [
-      {
-        "t": "2026-11-13T18:17:12+00:00",
-        "score": 44,
-        "vol": {
-          "bluesky": 38.2,
-          "mastodon": 63.64
-        }
-      },
       {
         "t": "2026-11-13T19:17:15+00:00",
         "score": 51,
@@ -2754,11 +2746,19 @@
           "bluesky": 23.5,
           "mastodon": 104.11
         }
+      },
+      {
+        "t": "2026-11-20T19:17:12+00:00",
+        "score": 42,
+        "vol": {
+          "bluesky": 24.67,
+          "mastodon": 116.28
+        }
       }
     ],
-    "card": "data/cards/ai-202611201117.png",
-    "share": "share/ai.html?r=202611201117"
+    "card": "data/cards/ai-202611201217.png",
+    "share": "share/ai.html?r=202611201217"
   },
-  "card": "data/cards/main-202611201117.png",
-  "share": "share/main.html?r=202611201117"
+  "card": "data/cards/main-202611201217.png",
+  "share": "share/main.html?r=202611201217"
 }
