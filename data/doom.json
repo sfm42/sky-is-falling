@@ -1,13 +1,13 @@
 {
-  "updated": "2026-11-21T06:17:12+00:00",
-  "score": 37,
+  "updated": "2026-11-21T07:17:10+00:00",
+  "score": 36,
   "level": "Clutching Pearls",
   "emoji": "🟡",
   "forecast": "Partly anxious with scattered gasps. Keep a fainting couch handy.",
   "method": "word-list",
-  "sampleSize": 524,
+  "sampleSize": 509,
   "sources": {
-    "bluesky": 174,
+    "bluesky": 159,
     "mastodon": 300,
     "news": 50
   },
@@ -26,20 +26,12 @@
   ],
   "intensity": 29,
   "volume": {
-    "score": 41,
-    "ratio": 0.78,
+    "score": 40,
+    "ratio": 0.77,
     "learning": false,
-    "postsPerHour": 53
+    "postsPerHour": 52
   },
   "history": [
-    {
-      "t": "2026-11-14T06:17:18+00:00",
-      "score": 48,
-      "vol": {
-        "bluesky": 75.49,
-        "mastodon": 7.7
-      }
-    },
     {
       "t": "2026-11-14T07:17:19+00:00",
       "score": 45,
@@ -1375,50 +1367,50 @@
         "bluesky": 47.45,
         "mastodon": 5.28
       }
+    },
+    {
+      "t": "2026-11-21T07:17:10+00:00",
+      "score": 36,
+      "vol": {
+        "bluesky": 46.95,
+        "mastodon": 5.14
+      }
     }
   ],
   "ai": {
-    "updated": "2026-11-21T06:17:12+00:00",
-    "score": 37,
-    "level": "Side-Eyeing the Toaster",
-    "emoji": "👀",
-    "forecast": "Light suspicion of household appliances, clearing by lunch.",
+    "updated": "2026-11-21T07:17:10+00:00",
+    "score": 18,
+    "level": "Mild Robot Concern",
+    "emoji": "🤖",
+    "forecast": "Calm conditions. The robots are mostly just autocompleting emails today.",
     "method": "word-list",
-    "sampleSize": 442,
+    "sampleSize": 420,
     "sources": {
-      "bluesky": 105,
-      "mastodon": 287,
+      "bluesky": 96,
+      "mastodon": 274,
       "news": 50
     },
     "bySource": {
-      "bluesky": 16,
+      "bluesky": 15,
       "mastodon": 7,
       "news": 0
     },
     "topWords": [
       "agi",
       "ai slop",
-      "superintelligence",
       "ai bubble",
+      "superintelligence",
       "p(doom)",
       "rogue ai"
     ],
     "intensity": 19,
     "volume": {
-      "score": 46,
-      "ratio": 0.9,
+      "score": 18,
+      "ratio": 0.41,
       "learning": false,
-      "postsPerHour": 89
+      "postsPerHour": 42
     },
     "history": [
-      {
-        "t": "2026-11-14T06:17:18+00:00",
-        "score": 29,
-        "vol": {
-          "bluesky": 33.06,
-          "mastodon": 24.64
-        }
-      },
       {
         "t": "2026-11-14T07:17:19+00:00",
         "score": 30,
@@ -2754,11 +2746,19 @@
           "bluesky": 32.19,
           "mastodon": 56.85
         }
+      },
+      {
+        "t": "2026-11-21T07:17:10+00:00",
+        "score": 18,
+        "vol": {
+          "bluesky": 29.46,
+          "mastodon": 13.0
+        }
       }
     ],
-    "card": "data/cards/ai-202611202317.png",
-    "share": "share/ai.html?r=202611202317"
+    "card": "data/cards/ai-202611210017.png",
+    "share": "share/ai.html?r=202611210017"
   },
-  "card": "data/cards/main-202611202317.png",
-  "share": "share/main.html?r=202611202317"
+  "card": "data/cards/main-202611210017.png",
+  "share": "share/main.html?r=202611210017"
 }
