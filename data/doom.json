@@ -1,13 +1,13 @@
 {
-  "updated": "2026-11-22T07:17:12+00:00",
-  "score": 36,
+  "updated": "2026-11-22T08:17:10+00:00",
+  "score": 35,
   "level": "Clutching Pearls",
   "emoji": "🟡",
   "forecast": "Partly anxious with scattered gasps. Keep a fainting couch handy.",
   "method": "word-list",
-  "sampleSize": 505,
+  "sampleSize": 494,
   "sources": {
-    "bluesky": 155,
+    "bluesky": 144,
     "mastodon": 300,
     "news": 50
   },
@@ -26,20 +26,12 @@
   ],
   "intensity": 30,
   "volume": {
-    "score": 40,
-    "ratio": 0.75,
+    "score": 37,
+    "ratio": 0.69,
     "learning": false,
-    "postsPerHour": 47
+    "postsPerHour": 41
   },
   "history": [
-    {
-      "t": "2026-11-15T07:17:14+00:00",
-      "score": 36,
-      "vol": {
-        "bluesky": 39.45,
-        "mastodon": 6.6
-      }
-    },
     {
       "t": "2026-11-15T08:17:17+00:00",
       "score": 35,
@@ -1375,19 +1367,27 @@
         "bluesky": 42.22,
         "mastodon": 4.63
       }
+    },
+    {
+      "t": "2026-11-22T08:17:10+00:00",
+      "score": 35,
+      "vol": {
+        "bluesky": 36.54,
+        "mastodon": 4.48
+      }
     }
   ],
   "ai": {
-    "updated": "2026-11-22T07:17:12+00:00",
+    "updated": "2026-11-22T08:17:10+00:00",
     "score": 30,
     "level": "Side-Eyeing the Toaster",
     "emoji": "👀",
     "forecast": "Light suspicion of household appliances, clearing by lunch.",
     "method": "word-list",
-    "sampleSize": 419,
+    "sampleSize": 414,
     "sources": {
-      "bluesky": 87,
-      "mastodon": 282,
+      "bluesky": 81,
+      "mastodon": 283,
       "news": 50
     },
     "bySource": {
@@ -1400,25 +1400,17 @@
       "ai slop",
       "ai bubble",
       "superintelligence",
-      "singularity",
-      "rogue ai"
+      "rogue ai",
+      "singularity"
     ],
     "intensity": 18,
     "volume": {
       "score": 37,
-      "ratio": 0.7,
+      "ratio": 0.69,
       "learning": false,
-      "postsPerHour": 71
+      "postsPerHour": 74
     },
     "history": [
-      {
-        "t": "2026-11-15T07:17:14+00:00",
-        "score": 30,
-        "vol": {
-          "bluesky": 14.66,
-          "mastodon": 56.21
-        }
-      },
       {
         "t": "2026-11-15T08:17:17+00:00",
         "score": 33,
@@ -2754,11 +2746,19 @@
           "bluesky": 18.63,
           "mastodon": 52.52
         }
+      },
+      {
+        "t": "2026-11-22T08:17:10+00:00",
+        "score": 30,
+        "vol": {
+          "bluesky": 16.9,
+          "mastodon": 56.92
+        }
       }
     ],
-    "card": "data/cards/ai-202611220017.png",
-    "share": "share/ai.html?r=202611220017"
+    "card": "data/cards/ai-202611220117.png",
+    "share": "share/ai.html?r=202611220117"
   },
-  "card": "data/cards/main-202611220017.png",
-  "share": "share/main.html?r=202611220017"
+  "card": "data/cards/main-202611220117.png",
+  "share": "share/main.html?r=202611220117"
 }
