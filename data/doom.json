@@ -1,13 +1,13 @@
 {
-  "updated": "2026-11-28T00:17:11+00:00",
+  "updated": "2026-11-28T01:17:12+00:00",
   "score": 43,
   "level": "Stockpiling Beans",
   "emoji": "🟠",
   "forecast": "Heavy hysteria moving in. Canned goods advisory in effect until further notice.",
   "method": "word-list",
-  "sampleSize": 533,
+  "sampleSize": 528,
   "sources": {
-    "bluesky": 183,
+    "bluesky": 178,
     "mastodon": 300,
     "news": 50
   },
@@ -19,12 +19,12 @@
   "topWords": [
     "apocalypse",
     "collapse",
-    "doomsday",
     "it's over",
+    "doomsday",
     "crisis",
     "end times"
   ],
-  "intensity": 29,
+  "intensity": 28,
   "volume": {
     "score": 51,
     "ratio": 1.03,
@@ -32,14 +32,6 @@
     "postsPerHour": 83
   },
   "history": [
-    {
-      "t": "2026-11-21T01:17:11+00:00",
-      "score": 44,
-      "vol": {
-        "bluesky": 90.15,
-        "mastodon": 5.29
-      }
-    },
     {
       "t": "2026-11-21T02:17:10+00:00",
       "score": 41,
@@ -1375,19 +1367,27 @@
         "bluesky": 79.08,
         "mastodon": 4.36
       }
+    },
+    {
+      "t": "2026-11-28T01:17:12+00:00",
+      "score": 43,
+      "vol": {
+        "bluesky": 78.64,
+        "mastodon": 4.36
+      }
     }
   ],
   "ai": {
-    "updated": "2026-11-28T00:17:11+00:00",
-    "score": 39,
+    "updated": "2026-11-28T01:17:12+00:00",
+    "score": 25,
     "level": "Side-Eyeing the Toaster",
     "emoji": "👀",
     "forecast": "Light suspicion of household appliances, clearing by lunch.",
     "method": "word-list",
-    "sampleSize": 444,
+    "sampleSize": 440,
     "sources": {
-      "bluesky": 105,
-      "mastodon": 289,
+      "bluesky": 91,
+      "mastodon": 299,
       "news": 50
     },
     "bySource": {
@@ -1401,24 +1401,16 @@
       "ai bubble",
       "superintelligence",
       "singularity",
-      "p(doom)"
+      "collapse"
     ],
-    "intensity": 19,
+    "intensity": 18,
     "volume": {
-      "score": 50,
-      "ratio": 0.99,
+      "score": 29,
+      "ratio": 0.55,
       "learning": false,
-      "postsPerHour": 78
+      "postsPerHour": 39
     },
     "history": [
-      {
-        "t": "2026-11-21T01:17:11+00:00",
-        "score": 47,
-        "vol": {
-          "bluesky": 59.59,
-          "mastodon": 76.81
-        }
-      },
       {
         "t": "2026-11-21T02:17:10+00:00",
         "score": 42,
@@ -2754,11 +2746,19 @@
           "bluesky": 21.86,
           "mastodon": 56.21
         }
+      },
+      {
+        "t": "2026-11-28T01:17:12+00:00",
+        "score": 25,
+        "vol": {
+          "bluesky": 18.54,
+          "mastodon": 20.44
+        }
       }
     ],
-    "card": "data/cards/ai-202611271717.png",
-    "share": "share/ai.html?r=202611271717"
+    "card": "data/cards/ai-202611271817.png",
+    "share": "share/ai.html?r=202611271817"
   },
-  "card": "data/cards/main-202611271717.png",
-  "share": "share/main.html?r=202611271717"
+  "card": "data/cards/main-202611271817.png",
+  "share": "share/main.html?r=202611271817"
 }
